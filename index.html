@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PV Fab Lab · ASME VIII-1 Simulator</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root{--bg:#eef2f8;--card:#fff;--ink:#0f1b33;--mut:#5b6b8a;--line:#d5deee;--acc:#1673e6;--ok:#12a150;--bad:#e5384f;--warn:#d98a00;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0a0f1e;--card:#0f1629;--ink:#e6edfb;--mut:#8b9ac0;--line:#1e2f4f;--acc:#3b9bff;--ok:#3ddc84;--bad:#ff5e7c;--warn:#ffb020}}
+:root[data-theme=dark]{--bg:#0a0f1e;--card:#0f1629;--ink:#e6edfb;--mut:#8b9ac0;--line:#1e2f4f;--acc:#3b9bff;--ok:#3ddc84;--bad:#ff5e7c;--warn:#ffb020}
+*{box-sizing:border-box;margin:0;font-family:system-ui,"Segoe UI",Roboto,sans-serif}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--ink);padding:14px;max-width:1500px;margin:auto}
+h1{font-size:1.25rem}h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);margin-bottom:10px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:8px;flex-wrap:wrap}
+.sub{font-size:.75rem;color:var(--mut)}
+.grid{display:grid;grid-template-columns:270px 1fr 300px;gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+label{display:flex;justify-content:space-between;font-size:.75rem;color:var(--mut);margin:8px 0 3px}
+input,select{width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-size:.85rem}
+input[type=range]{padding:0}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#cv{width:100%;aspect-ratio:16/10;border-radius:10px;background:#080d16;display:block;touch-action:none;cursor:grab}
+.btns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+button{flex:1;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:9px 12px;font-size:.8rem;cursor:pointer}
+button.p{background:var(--acc);color:#fff;border-color:var(--acc)}
+button:disabled{opacity:.5}
+.gauge{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px}
+.big{font-size:1.8rem;font-weight:700}
+.pill{padding:4px 12px;border-radius:99px;font-size:.75rem;font-weight:600;border:1px solid currentColor}
+.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+.res{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line);font-size:.8rem}
+.res b{font-variant-numeric:tabular-nums}
+.bar{height:8px;background:var(--bg);border-radius:9px;overflow:hidden;margin:4px 0 8px}.bar i{display:block;height:100%;background:var(--ok)}
+.low{display:grid;grid-template-columns:1.1fr 1fr;gap:12px;margin-top:12px}
+table{width:100%;border-collapse:collapse;font-size:.75rem}th,td{padding:5px 6px;border-bottom:1px solid var(--line);text-align:left}
+.scroll{max-height:240px;overflow:auto}
+#ch{width:100%;height:200px;display:block}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.stat{background:var(--bg);border-radius:10px;padding:8px}.stat span{font-size:.65rem;color:var(--mut);display:block}.stat b{font-size:1.05rem}
+.note{font-size:.68rem;color:var(--mut);margin-top:8px;line-height:1.4}
+@media(max-width:1100px){.grid,.low{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;position:sticky;top:0;z-index:5}
+.tabs button{flex:none;border-radius:10px}.tabs button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.tab{display:none}.tab.on{display:block}
+.chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:12px}
+.chip{border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--card)}.chip b{display:block;font-size:1.1rem;margin-top:4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;align-items:end}
+td button{padding:2px 8px;flex:none}
+@media(max-width:900px){.two{grid-template-columns:1fr}}
+@media print{.tab{display:block!important}.tabs,.btns,#cv,.top button,.fgrid{display:none!important}body{background:#fff;color:#000}}
+</style></head><body>
+<div class="top"><div><h1>PV Fab Lab · ASME VIII-1 Simulator</h1><div class="sub">Shell design (UG-27/32) · 3-roll forming (UG-79) · Hi-Lo (UW-33) · Monte Carlo fit-up</div></div>
+<button id="theme" style="flex:none">Theme</button></div>
+<div class="tabs"><button data-t="dash">Control panel</button><button data-t="design">Design &amp; rolling</button><button data-t="asm">Assembly &amp; circ. welds</button><button data-t="nozzle">Nozzle UG-37</button><button data-t="wps">WPS / PQR / welds</button></div>
+<div id="tab-dash" class="tab"><div class="chips" id="chips"></div>
+<div class="two"><div class="card"><h2>Project</h2><div class="fgrid"><div><label>Project</label><input id="pj" value="Vessel V-101"></div><div><label>Tag / serial</label><input id="tag" value="PV-0001"></div><div><label>Code edition</label><input id="ed" value="ASME VIII-1 2023"></div><div><label>Inspector</label><input id="insp"></div></div>
+<div class="btns"><button class="p" id="sv_">Save project (.json)</button><button id="ld_">Load project</button><button id="pr_">Print report</button><button id="ra_">Reset all</button></div><input type="file" id="fl_" accept=".json" style="display:none">
+<div class="note">Everything (inputs, Hi-Lo log, nozzle, WPS/PQR, weld log) is saved in the JSON file and auto-saved in this browser.</div></div>
+<div class="card"><h2>Run summary</h2><div id="sum"></div></div></div></div>
+<div id="tab-design" class="tab on"><div class="grid">
+<div class="card"><h2>Design inputs</h2>
+<label>Material</label><select id="mat"><option value="0">SA-516-70 (CS)</option><option value="1">SA-240-304 (SS)</option><option value="2">SA-240-316L (SS)</option></select>
+<div class="row"><div><label>Pressure MPa</label><input id="P" type="number" value="1.6" step=".1"></div><div><label>ID mm</label><input id="ID" type="number" value="1800" step="50"></div></div>
+<div class="row"><div><label>Plate t mm</label><input id="t" type="number" value="12" step="1"></div><div><label>Course L mm</label><input id="L" type="number" value="1500" step="100"></div></div>
+<div class="row"><div><label>Allow. S MPa</label><input id="S" type="number" value="138"></div><div><label>Corr. allow. mm</label><input id="CA" type="number" value="1.5" step=".5"></div></div>
+<label>Joint efficiency E</label><select id="E"><option value="1">1.00 – full RT</option><option value="0.85" selected>0.85 – spot RT</option><option value="0.7">0.70 – no RT</option></select>
+<label>Seam category (UW-33)</label><select id="cat"><option value="A">A – longitudinal</option><option value="B">B – circumferential</option></select>
+<h2 style="margin-top:14px">Process model</h2>
+<label>Fit-up scatter σ <span id="sv">0.6</span> mm</label><input id="sig" type="range" min=".1" max="2" step=".05" value=".6">
+<label>Courses to roll</label><input id="N" type="number" value="4" min="1" max="8">
+<div class="btns"><button class="p" id="run">▶ Run fabrication</button></div>
+<div class="btns"><button id="rst">Reset</button><button id="mc">Monte Carlo ×500</button></div>
+<div class="note">S is editable: set it for your design temperature from ASME II-D Table 1A/1B. Values shown are screening estimates, not a code-certified calculation.</div></div>
+
+<div class="card"><h2>3-roll bending · live Hi-Lo</h2>
+<canvas id="cv"></canvas>
+<div class="gauge"><div><div class="sub">Hi-Lo reading (offset exaggerated in 3D)</div><div class="big"><span id="hv">0.00</span> <small>mm</small></div><div class="sub" id="hs">Idle</div></div>
+<div style="text-align:right"><div class="sub">UW-33 limit</div><div class="big" id="lim">3.0</div><span class="pill ok" id="pill">READY</span></div></div>
+<div class="btns"><button id="zm">Zoom to seam</button><button id="vw">Reset view</button></div></div>
+
+<div class="card"><h2>ASME analysis</h2>
+<div id="out"></div>
+<div class="note" id="flags"></div></div>
+</div>
+
+<div class="low">
+<div class="card"><h2>Hi-Lo data log</h2><div class="stats">
+<div class="stat"><span>Readings</span><b id="s1">0</b></div><div class="stat"><span>Mean / Max mm</span><b id="s2">–</b></div><div class="stat"><span>Fail rate</span><b id="s3">–</b></div><div class="stat"><span>Cpk vs limit</span><b id="s4">–</b></div></div>
+<canvas id="ch"></canvas></div>
+<div class="card"><h2>Inspection record</h2><div class="scroll"><table><thead><tr><th>#</th><th>Course</th><th>Stn</th><th>Pass</th><th>Hi-Lo mm</th><th>Result</th></tr></thead><tbody id="tb"></tbody></table></div>
+<div class="btns"><button id="cp">Copy CSV</button><button id="clr">Clear log</button></div>
+<textarea id="ta" style="display:none;width:100%;height:80px;margin-top:8px;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px"></textarea></div>
+</div>
+
+</div>
+<div id="tab-asm" class="tab"><div class="two"><div class="card"><h2>Shell assembly · heads · circumferential welding</h2>
+<canvas id="av" style="width:100%;border-radius:10px;background:#080d16;display:block;touch-action:none;cursor:grab"></canvas>
+<div class="gauge"><div><div class="sub" id="as">Idle</div><div class="big"><span id="ah">0.00</span> <small>mm</small></div></div><div style="text-align:right"><div class="sub">UW-33 Cat. B limit</div><div class="big" id="alim">–</div><span class="pill ok" id="ap">READY</span></div></div>
+<div class="btns"><button class="p" id="arun">▶ Run assembly</button><button id="arst">Reset</button><button id="azm">Zoom joint</button></div>
+<div class="note">Sequence per joint: fit-up → 8-station Hi-Lo (re-fit up to 3×) → tack → root / fill / cap passes → NDE. Radial offset is exaggerated in 3D. Uses courses, thickness, WPS and scatter σ from the other tabs.</div></div>
+<div class="card"><h2>Acceptance criteria</h2><div id="acr"></div></div></div>
+<div class="card" style="margin-top:12px"><h2>Joint inspection record</h2><div class="scroll"><table id="t_jt"></table></div><div id="verd" class="big" style="margin-top:10px"></div></div><div class="two" style="margin-top:12px"><div class="card"><h2>Saddle support (Zick screening)</h2><div id="sad"></div></div><div class="card"><h2>Nozzle installation record</h2><div class="scroll"><table id="t_nz"></table></div></div></div></div>
+<div id="tab-nozzle" class="tab"><div class="two"><div class="card"><h2>Nozzle &amp; opening (UG-37 / UG-40, internal pressure)</h2>
+<div class="fgrid" id="nf"></div><div class="note">Set-in nozzle with optional reinforcing pad. Opening assumed clear of weld seams (E1 selectable). Shell data come from Design tab. Corrosion allowance applied to all corroded dimensions.</div></div>
+<div class="card"><h2>Area replacement</h2><div id="nout"></div><div class="note" id="nfl"></div></div></div></div>
+<div id="tab-wps" class="tab"><div class="two"><div class="card"><h2>PQR records</h2><div class="fgrid" id="f_pqr"></div><div class="scroll"><table id="t_pqr"></table></div></div>
+<div class="card"><h2>WPS records</h2><div class="fgrid" id="f_wps"></div><div class="scroll"><table id="t_wps"></table></div></div></div>
+<div class="card" style="margin-top:12px"><h2>Production weld log (heat input, interpass, WPS coverage, NDE)</h2><div class="fgrid" id="f_weld"></div><div class="scroll"><table id="t_weld"></table></div>
+<div class="note">Qualified thickness per QW-451.1 groove welds (simplified): T&lt;1.6 → T–2T; 1.6≤T&lt;10 → 1.6–2T; T≥10 → 5–2T. Heat input = V×I×60/(1000×speed) kJ/mm. Confirm all limits against your WPS, QW and your Code edition.</div></div></div>
+<script>
+const $=id=>document.getElementById(id);
+const MATS=[{n:"SA-516-70",S:138,sy:260,Em:200000,cs:1},{n:"SA-240-304",S:138,sy:205,Em:193000,cs:0},{n:"SA-240-316L",S:115,sy:170,Em:193000,cs:0}];
+const f=(x,d=2)=>Number(x).toFixed(d);
+function inp(){return{P:+$("P").value,ID:+$("ID").value,t:+$("t").value,L:+$("L").value,S:+$("S").value,CA:+$("CA").value,E:+$("E").value,m:MATS[+$("mat").value],cat:$("cat").value,sig:+$("sig").value,N:Math.max(1,Math.min(8,+$("N").value||1))}}
+// UW-33 Table (mm): returns max permitted offset
+function uw33(t,cat){const i=t/25.4;if(cat==="A"){if(i<=.5)return t/4;if(i<=2)return 3.2;return Math.min(t/16,9.5)}
+if(i<=.5)return t/4;if(i<=.75)return t/4;if(i<=1.5)return 4.8;if(i<=2)return t/8;return Math.min(t/8,19)}
+function springRi(Rf,t,sy,E){let Ri=Rf;for(let k=0;k<60;k++){const q=sy*Ri/(E*t);const r=4*q*q*q-3*q+1;Ri=Rf*r}return Ri}
+function calc(){const c=inp(),R=c.ID/2+c.CA,SE=c.S*c.E;
+const tc=c.P*R/(SE-.6*c.P),tl=c.P*R/(2*SE+.4*c.P),tr=Math.max(tc,tl)+c.CA,tcor=c.t-c.CA;
+const mawp=SE*tcor/(R+.6*tcor),hyd=1.3*mawp;
+const th=c.P*(c.ID+2*c.CA)/(2*SE-.2*c.P)+c.CA;
+const Rf=(c.ID+c.t)/2,strain=50*c.t/Rf,dev=Math.PI*(c.ID+c.t);
+const Ri=springRi(Rf,c.t,c.m.sy,c.m.Em),wt=dev*c.t*c.L*7850e-9;
+const lim=uw33(c.t,c.cat),sLim=c.m.cs?5:15;
+return{c,tc,tl,tr,mawp,hyd,th,strain,sLim,dev,Ri,wt,lim,util:tr/c.t,ok:c.t>=tr&&c.t>=1.5}}
+function render(){const r=calc(),c=r.c;$("lim").textContent=f(r.lim,1);
+const rows=[["Min t, circumferential (UG-27c1)",f(r.tc)+" mm"],["Min t, longitudinal (UG-27c2)",f(r.tl)+" mm"],["Required t + CA",f(r.tr)+" mm"],["Nominal plate t",f(c.t)+" mm"],["2:1 ellip. head min t (UG-32d)",f(r.th)+" mm"],["MAWP (corroded)",f(r.mawp,2)+" MPa"],["Hydrotest 1.3×MAWP (UG-99b)",f(r.hyd,2)+" MPa"],["Plate development length",f(r.dev,0)+" mm"],["Pre-roll radius (springback)",f(r.Ri,0)+" mm"],["Outer fibre strain (UG-79)",f(r.strain)+" % (limit ≈"+r.sLim+" %)"],["Shell course weight",f(r.wt,0)+" kg"],["UW-33 Hi-Lo limit (Cat. "+c.cat+")",f(r.lim,2)+" mm"]];
+$("out").innerHTML=`<div class="res"><span>Thickness utilisation</span><b class="${r.util>1?"bad":r.util>.9?"warn":"ok"}">${f(r.util*100,0)} %</b></div><div class="bar"><i style="width:${Math.min(100,r.util*100)}%;background:var(--${r.util>1?"bad":r.util>.9?"warn":"ok"})"></i></div>`+rows.map(a=>`<div class="res"><span>${a[0]}</span><b>${a[1]}</b></div>`).join("");
+const fl=[];if(!r.ok)fl.push("⚠ Nominal thickness is below required thickness.");if(r.strain>r.sLim)fl.push("⚠ Forming strain exceeds screening limit: check UCS-79 / UHA-44 for heat treatment or notch-toughness requirements.");if(c.E<1&&c.cat==="A")fl.push("Spot/no RT lowers E: full RT could cut required thickness.");
+$("flags").innerHTML=(fl.join("<br>")||"✔ Design passes screening checks.")+"<br><br>Limits follow UW-33 as commonly tabulated; verify against your edition of the Code.";
+$("sv").textContent=f(c.sig);return r}
+// ---- log & stats ----
+let log=[],pass=0;
+function addLog(course,stn,ps,v,lim){log.push({course,stn,ps,v,ok:v<=lim});drawLog()}
+function drawLog(){const lim=calc().lim;$("tb").innerHTML=log.slice(-60).reverse().map((l,i)=>`<tr><td>${log.length-i}</td><td>${l.course}</td><td>${l.stn}</td><td>${l.ps}</td><td>${f(l.v)}</td><td class="${l.ok?"ok":"bad"}">${l.ok?"PASS":"FAIL"}</td></tr>`).join("");
+const n=log.length;$("s1").textContent=n;if(n){const vs=log.map(l=>l.v),m=vs.reduce((a,b)=>a+b)/n,mx=Math.max(...vs),sd=Math.sqrt(vs.reduce((a,b)=>a+(b-m)**2,0)/n)||1e-6,fr=log.filter(l=>!l.ok).length/n;
+$("s2").textContent=f(m)+" / "+f(mx);$("s3").textContent=f(fr*100,0)+" %";$("s4").textContent=f((lim-m)/(3*sd))}else{["s2","s3","s4"].forEach(i=>$(i).textContent="–")}
+chart(lim)}
+function chart(lim){const cv=$("ch"),d=devicePixelRatio||1,w=cv.clientWidth,h=cv.clientHeight;cv.width=w*d;cv.height=h*d;const x=cv.getContext("2d");x.scale(d,d);const css=getComputedStyle(document.documentElement);
+const col=k=>css.getPropertyValue(k).trim(),pts=log.slice(-80),mx=Math.max(lim*1.3,...pts.map(p=>p.v),.1);
+const Y=v=>h-18-(v/mx)*(h-30);x.font="10px system-ui";x.fillStyle=col("--mut");x.strokeStyle=col("--line");
+for(let i=0;i<=4;i++){const v=mx*i/4;x.beginPath();x.moveTo(30,Y(v));x.lineTo(w,Y(v));x.stroke();x.fillText(f(v,1),0,Y(v)+3)}
+const bw=(w-34)/Math.max(pts.length,20);pts.forEach((p,i)=>{x.fillStyle=p.ok?col("--acc"):col("--bad");const bh=h-18-Y(p.v);x.fillRect(32+i*bw,Y(p.v),bw*.75,bh)});
+x.strokeStyle=col("--warn");x.setLineDash([5,4]);x.beginPath();x.moveTo(30,Y(lim));x.lineTo(w,Y(lim));x.stroke();x.setLineDash([]);x.fillStyle=col("--warn");x.fillText("UW-33 "+f(lim,1)+" mm",w-90,Y(lim)-4);
+if(!pts.length){x.fillStyle=col("--mut");x.fillText("Run fabrication or Monte Carlo to collect data",40,h/2)}}
+// ---- process model ----
+const gauss=()=>{let u=0,v=0;while(!u)u=Math.random();while(!v)v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
+function reading(r,sc){return Math.abs(.03*r.c.t*(r.strain/5)+gauss()*r.c.sig*sc)}
+// ---- 3D ----
+const cv=$("cv"),ren=new THREE.WebGLRenderer({canvas:cv,antialias:true}),sc=new THREE.Scene();sc.background=new THREE.Color(0x080d16);
+const cam=new THREE.PerspectiveCamera(42,1.6,.1,100);let az=.7,el=.45,dist=9,tgt=new THREE.Vector3(0,1.2,0);
+function setCam(){cam.position.set(tgt.x+dist*Math.cos(el)*Math.sin(az),tgt.y+dist*Math.sin(el),tgt.z+dist*Math.cos(el)*Math.cos(az));cam.lookAt(tgt)}
+sc.add(new THREE.AmbientLight(0x6688bb,.9));const dl=new THREE.DirectionalLight(0xffffff,1.1);dl.position.set(5,8,6);sc.add(dl);
+sc.add(new THREE.GridHelper(16,32,0x1e90ff,0x14233f));
+const R0=1.2,Lp=2*Math.PI*R0;let W=2.4;
+const pg=new THREE.PlaneGeometry(Lp,W,140,1),pm=new THREE.Mesh(pg,new THREE.MeshStandardMaterial({color:0x4b7fd0,metalness:.6,roughness:.35,side:THREE.DoubleSide}));sc.add(pm);
+const org=pg.attributes.position.array.slice();
+const rm=new THREE.MeshStandardMaterial({color:0x6a86b5,metalness:.8,roughness:.3}),rolls=[];
+[[-1.5,-.3],[1.5,-.3],[0,2.6]].forEach(([x,y])=>{const m=new THREE.Mesh(new THREE.CylinderGeometry(.3,.3,W+.6,32),rm);m.rotation.x=Math.PI/2;m.position.set(x,y,0);sc.add(m);rolls.push(m)});
+const gm=new THREE.Group(),probe=new THREE.Mesh(new THREE.BoxGeometry(.5,.05,.25),new THREE.MeshStandardMaterial({color:0x1e90ff,emissive:0x1e90ff,emissiveIntensity:.6}));gm.add(probe);sc.add(gm);gm.visible=false;
+let prog=0,off=0,EX=14;
+function bend(p,offmm,ID){const e=p*p*(3-2*p),k=e*(2*Math.PI/Lp),d=(offmm/(ID/2))*R0*EX*(p>.98?1:0),a=pg.attributes.position;
+for(let i=0;i<a.count;i++){const s=org[i*3],z=org[i*3+1];let X,Y;if(k<1e-6){X=s;Y=0}else{const th=s*k,Rr=1/k,dd=s>0?d:0;X=(Rr+dd)*Math.sin(th);Y=Rr-(Rr+dd)*Math.cos(th)}
+a.array[i*3]=X;a.array[i*3+1]=Y+0.0;a.array[i*3+2]=z}a.needsUpdate=true;pg.computeVertexNormals();pm.position.y=0;
+gm.visible=p>.98;if(gm.visible)gm.position.set(0,2*R0+d/2+.12,0);
+rolls[2].position.y=2.6-1.0*e}
+function onsize(){const w=cv.parentElement.clientWidth-28;ren.setSize(w,w/1.6,false);cam.aspect=1.6;cam.updateProjectionMatrix()}
+let drag=null;cv.onpointerdown=e=>{drag=[e.clientX,e.clientY];cv.setPointerCapture(e.pointerId)};cv.onpointerup=()=>drag=null;
+cv.onpointermove=e=>{if(!drag)return;az-=(e.clientX-drag[0])*.008;el=Math.max(.05,Math.min(1.4,el+(e.clientY-drag[1])*.006));drag=[e.clientX,e.clientY]};
+cv.onwheel=e=>{e.preventDefault();dist=Math.max(2.5,Math.min(16,dist*(1+e.deltaY*.001)))};
+function tick(){setCam();ren.render(sc,cam);requestAnimationFrame(tick)}
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+function gaugeUI(v,lim,txt){$("hv").textContent=f(v);$("hs").textContent=txt;const ok=v<=lim;$("pill").textContent=ok?"ACCEPT":"REJECT";$("pill").className="pill "+(ok?"ok":"bad");
+probe.material.color.setHex(ok?0x1e90ff:0xff5e7c);probe.material.emissive.setHex(ok?0x1e90ff:0xff5e7c)}
+async function roll(r,from,to){const T=1400,t0=performance.now();return new Promise(res=>{(function s(now){const q=Math.min(1,(now-t0)/T);prog=from+(to-from)*q;bend(prog,off,r.c.ID);rolls.forEach((m,i)=>m.rotation.y+=.08*(i<2?1:-1));q<1?requestAnimationFrame(s):res()})(performance.now())})}
+let running=false;
+async function run(){if(running)return;running=true;$("run").disabled=true;const r=calc(),c=r.c;W=2.4*Math.max(.4,Math.min(1.5,c.L/c.ID));
+for(let c1=1;c1<=c.N;c1++){off=0;prog=0;bend(0,0,c.ID);$("hs").textContent=`Course ${c1}: rolling`;await roll(r,0,1);let scl=1,ps=1;
+while(ps<=3){let worst=0;for(let st=1;st<=5;st++){const v=reading(r,scl);off=v;bend(1,v,c.ID);worst=Math.max(worst,v);gaugeUI(v,r.lim,`Course ${c1} · station ${st} · pass ${ps}`);addLog(c1,st,ps,v,r.lim);await sleep(380)}
+if(worst<=r.lim)break;ps++;scl*=.6;if(ps>3)break;$("hs").textContent=`Course ${c1}: re-rolling (pass ${ps})`;await roll(r,1,.7);await roll(r,.7,1)}
+await sleep(300)}
+$("hs").textContent="Run complete";running=false;$("run").disabled=false}
+function mc(){const r=calc(),n=500;for(let i=0;i<n;i++)log.push({course:"MC",stn:i%5+1,ps:1,v:reading(r,1),ok:false});log.forEach(l=>l.ok=l.v<=r.lim);if(log.length>3000)log=log.slice(-3000);drawLog();$("hs").textContent="Monte Carlo added "+n+" virtual readings"}
+function reset(){log=[];off=0;prog=0;bend(0,0,1800);drawLog();gaugeUI(0,3,"Idle");$("pill").textContent="READY";$("pill").className="pill ok"}
+$("run").onclick=run;$("mc").onclick=mc;$("rst").onclick=()=>{if(!running)reset()};$("clr").onclick=()=>{log=[];drawLog()};
+$("vw").onclick=()=>{az=.7;el=.45;dist=9;tgt.set(0,1.2,0)};
+$("zm").onclick=()=>{if(prog<.98){off=.5;bend(1,.5,calc().c.ID);prog=1}az=0;el=.3;dist=3.2;tgt.set(0,2.4,0)};
+$("cp").onclick=async()=>{const csv="n,course,station,pass,hilo_mm,limit_mm,result\n"+log.map((l,i)=>[i+1,l.course,l.stn,l.ps,f(l.v,3),f(calc().lim,2),l.ok?"PASS":"FAIL"].join(",")).join("\n");
+const ta=$("ta");ta.value=csv;try{await navigator.clipboard.writeText(csv);$("cp").textContent="Copied ✓"}catch(e){ta.style.display="block";ta.select();$("cp").textContent="Select & copy below"}setTimeout(()=>$("cp").textContent="Copy CSV",2500)};
+$("theme").onclick=()=>{const d=document.documentElement,dark=getComputedStyle(d).getPropertyValue("--bg").trim()==="#0a0f1e";d.dataset.theme=dark?"light":"dark";drawLog()};
+$("mat").onchange=()=>{$("S").value=MATS[+$("mat").value].S;render();drawLog()};
+["P","ID","t","L","S","CA","E","cat","sig"].forEach(i=>$(i).oninput=()=>{render();drawLog()});
+addEventListener("resize",()=>{onsize();drawLog()});
+onsize();render();bend(0,0,1800);drawLog();gaugeUI(0,3,"Idle");$("pill").textContent="READY";$("pill").className="pill ok";tick();
+
+// ===== v2: nozzle, WPS/PQR, control panel =====
+MATS[0].pno=1;MATS[1].pno=8;MATS[2].pno=8;
+const NF=[["nd","Nozzle ID mm","num",300],["ntn","Neck t nom mm","num",12],["nS","Neck S MPa","num",138],["nEj","Neck E","sel","1,0.85"],["E1","Shell E1 at opening","sel","1,0.85"],["pt","Pad t mm","num",12],["pD","Pad OD mm","num",600],["pS","Pad S MPa","num",138],["l41","Weld leg 41 mm","num",8],["l42","Weld leg 42 mm","num",8],["h","Inward proj. mm","num",0]];
+const nid=k=>"n_"+k;
+function fld(host,pre,spec){$(host).innerHTML=spec.map(([k,l,t,v])=>`<div><label>${l}</label>`+(t==="sel"?`<select id="${pre}${k}">${String(v).split(",").map(o=>`<option>${o}</option>`).join("")}</select>`:`<input id="${pre}${k}" type="${t==="num"?"number":"text"}" value="${v}" step="any">`)+"</div>").join("")}
+fld("nf","n_",NF);
+function noz(){const r=calc(),c=r.c,g=k=>+$(nid(k)).value,CA=c.CA;
+const t=c.t-CA,tn=g("ntn")-CA,d=g("nd")+2*CA,R=c.ID/2+CA,Sv=c.S,Sn=g("nS"),Sp=g("pS"),E1=g("E1"),te=g("pt"),h=g("h");
+const tr=c.P*R/(Sv*E1-.6*c.P),trn=c.P*(d/2)/(Sn*g("nEj")-.6*c.P);
+const fr1=Math.min(1,Sn/Sv),fr3=Math.min(1,Math.min(Sn,Sp)/Sv),fr4=Math.min(1,Sp/Sv);
+const A=d*tr+2*tn*tr*(1-fr1);
+const A1=Math.max(d*(E1*t-tr)-2*tn*(E1*t-tr)*(1-fr1),2*(t+tn)*(E1*t-tr)-2*tn*(E1*t-tr)*(1-fr1));
+const A2=Math.max(0,Math.min(5*(tn-trn)*fr1*t,2*(tn-trn)*(2.5*tn+te)*fr1));
+const A3=h>0?Math.min(5*t*tn*fr1,5*tn*tn*fr1,2*h*tn*fr1):0;
+const A41=g("l41")**2*fr3,A42=g("l42")**2*fr4;
+const X=Math.max(d,d/2+tn+t),Dp=Math.min(g("pD"),2*X),A5=Math.max(0,(Dp-d-2*tn))*te*fr4;
+const Av=Math.max(0,A1)+A2+A3+A41+A42+A5;return{tr,trn,A,A1,A2,A3,A41,A42,A5,Av,X,Dp,ok:Av>=A&&tn>=trn&&t>=tr,pad:g("pD")>2*X}}
+function nrender(){const o=noz(),rows=[["tr shell (E1)",o.tr],["trn nozzle",o.trn],["A required",o.A],["A1 shell excess",o.A1],["A2 nozzle wall",o.A2],["A3 inward",o.A3],["A41 weld",o.A41],["A42 pad weld",o.A42],["A5 pad",o.A5],["A available",o.Av]];
+$("nout").innerHTML=`<div class="res"><span>Reinforcement ratio</span><b class="${o.ok?"ok":"bad"}">${f(o.Av/o.A*100,0)} %</b></div><div class="bar"><i style="width:${Math.min(100,o.Av/o.A*100)}%;background:var(--${o.ok?"ok":"bad"})"></i></div>`+rows.map(a=>`<div class="res"><span>${a[0]}</span><b>${f(a[1])}${a[0].startsWith("A")?" mm²":" mm"}</b></div>`).join("")+`<div class="res"><span>Limit parallel to wall (each side)</span><b>${f(o.X,0)} mm</b></div>`;
+$("nfl").innerHTML=(o.ok?"✔ Opening is adequately reinforced (area method).":"⚠ Insufficient reinforcement: increase pad thickness/OD, neck thickness or weld legs.")+(o.pad?"<br>Pad extends beyond the limit of reinforcement; only the effective part is counted.":"")+"<br>Not covered: UG-41 weld strength paths, UG-45 minimum neck thickness, external pressure, nozzle loads."}
+// WPS/PQR
+const D={pqr:[{id:"PQR-001",proc:"GMAW",pno:1,t:12,pwht:"No",imp:"No"}],wps:[{id:"WPS-001",pqr:"PQR-001",pre:10,ip:250,hmin:.5,hmax:2.5}],weld:[]};
+const FS={pqr:[["id","PQR no","text","PQR-002"],["proc","Process","sel","SMAW,GMAW,FCAW,GTAW,SAW"],["pno","P-No","num",1],["t","Tested t mm","num",12],["pwht","PWHT","sel","No,Yes"],["imp","Impact","sel","No,Yes"]],
+wps:[["id","WPS no","text","WPS-002"],["pqr","PQR no","text","PQR-001"],["pre","Min preheat °C","num",10],["ip","Max interpass °C","num",250],["hmin","HI min kJ/mm","num",.5],["hmax","HI max kJ/mm","num",2.5]],
+weld:[["seam","Seam","text","C1-LS"],["wps","WPS","text","WPS-001"],["wd","Welder ID","text","W-01"],["V","Volts","num",24],["I","Amps","num",220],["sp","Speed mm/min","num",300],["ipT","Interpass °C","num",180],["rt","NDE","sel","Pending,Accept,Reject"]]};
+const qr=T=>T<1.6?[T,2*T]:T<10?[1.6,2*T]:[5,2*T];
+function cover(w){const q=D.pqr.find(x=>x.id===w.pqr),r=calc();if(!q)return{ok:false,why:"PQR missing"};const[lo,hi]=qr(+q.t);const pn=r.c.m.pno;
+if(+q.pno!==pn)return{ok:false,why:"P-No "+q.pno+"≠"+pn,lo,hi};if(r.c.t<lo||r.c.t>hi)return{ok:false,why:"t outside "+f(lo,1)+"–"+f(hi,1),lo,hi};return{ok:true,lo,hi}}
+function weldEval(w){const ws=D.wps.find(x=>x.id===w.wps),hi=w.V*w.I*60/(1000*w.sp),fl=[];
+if(!ws)fl.push("WPS unknown");else{const cv=cover(ws);if(!cv.ok)fl.push(cv.why);if(hi<ws.hmin||hi>ws.hmax)fl.push("HI out of range");if(+w.ipT>ws.ip)fl.push("interpass high")}
+if(w.rt==="Reject")fl.push("NDE reject");return{hi,fl}}
+function wrender(){const bd=(k,cols)=>$("t_"+k).innerHTML="<thead><tr>"+cols.map(c=>`<th>${c[0]}</th>`).join("")+"<th></th></tr></thead><tbody>"+D[k].map((x,i)=>"<tr>"+cols.map(c=>`<td>${c[1](x)}</td>`).join("")+`<td><button data-d="${k}:${i}">×</button></td></tr>`).join("")+"</tbody>";
+bd("pqr",[["PQR",x=>x.id],["Proc",x=>x.proc],["P-No",x=>x.pno],["T",x=>x.t],["Qualified mm",x=>qr(+x.t).map(v=>f(v,1)).join("–")],["PWHT",x=>x.pwht],["Impact",x=>x.imp]]);
+bd("wps",[["WPS",x=>x.id],["PQR",x=>x.pqr],["Preheat",x=>x.pre],["IP max",x=>x.ip],["HI kJ/mm",x=>x.hmin+"–"+x.hmax],["Covers t",x=>{const c=cover(x);return`<span class="${c.ok?"ok":"bad"}">${c.ok?"YES":c.why}</span>`}]]);
+bd("weld",[["Seam",x=>x.seam],["WPS",x=>x.wps],["Welder",x=>x.wd],["HI",x=>f(weldEval(x).hi)],["IP °C",x=>x.ipT],["NDE",x=>x.rt],["Status",x=>{const e=weldEval(x).fl;return`<span class="${e.length?"bad":"ok"}">${e.length?e.join(", "):"OK"}</span>`}]])}
+["pqr","wps","weld"].forEach(k=>{fld("f_"+k,k+"_",FS[k]);const b=document.createElement("button");b.className="p";b.textContent="+ Add";b.onclick=()=>{const o={};FS[k].forEach(([n,,t])=>{const v=$(k+"_"+n).value;o[n]=t==="num"?+v:v});D[k].push(o);wrender();dash();save()};$("f_"+k).appendChild(b)});
+document.addEventListener("click",e=>{const d=e.target.dataset&&e.target.dataset.d;if(d){const[k,i]=d.split(":");D[k].splice(+i,1);wrender();dash();save()}});
+// control panel
+function dash(){const r=calc(),o=noz(),n=log.length,fr=n?log.filter(l=>!l.ok).length/n:0,wf=D.weld.filter(w=>weldEval(w).fl.length).length,wc=D.wps.some(w=>cover(w).ok);
+const ch=[["Shell design",r.ok,`${f(r.util*100,0)} % utilisation`],["Nozzle UG-37",o.ok,`${f(o.Av/o.A*100,0)} % area`],["Hi-Lo (UW-33)",n?fr<=.02:null,n?`${f(fr*100,1)} % fail of ${n}`:"no data"],["WPS coverage",wc,wc?"covered":"no WPS covers t"],["Weld log",D.weld.length?wf===0:null,D.weld.length?`${wf} flagged / ${D.weld.length}`:"no welds"]];
+$("chips").innerHTML=ch.map(c=>`<div class="chip"><span class="sub">${c[0]}</span><b class="${c[1]===null?"warn":c[1]?"ok":"bad"}">${c[1]===null?"PENDING":c[1]?"PASS":"FAIL"}</b><span class="sub">${c[2]}</span></div>`).join("");
+$("sum").innerHTML=[["Project",$("pj").value+" / "+$("tag").value],["Material",r.c.m.n],["Design",r.c.P+" MPa, ID "+r.c.ID+" mm, t "+r.c.t+" mm"],["MAWP / hydro",f(r.mawp)+" / "+f(r.hyd)+" MPa"],["Hi-Lo limit",f(r.lim)+" mm"],["Nozzle area",f(o.Av,0)+" / "+f(o.A,0)+" mm²"],["Inspector",$("insp").value||"–"]].map(a=>`<div class="res"><span>${a[0]}</span><b>${a[1]}</b></div>`).join("")}
+function snap(){const v={};document.querySelectorAll("input[id],select[id]").forEach(e=>{if(e.type!=="file"&&!/^(pqr|wps|weld)_/.test(e.id))v[e.id]=e.value});return{v,log,D}}
+function save(){try{localStorage.setItem("pvlab",JSON.stringify(snap()))}catch(e){}}
+function load(o){Object.entries(o.v||{}).forEach(([k,x])=>{if($(k))$(k).value=x});log=o.log||[];Object.assign(D,o.D||{});render();nrender();wrender();drawLog();dash()}
+$("sv_").onclick=()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(snap(),null,1)],{type:"application/json"}));a.download=($("tag").value||"pv")+"-project.json";a.click()};
+$("ld_").onclick=()=>$("fl_").click();$("fl_").onchange=e=>{const r=new FileReader();r.onload=()=>{try{load(JSON.parse(r.result))}catch(x){alert("Invalid project file")}};r.readAsText(e.target.files[0])};
+$("pr_").onclick=()=>print();$("ra_").onclick=()=>{if(confirm("Clear all data?")){try{localStorage.removeItem("pvlab")}catch(e){}location.reload()}};
+function show(t){document.querySelectorAll(".tab").forEach(e=>e.classList.toggle("on",e.id==="tab-"+t));document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("on",b.dataset.t===t));if(t==="design"){onsize();drawLog()}nrender();wrender();dash()}
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>show(b.dataset.t));
+document.addEventListener("input",()=>{nrender();dash();save()});
+try{const o=JSON.parse(localStorage.getItem("pvlab")||"null");if(o)load(o)}catch(e){}
+setInterval(()=>{if($("tab-dash").classList.contains("on"))dash()},1000);
+show("dash");
+
+// ===== v3: assembly & circumferential welds =====
+let AJ=[],AO=[],aRun=false,parts=[],rings=[],atot=10;
+const AV=$("av"),aR=new THREE.WebGLRenderer({canvas:AV,antialias:true}),aS=new THREE.Scene();aS.background=new THREE.Color(0x080d16);
+const aC=new THREE.PerspectiveCamera(40,16/9,.1,200);let aaz=.5,ael=.3,ad=14,at=new THREE.Vector3();
+aS.add(new THREE.AmbientLight(0x6688bb,.9));const aL=new THREE.DirectionalLight(0xffffff,1.1);aL.position.set(5,8,6);aS.add(aL);
+const FLY=-1.8;let RL,SD,NZ=[],NR=[];const ac=new THREE.Group();aS.add(ac);
+const fl_=new THREE.Mesh(new THREE.PlaneGeometry(70,34),new THREE.MeshStandardMaterial({color:0x1d2638,roughness:.9}));fl_.rotation.x=-Math.PI/2;fl_.position.y=FLY;aS.add(fl_);
+const gh_=new THREE.GridHelper(70,70,0x2b4a7a,0x16233b);gh_.position.y=FLY+.005;aS.add(gh_);
+const wl_=new THREE.Mesh(new THREE.PlaneGeometry(70,16),new THREE.MeshStandardMaterial({color:0x121a2b,roughness:1}));wl_.position.set(0,FLY+8,-9);aS.add(wl_);
+const yl=new THREE.MeshBasicMaterial({color:0xf2c200});[-3.2,3.2].forEach(z=>{const l=new THREE.Mesh(new THREE.PlaneGeometry(60,.12),yl);l.rotation.x=-Math.PI/2;l.position.set(0,FLY+.01,z);aS.add(l)});
+const cm=new THREE.MeshStandardMaterial({color:0xe0a800,metalness:.4,roughness:.6}),gr=new THREE.MeshStandardMaterial({color:0x3a4660,metalness:.5,roughness:.6});
+[-4.2,4.2].forEach(z=>{const b=new THREE.Mesh(new THREE.BoxGeometry(48,.35,.4),gr);b.position.set(0,5.2,z);aS.add(b);[-22,22].forEach(x=>{const cl=new THREE.Mesh(new THREE.BoxGeometry(.4,7,.4),gr);cl.position.set(x,1.7,z);aS.add(cl)})});
+const crane=new THREE.Group();aS.add(crane);
+const br_=new THREE.Mesh(new THREE.BoxGeometry(.5,.3,8.4),cm);br_.position.y=5.2;crane.add(br_);
+const rp_=new THREE.Mesh(new THREE.CylinderGeometry(.025,.025,3.5,8),new THREE.MeshStandardMaterial({color:0xaaaaaa}));rp_.position.y=3.45;crane.add(rp_);
+const hk_=new THREE.Mesh(new THREE.BoxGeometry(.3,.25,.3),cm);hk_.position.y=1.65;crane.add(hk_);
+const craneTo=x=>{crane.position.x=x};
+[-8,8].forEach(x=>{const pl=new THREE.PointLight(0xffe2b0,.7,30);pl.position.set(x,4.5,1);aS.add(pl)});
+const ag=new THREE.Group();aS.add(ag);const mB=new THREE.MeshStandardMaterial({color:0x4b7fd0,metalness:.6,roughness:.35,side:THREE.DoubleSide});
+function aSize(){const w=AV.parentElement.clientWidth-28;if(w>50){aR.setSize(w,w*9/16,false);aC.aspect=16/9;aC.updateProjectionMatrix()}}
+let ad0=null;AV.onpointerdown=e=>{ad0=[e.clientX,e.clientY];AV.setPointerCapture(e.pointerId)};AV.onpointerup=()=>ad0=null;
+AV.onpointermove=e=>{if(!ad0)return;aaz-=(e.clientX-ad0[0])*.008;ael=Math.max(.02,Math.min(1.4,ael+(e.clientY-ad0[1])*.006));ad0=[e.clientX,e.clientY]};
+AV.onwheel=e=>{e.preventDefault();ad=Math.max(2,Math.min(40,ad*(1+e.deltaY*.001)))};
+(function at_(){if($("tab-asm").classList.contains("on")){aC.position.set(at.x+ad*Math.cos(ael)*Math.sin(aaz),at.y+ad*Math.sin(ael),at.z+ad*Math.cos(ael)*Math.cos(aaz));aC.lookAt(at);aR.render(aS,aC)}requestAnimationFrame(at_)})();
+const tw=(ms,fn)=>new Promise(r=>{const t0=performance.now();(function st(){const q=Math.min(1,(performance.now()-t0)/ms);fn(q);q<1?requestAnimationFrame(st):r()})()});
+const EXA=14;
+function build(){while(ag.children.length)ag.remove(ag.children[0]);parts=[];rings=[];const c=calc().c,n=c.N,Lc=2*c.L/c.ID,H=.5;atot=n*Lc+2*H;const xL=-atot/2+H;
+for(let i=0;i<=n+1;i++){const g=new THREE.Group();let fx;
+if(i===0||i===n+1){const m=new THREE.Mesh(new THREE.SphereGeometry(1,48,16,0,2*Math.PI,0,Math.PI/2),mB.clone());m.scale.y=.5;g.add(m);g.rotation.z=i===0?Math.PI/2:-Math.PI/2;fx=i===0?xL:xL+n*Lc}
+else{const m=new THREE.Mesh(new THREE.CylinderGeometry(1,1,Lc,56,1,true),mB.clone());m.rotation.z=Math.PI/2;g.add(m);fx=xL+(i-.5)*Lc}
+ag.add(g);parts.push({g,fx,ex:(i-(n+1)/2)*.9,e:1,y:0,z:0});place(i)}
+for(let j=0;j<=n;j++){const m=new THREE.Mesh(new THREE.TorusGeometry(1.01,.04,8,72,.01),new THREE.MeshStandardMaterial({color:0xff9a1e,emissive:0xff6a00,emissiveIntensity:.6}));m.rotation.y=Math.PI/2;m.position.x=xL+j*Lc;m.visible=false;ag.add(m);rings.push(m)}
+
+while(ac.children.length)ac.remove(ac.children[0]);
+const stl=new THREE.MeshStandardMaterial({color:0x5d708f,metalness:.7,roughness:.45}),Lt=n*Lc,R1=c.ID/2;
+RL=new THREE.Group();SD=new THREE.Group();ac.add(RL);ac.add(SD);
+[xL+.5*Lc,xL+Lt-.5*Lc].forEach(x=>{const b=new THREE.Mesh(new THREE.BoxGeometry(1.1,.06,2.1),stl);b.position.set(x,FLY+.03,0);RL.add(b);
+[-1,1].forEach(sg=>{const a=Math.PI/6,ry=-Math.cos(a)*1.25,rz=sg*Math.sin(a)*1.25,hs=ry-.25-FLY;
+const rm=new THREE.Mesh(new THREE.CylinderGeometry(.25,.25,.5,24),stl);rm.rotation.z=Math.PI/2;rm.position.set(x,ry,rz);
+const lug=new THREE.Mesh(new THREE.BoxGeometry(.05,.5,.08),new THREE.MeshStandardMaterial({color:0xffcc33}));lug.position.x=.25;rm.add(lug);RL.add(rm);
+const st=new THREE.Mesh(new THREE.BoxGeometry(.5,hs,.4),stl);st.position.set(x,FLY+hs/2,rz);RL.add(st)})});
+const As=Math.min(.2*n*c.L,R1/2)/R1,sh=new THREE.Shape();sh.absarc(0,0,1.12,Math.PI*1.1667,Math.PI*1.8333,false);sh.absarc(0,0,1.01,Math.PI*1.8333,Math.PI*1.1667,true);
+[xL+As,xL+Lt-As].forEach(x=>{const cr=new THREE.Mesh(new THREE.ExtrudeGeometry(sh,{depth:.5,bevelEnabled:false}),stl.clone());cr.material.color.setHex(0xd9822b);cr.rotation.y=Math.PI/2;cr.position.x=x-.25;SD.add(cr);
+const bl=new THREE.Mesh(new THREE.BoxGeometry(.5,-1.12-FLY,1.5),cr.material);bl.position.set(x,(-1.12+FLY)/2,0);SD.add(bl);
+const bp=new THREE.Mesh(new THREE.BoxGeometry(.8,.05,1.9),stl);bp.position.set(x,FLY+.025,0);SD.add(bp)});SD.visible=false;
+NZ=[];const nd=+$("n_nd").value,nt=+$("n_ntn").value,pD=+$("n_pD").value,dS=nd/R1,oS=(nd+2*nt)/R1,pS=Math.min(pD/R1,1.6);
+[["N1 Manway",Math.max(1,Math.ceil(n/2)),Math.PI/2,0],["N2 Inlet",1,5*Math.PI/6,-.25*Lc],["N3 Outlet",n,Math.PI/6,.25*Lc]].forEach(([tag,cs,al,off])=>{
+const x=xL+(cs-.5)*Lc+off,g=new THREE.Group();g.position.set(x,Math.sin(al),Math.cos(al));g.rotation.x=Math.PI/2-al;ac.add(g);
+const mk=(geo,col,em)=>new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:col,metalness:.6,roughness:.4,emissive:em||0,side:THREE.DoubleSide}));
+const mark=mk(new THREE.RingGeometry(dS/2*.98,dS/2*1.04,48),0xffe14d,0xffe14d);mark.rotation.x=-Math.PI/2;mark.position.y=.012;g.add(mark);
+const hole=mk(new THREE.CircleGeometry(dS/2,48),0x05080d);hole.rotation.x=-Math.PI/2;hole.position.y=.01;g.add(hole);
+const ng=new THREE.Group(),nk=mk(new THREE.CylinderGeometry(oS/2,oS/2,.9,40),0x8aa0c0);nk.position.y=.43;ng.add(nk);
+const fl=mk(new THREE.CylinderGeometry(oS/2*1.45,oS/2*1.45,.07,40),0x9db3d3);fl.position.y=.9;ng.add(fl);
+const bore=mk(new THREE.CircleGeometry(dS/2,40),0x05080d);bore.rotation.x=-Math.PI/2;bore.position.y=.941;ng.add(bore);g.add(ng);
+const th=pS/1.02,pad=mk(new THREE.CylinderGeometry(1.02,1.02,pS,28,1,true,al-th/2,th),0x6d8fd0);pad.rotation.z=Math.PI/2;pad.position.x=x;ac.add(pad);
+const weld=mk(new THREE.TorusGeometry(oS/2*1.03,.02,8,48,.01),0xff9a1e,0xff6a00);weld.rotation.x=Math.PI/2;weld.position.y=.02;g.add(weld);
+[mark,hole,pad,ng,weld].forEach(o=>o.visible=false);NZ.push({tag,cs,al,mark,hole,pad,ng,weld,oS})});
+ad=Math.max(7,atot*1.05);at.set(0,0,0)}
+function place(i){const p=parts[i];p.g.position.set(p.fx+p.ex*p.e,p.y,p.z)}
+function ring(j,arc,col,pass){const m=rings[j];m.geometry.dispose();m.geometry=new THREE.TorusGeometry(1.01,.03+.012*pass,8,72,Math.max(.01,arc));m.material.color.setHex(col);m.material.emissive.setHex(col);m.visible=true}
+function aUI(v,lim,txt){$("ah").textContent=f(v);$("as").textContent=txt;const ok=v<=lim;$("ap").textContent=ok?"ACCEPT":"REJECT";$("ap").className="pill "+(ok?"ok":"bad")}
+function pickWPS(){const r=calc();return D.wps.find(w=>cover(w).ok)||D.wps[0]||{id:"WPS-001",pre:10,ip:250,hmin:.5,hmax:2.5}}
+function acrit(){const r=calc(),c=r.c,w=pickWPS(),lb=uw33(c.t,"B"),oor=c.ID*.01;
+const rows=[["Hi-Lo, Cat. B / head joints (UW-33)","≤ "+f(lb,2)+" mm"],["Root gap (fit-up)","2.0 – 4.0 mm"],["Preheat ("+w.id+")","≥ "+w.pre+" °C"],["Interpass ("+w.id+")","≤ "+w.ip+" °C"],["Heat input","≥ "+w.hmin+" – "+w.hmax+" kJ/mm"],["Out-of-roundness (UG-80)","Dmax−Dmin ≤ "+f(oor,1)+" mm (1 % D)"],["NDE (UW-11 / UW-51)",c.E>=1?"Full RT – no rejectable indications":"Spot RT – no rejectable indications"],["Re-fit attempts","≤ 3, then cut &amp; re-prepare"]];
+$("acr").innerHTML=rows.map(a=>`<div class="res"><span>${a[0]}</span><b>${a[1]}</b></div>`).join("")+(AO.length?`<h2 style="margin-top:12px">Course roundness</h2>`+AO.map((o,i)=>`<div class="res"><span>Course ${i+1}</span><b class="${o<=oor?"ok":"bad"}">${f(o,1)} mm ${o<=oor?"PASS":"FAIL"}</b></div>`).join(""):"")}
+function jrender(){$("t_jt").innerHTML="<thead><tr><th>Joint</th><th>Type</th><th>Hi-Lo max</th><th>Limit</th><th>Re-fits</th><th>Gap</th><th>Pre °C</th><th>HI</th><th>IP °C</th><th>Result</th></tr></thead><tbody>"+AJ.map(a=>`<tr><td>J${a.j}</td><td>${a.ty}</td><td>${f(a.w)}</td><td>${f(a.l)}</td><td>${a.at-1}</td><td>${f(a.gap,1)}</td><td>${f(a.pre,0)}</td><td>${f(a.hi)}</td><td>${f(a.ip,0)}</td><td class="${a.ok?"ok":"bad"}">${a.ok?"ACCEPT":a.why}</td></tr>`).join("")+"</tbody>";
+const oor=calc().c.ID*.01,bad=AJ.filter(a=>!a.ok).length+AO.filter(o=>o>oor).length;
+$("verd").innerHTML=AJ.length?`<span class="${bad?"bad":"ok"}">${bad?"ASSEMBLY REJECTED – "+bad+" non-conformance(s)":"ASSEMBLY ACCEPTED – all joints and courses conform"}</span>`:""}
+async function runAsm(){if(aRun)return;aRun=true;$("arun").disabled=true;build();AJ=[];AO=[];const r=calc(),c=r.c,n=c.N,lb=uw33(c.t,"B"),w=pickWPS();$("alim").textContent=f(lb,1);
+for(let k=0;k<n;k++)AO.push(Math.abs(gauss())*.004*c.ID*(c.sig/.6));acrit();jrender();
+await tw(500,q=>{parts[0].e=1-q;place(0)});
+for(let i=1;i<=n+1;i++){const j=i-1,P=parts[i];$("as").textContent=`J${j}: fit-up`;await tw(700,q=>{P.e=1-q;place(i);craneTo(P.g.position.x)});
+let scl=1,att=1,worst=0;
+for(;att<=3;att++){worst=0;for(let st=1;st<=8;st++){const v=reading(r,scl);worst=Math.max(worst,v);P.y=v/(c.ID/2)*EXA;place(i);aUI(v,lb,`J${j} · station ${st}/8 · fit-up ${att}`);addLog("J"+j,st,att,v,lb);await sleep(170)}
+if(worst<=lb)break;$("as").textContent=`J${j}: Hi-Lo ${f(worst)} > ${f(lb,1)} – re-fitting`;await sleep(500);scl*=.6;if(att===3)break}
+const ok1=worst<=lb;
+const gap=3+gauss()*.45,pre=w.pre+12+gauss()*10,hi=w.hmin+(w.hmax-w.hmin)*(.2+.6*Math.random()),ip=w.ip*(.7+.33*Math.random());
+$("as").textContent=`J${j}: tack welding`;await sleep(400);
+for(let ps=1;ps<=3;ps++){$("as").textContent=`J${j}: ${["root","fill","cap"][ps-1]} pass`;await tw(550,q=>{ring(j,q*2*Math.PI,0xff9a1e,ps);RL.children.forEach(m=>{if(m.geometry.type==='CylinderGeometry')m.rotation.x+=.05})})}
+const why=[];if(!ok1)why.push("Hi-Lo");if(gap<2||gap>4)why.push("gap");if(pre<w.pre)why.push("preheat");if(ip>w.ip)why.push("interpass");if(hi<w.hmin||hi>w.hmax)why.push("HI");if(Math.random()>.95)why.push("RT");
+const ok=!why.length;ring(j,2*Math.PI,ok?0x3ddc84:0xff5e7c,3);
+AJ.push({j,ty:(j===0||j===n)?"Head–shell":"Course–course",w:worst,l:lb,at:att,gap,pre,hi,ip,ok,why:why.join(", ")});
+D.weld.push({seam:"J"+j,wps:w.id,wd:"W-0"+(1+j%3),V:24,I:220,sp:+(24*220*60/(1000*hi)).toFixed(0),ipT:+ip.toFixed(0),rt:ok?"Accept":"Reject"});
+jrender();wrender();drawLog();save();await sleep(250)}
+await postWeld(r,c);$("as").textContent="Assembly complete";aRun=false;$("arun").disabled=false;acrit();jrender()}
+$("arun").onclick=runAsm;
+$("arst").onclick=()=>{if(aRun)return;AJ=[];AO=[];build();acrit();jrender();$("as").textContent="Idle";$("ah").textContent="0.00"};
+$("azm").onclick=()=>{const j=Math.max(0,AJ.length-1),c=calc().c,Lc=2*c.L/c.ID;at.set(-atot/2+.5+j*Lc,0,0);ad=4;aaz=.3;ael=.2};
+const _s=show;show=function(t){_s(t);if(t==="asm"){aSize();acrit();jrender()}};
+addEventListener("resize",aSize);build();acrit();
+
+// ===== v4: workshop, saddles, nozzle installation =====
+async function postWeld(r,c){const w=pickWPS(),o=noz();NR=[];
+$("as").textContent="Lifting vessel off turning rolls";await tw(700,q=>{ag.position.y=.2*Math.sin(Math.PI*q/2);craneTo(0);if(q>.8)RL.visible=false});
+SD.visible=true;$("as").textContent="Lowering onto saddles";await tw(700,q=>{ag.position.y=.2*(1-q)});ag.position.y=0;await sleep(300);
+for(const z of NZ){$("as").textContent=z.tag+": layout & mark-out";z.mark.visible=true;await sleep(600);
+$("as").textContent=z.tag+": cutting opening";z.mark.visible=false;z.hole.visible=true;await tw(500,q=>z.hole.scale.set(q,q,q));
+$("as").textContent=z.tag+": fitting reinforcing pad";z.pad.visible=true;await tw(500,q=>{const k=1.25-.25*q;z.pad.scale.set(k,1,k)});
+$("as").textContent=z.tag+": setting nozzle neck";z.ng.visible=true;await tw(600,q=>{z.ng.position.y=1.6*(1-q)});
+$("as").textContent=z.tag+": tack & fillet weld";await sleep(300);z.weld.visible=true;await tw(700,q=>{z.weld.geometry.dispose();z.weld.geometry=new THREE.TorusGeometry(z.oS/2*1.03,.02,8,48,Math.max(.01,q*2*Math.PI))});
+const ok=o.ok&&Math.random()<.95,col=ok?0x3ddc84:0xff5e7c;z.weld.material.color.setHex(col);z.weld.material.emissive.setHex(col);
+NR.push({tag:z.tag,cs:z.cs,al:Math.round(z.al*180/Math.PI),ratio:o.Av/o.A,ok});
+const hi=(w.hmin+w.hmax)/2;D.weld.push({seam:z.tag.split(" ")[0],wps:w.id,wd:"W-02",V:24,I:220,sp:+(24*220*60/(1000*hi)).toFixed(0),ipT:+(w.pre+20).toFixed(0),rt:ok?"Accept":"Reject"});
+nzr();wrender();save();await sleep(250)}
+$("as").textContent="Nozzles installed – PT / leak test of pad vents"}
+function nzr(){$("t_nz").innerHTML="<thead><tr><th>Nozzle</th><th>Course</th><th>Angle °</th><th>UG-37 area</th><th>Result</th></tr></thead><tbody>"+NR.map(n=>`<tr><td>${n.tag}</td><td>${n.cs}</td><td>${n.al}</td><td>${f(n.ratio*100,0)} %</td><td class="${n.ok?"ok":"bad"}">${n.ok?"ACCEPT":"REJECT"}</td></tr>`).join("")+"</tbody>"}
+function sadRender(){const c=calc().c,n=c.N,t=c.t-c.CA,R=(c.ID+t)/2,L=n*c.L,h=c.ID/4,A=Math.min(.2*L,R/2),rho=7850e-9;
+const Ws=Math.PI*(c.ID+c.t)*c.t*L*rho,Wh=2*1.084*Math.PI*(c.ID/2)**2*c.t*rho,Ww=(Math.PI/4*c.ID**2*L+2*Math.PI*c.ID**3/24)*1e-6,W=Ws+Wh+Ww,Q=W/2*9.81;
+const k=1+4*h/(3*L),M1=Math.abs(Q*A*(1-(1-A/L+(R*R-h*h)/(2*A*L))/k)),M2=Math.abs(Q*L/4*((1+2*(R*R-h*h)/(L*L))/k-4*A/L)),Z=Math.PI*R*R*t,s1=M1/Z,s2=M2/Z,lim=c.S*c.E,ok=Math.max(s1,s2)<=lim;
+const rows=[["Steel (shell + 2 heads)",f(Ws+Wh,0)+" kg"],["Water (hydrotest)",f(Ww,0)+" kg"],["Reaction per saddle",f(Q/1000,1)+" kN"],["Saddle position A (≤0.2L, ≤R/2)",f(A,0)+" mm"],["Saddle spacing",f(L-2*A,0)+" mm"],["Moment at saddle M1",f(M1/1e6,1)+" kN·m"],["Moment at midspan M2",f(M2/1e6,1)+" kN·m"],["Stress at saddle / midspan",f(s1,1)+" / "+f(s2,1)+" MPa"],["Screening limit S·E",f(lim,1)+" MPa"]];
+$("sad").innerHTML=`<div class="res"><span>Longitudinal bending</span><b class="${ok?"ok":"bad"}">${ok?"PASS":"FAIL"}</b></div>`+rows.map(a=>`<div class="res"><span>${a[0]}</span><b>${a[1]}</b></div>`).join("")+`<div class="note">Hydrotest case, 120° contact, saddles stiffened by heads (A ≤ R/2). Tension is screened against S·E; compressive buckling and saddle local stresses (Zick, UG-23 B-chart) still need a full check.</div>`}
+const _ac=acrit;acrit=function(){_ac();sadRender();nzr()};
+document.addEventListener("input",()=>{if($("tab-asm").classList.contains("on"))sadRender()});
+</script></body></html>
