@@ -703,5 +703,5 @@ const ax=()=>{const L=V('xal'),m=Math.max(...['xa0','xa1','xa2','xa3'].map(i=>V(
 const hl=()=>{const t=V('xht'),h=V('xhm'),x=t/25.4,lim=$('#xhc').value=='A'?(x<=.5?t/4:x<=2?3.2:Math.min(t/16,9.5)):(x<=.75?t/4:x<=1.5?4.8:x<=2?t/8:Math.min(t/8,19)),r=h<=1.5?['v-ok',`✔ within shop target 1.5 mm`]:h<=lim?['v-ok',`✔ meets UW-33, pull with wedges before tacking`]:['v-bad',`✘ over UW-33, correct before tacking`];$('#xho').innerHTML=sp([`UW-33 limit ${N(lim,1)} mm`,`measured ${N(h,1)} mm`])+`<span class="${r[0]}">${r[1]}</span>`};
 s.querySelectorAll('input,select').forEach(e=>e.oninput=e.onchange=()=>{bom();ov();ax();hl()});bom();ov();ax();hl()})();
 
-show((location.hash||'#start').slice(1)in{start:1,beams:1,flanges:1,fitup:1,weld:1}?location.hash.slice(1):'start');
+{const h0=location.hash.slice(1);show(['start','beams','flanges','fitup','weld'].includes(h0)?h0:'start')}
 </script></body></html>
