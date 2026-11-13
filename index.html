@@ -1186,4 +1186,286 @@ plan();verdict();prs();requestAnimationFrame(tick);
 if(window.ResizeObserver)new ResizeObserver(()=>{dirty=1}).observe(s)})();
 
 {const h0=location.hash.slice(1);show(['start','beams','flanges','fitup','weld','pwht','nde'].includes(h0)?h0:'start')}
-</script></body></html>
+</script><script>
+/* ---------- 3D · shell course to shell course fit-up · ovality correction (axis plate + blanko bridges) ---------- */
+(function(){
+const s=document.getElementById('fitup');if(!s)return;
+const $=q=>s.querySelector(q),cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),sg=(p,i)=>cl(p-i),ez=t=>t*t*(3-2*t),DR=Math.PI/180,w180=a=>((a+540)%360+360)%360-180,gs=(a,q)=>Math.exp(-a*a/(2*q*q));
+const STEPS=[
+['Course A on the rolls · measure ovality','Rest the welded, RT-cleared course A on the turning rolls. About 100 mm from the edge, measure the inside Ø with a trammel or tape at 0°, 45°, 90° and 135°. UG-80(a): Dmax − Dmin must not exceed 1 % of D.'],
+['Bring course B in','Roll B up on its own rolls to a 2–3 mm gap on the same axis as A. B is oval too, and its oval is rarely in line with the oval of A, so the two edges do not meet.'],
+['Read the Hi-Lo at 8 stations','Slide the Hi-Lo gauge across the seam every 45°. + means B is high, − means A is high. Every value above the UW-33 limit, or above your shop goal (about half of it), must be corrected before any tack.'],
+['Clock B to match the ovals','Turn B on the rolls until its major axis lines up with the major axis of A. The mismatch falls to the difference between the two ovalities. Check the long seams are still at least 5t (min. 100 mm) apart.'],
+['Axis plate: roundness ring in B','Slide the ring (a spider with four jack screws) into B about 150 mm from the seam. Wind the two minor-axis jacks out: the wall is pushed out there and the major axis closes by about the same amount, because the perimeter is fixed. Stop when the Hi-Lo matches A, allowing a little spring-back.'],
+['Blanko: weld the fit-up bridge plates','Where a station is still above the shop goal, weld a bridge plate to the LOW shell so that it overhangs the seam, with a stand-off above the HIGH shell. Use the production WPS and a qualified welder for the lugs.'],
+['Drive the pins / wedges','Hammer a tapered pin or wedge between the bridge and the HIGH edge. The edge is forced in until the surfaces are flush. Gauge after every few blows and do not over-drive: the shell springs back.'],
+['Tack and re-gauge','Tack 50 mm beside each bridge, and at no fewer than 4 evenly spaced points, with the root WPS. Gauge all 8 stations again: every Hi-Lo must be within the UW-33 limit before welding starts.'],
+['Weld with the ring in, then strip','Weld the first side with the axis plate and bridges in place so the shell cannot spring back. Remove them once enough weld is deposited (per procedure), cut the lugs 3 mm proud, grind flush and PT/MT the scars.']];
+const N=STEPS.length,FLD=[['D','Ø inside, mm',2000],['t','t, mm',14],['oa','Ovality A, mm',4],['ob','Ovality B, mm',18],['off','B major axis vs A, °',50]];
+s.insertAdjacentHTML('beforeend',`<div class="card" data-fu="shell" hidden><h2>3D · Shell course to shell course fit-up · correcting ovality</h2><p class="note" style="margin:0 0 8px">Drag to orbit, scroll to zoom. <b>Axis plate</b> = internal roundness ring with jack screws. <b>Blanko</b> = fit-up bridge plate welded across the seam, with a pin or wedge hammered in to pull the high edge flush. Change the inputs to see how the ovality changes the work.</p><div class="row"><div style="flex:2 1 520px"><canvas id="shc" class="stage v3" width="880" height="540" style="width:100%;height:auto" role="img" aria-label="3D shell course to shell course fit-up, drag to rotate"></canvas><div class="ctrl"><button class="btn go" id="shp">▶ Play</button><button class="btn" id="shb" aria-label="Previous step">◀</button><button class="btn" id="shn" aria-label="Next step">▶|</button><input type="range" id="shs" min="0" max="${N*100}" value="0" aria-label="Progress"><select id="shv" aria-label="Speed"><option value=".5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select><label><input type="checkbox" id="shx"> X-ray</label><button class="btn" id="shr">Reset view</button></div><div class="fld" id="shf"></div><div class="spec" id="shsp"></div></div><div style="flex:1 1 300px"><ol class="steps" id="shl"></ol></div></div><div class="scroll" id="sht"></div><p class="note" id="shnote"></p></div>`);
+$('#shf').innerHTML=FLD.map(f=>`<label>${f[1]} <input type="number" id="shi_${f[0]}" value="${f[2]}" step="any"></label>`).join('')+'<label><input type="checkbox" id="shfl" checked> flat spots in B</label>';
+$('#shl').innerHTML=STEPS.map((x,i)=>`<li tabindex="0"><b>${i+1}. ${x[0]}</b>${x[1]}</li>`).join('');
+const cv=$('#shc'),cx=cv.getContext('2d'),W=cv.width,H=cv.height;
+let I={D:2000,t:14,oa:4,ob:18,off:50},FLT=true,PL,cam={yaw:-.62,pitch:.3,zoom:1},P=0,play=false,last=0,drag=null,dirty=true,polys=[],tbl='';
+/* ---- model: radial deviation fields in mm, theta from 12 o'clock ---- */
+function plan(){
+const R=I.D/2,k=100/(R+I.t),aA=I.oa/4,aB=I.ob/4,pA=90,pB=pA+I.off,rotF=((pA-pB)%180+270)%180-90,fl=FLT?[[135,2.2],[300,-1.8]]:[],
+lim=I.t<=13?I.t/4:I.t<=19?3:I.t<=38?5:I.t<=51?I.t/8:Math.min(I.t/8,19),goal=lim/2,cor=Array(8).fill(0),z8=Array(8).fill(0),
+dA=th=>aA*Math.cos(2*(th-pA)*DR),bo=(th,r)=>aB*Math.cos(2*(th-pB-r)*DR),b0=(th,r)=>bo(th,r)+fl.reduce((q,f)=>q+f[1]*gs(w180(th-f[0]-r),11),0),
+dB=(th,st)=>{const o=bo(th,st.rot);let v=o+st.kap*(dA(th)-o)+(b0(th,st.rot)-o);for(let j=0;j<8;j++)if(cor[j])v-=st.c[j]*cor[j]*gs(w180(th-j*45),12);return v},
+HL=st=>Array.from({length:8},(_,j)=>dB(j*45,st)-dA(j*45)),kF=.8,h0=HL({rot:0,kap:0,c:z8}),pre=HL({rot:rotF,kap:kF,c:z8}),br=[];
+pre.forEach((v,j)=>{if(Math.abs(v)>goal){br.push(j);cor[j]=.85*v}});
+PL={R,k,aA,aB,pA,pB,rotF,kF,lim,goal,dA,b0,dB,HL,br,pre,h0,sA:200,sB:270,ex:cl(3.2/Math.max(aA*k,aB*k,fl.length?2.2*k:0,.002),1,40)}}
+const state=P=>{const nb=PL.br.length,c=Array(8).fill(0);PL.br.forEach((j,i)=>c[j]=ez(cl(sg(P,6)*nb-i)));return{rot:PL.rotF*ez(sg(P,3)),kap:PL.kF*ez(cl((sg(P,4)-.35)/.65)),c}};
+/* ---- tiny 3D painter ---- */
+const add=(a,b)=>[a[0]+b[0],a[1]+b[1],a[2]+b[2]],mul=(a,k)=>[a[0]*k,a[1]*k,a[2]*k],sub=(a,b)=>add(a,mul(b,-1)),crs=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],nrm=a=>mul(a,1/(Math.hypot(a[0],a[1],a[2])||1)),
+PT=(th,x,r)=>[x,r*Math.cos(th*DR),r*Math.sin(th*DR)],NN=th=>[0,Math.cos(th*DR),Math.sin(th*DR)],CC=th=>[0,-Math.sin(th*DR),Math.cos(th*DR)],AX=[1,0,0],
+view=p=>{const cy=Math.cos(cam.yaw),sy=Math.sin(cam.yaw),cp=Math.cos(cam.pitch),sp=Math.sin(cam.pitch),z0=-p[0]*sy+p[2]*cy;return[p[0]*cy+p[2]*sy,p[1]*cp-z0*sp,p[1]*sp+z0*cp]},
+SC=()=>W/520*cam.zoom,scr=p=>{const q=view(p),k=SC();return[W/2+q[0]*k,H*.52-q[1]*k]};
+function Q(pts,col,al=1){const v=pts.map(view);polys.push({v,z:(v[0][2]+v[1][2]+v[2][2]+v[v.length-1][2])/4,col,al})}
+function box(c,u,v,w,a,b,d,col,al=1){const V=[];for(const i of[-1,1])for(const j of[-1,1])for(const k of[-1,1])V.push(add(c,add(add(mul(u,a*i),mul(v,b*j)),mul(w,d*k))));[[0,1,3,2],[4,5,7,6],[0,1,5,4],[2,3,7,6],[0,2,6,4],[1,3,7,5]].forEach(f=>Q(f.map(i=>V[i]),col,al))}
+function bar(p,q,hw,col,al=1){const d=sub(q,p),L=Math.hypot(d[0],d[1],d[2])/2;if(L<1e-3)return;const w=nrm(d);let u=crs(w,[0,0,1]);if(Math.hypot(u[0],u[1],u[2])<.2)u=crs(w,[0,1,0]);u=nrm(u);box(mul(add(p,q),.5),u,crs(w,u),w,hw,hw,L,col,al)}
+function tube(x0,x1,ro,ti,colF,al,nA){for(let i=0;i<40;i++){const t0=i*9,t1=t0+9,tm=t0+4.5;for(let a=0;a<nA;a++){const xa=x0+(x1-x0)*a/nA,xb=x0+(x1-x0)*(a+1)/nA,col=colF(tm,(xa+xb)/2),r00=ro(t0,xa),r10=ro(t1,xa),r01=ro(t0,xb),r11=ro(t1,xb);
+Q([PT(t0,xa,r00),PT(t1,xa,r10),PT(t1,xb,r11),PT(t0,xb,r01)],col,al);Q([PT(t0,xa,r00-ti),PT(t1,xa,r10-ti),PT(t1,xb,r11-ti),PT(t0,xb,r01-ti)],col.map(v=>v*.62),al)}
+[x0,x1].forEach(x=>Q([PT(t0,x,ro(t0,x)),PT(t1,x,ro(t1,x)),PT(t1,x,ro(t1,x)-ti),PT(t0,x,ro(t0,x)-ti)],colF(tm,x).map(v=>v*.85),al))}}
+function roll(xc,sgn,spin,fy){const y0=-114*Math.cos(35*DR),z0=sgn*114*Math.sin(35*DR),o=Math.round(spin/(360/14));const ring=(x)=>Array.from({length:14},(_,i)=>[x,y0+14*Math.cos(i*DR*360/14),z0+14*Math.sin(i*DR*360/14)]);
+for(let i=0;i<14;i++){const a=i*DR*360/14,b=(i+1)*DR*360/14,col=((i+o)%14+14)%14==0?[205,85,50]:[92,102,112];Q([[xc-10,y0+14*Math.cos(a),z0+14*Math.sin(a)],[xc+10,y0+14*Math.cos(a),z0+14*Math.sin(a)],[xc+10,y0+14*Math.cos(b),z0+14*Math.sin(b)],[xc-10,y0+14*Math.cos(b),z0+14*Math.sin(b)]],col)}Q(ring(xc-10),[110,120,130]);Q(ring(xc+10),[110,120,130])}
+/* ---- one frame ---- */
+function frame(){
+const st=state(P),ex=PL.ex,k=PL.k,tsh=Math.max(k*I.t,1.3),g=2.5,L=130,xB0=g/2+(1-ez(sg(P,1)))*90,xB1=xB0+L,xA0=-g/2-L,xA1=-g/2,fy=-114*Math.cos(35*DR)-17,hl=PL.HL(st);polys=[];
+const rAa=[],rBe=[],rBo=[];for(let i=0;i<40;i++){const th=i*9;rAa[i]=100+ex*k*PL.dA(th);rBe[i]=100+ex*k*PL.dB(th,st);rBo[i]=100+ex*k*PL.b0(th,st.rot)}
+const ix=th=>(Math.round(th/9)%40+40)%40,roA=th=>rAa[ix(th)],roB=(th,x)=>{const w=ez(1-cl((x-xB0)/55)),i=ix(th);return rBo[i]*(1-w)+rBe[i]*w};
+const alS=$('#shx').checked?.3:P<.8?.5:P<1?.5+.5*(P-.8)/.2:1-.7*ez(cl((P-3.9)*5))*(1-ez(cl((P-8.8)*5))),SA=[148,162,174],SB=[124,154,182],SEAM=[196,164,112];
+[[xA0,xA1,0],[xB0,xB1,st.rot]].forEach(([a,b,r],q)=>{[a+28,b-28].forEach(xc=>{[-1,1].forEach(sn=>roll(xc,sn,-r*100/14,fy));box([xc,fy+1.6,0],AX,[0,1,0],[0,0,1],13,1.6,70,[70,78,86])})});
+tube(xA0,xA1,roA,tsh,th=>Math.abs(w180(th-PL.sA))<4?SEAM:SA,alS,3);
+tube(xB0,xB1,roB,tsh,th=>Math.abs(w180(th-PL.sB-st.rot))<4?SEAM:SB,alS,3);
+const gi=(P>=2&&P<3||P>=7&&P<8)?Math.min(7,Math.floor((P%1)*8)):-1,col3=v=>{v=Math.abs(v);return v<=PL.goal?[40,170,100]:v<=PL.lim?[235,170,40]:[220,70,40]},hiAt=th=>Math.max(roA(th),rBe[ix(th)]);
+for(let j=0;j<8;j++){if(P<2||j==gi||(P<3&&j>gi))continue;const th=j*45;box(PT(th,0,hiAt(th)+.9),AX,CC(th),NN(th),1.4,1.4,.6,col3(hl[j]))}
+if(gi>=0){const th=gi*45,a=roA(th),b=rBe[ix(th)],hi=Math.max(a,b),n=NN(th),c=CC(th);box(PT(th,0,hi+2.6),AX,c,n,10,3,1,[50,58,66]);box(PT(th,0,hi+3.7),AX,c,n,4,2,.3,col3(hl[gi]));
+box(PT(th,-7,(a+hi+1.6)/2),AX,c,n,1.2,2.6,(hi+1.6-a)/2+.01,[50,58,66]);box(PT(th,7,(b+hi+1.6)/2),AX,c,n,1.2,2.6,(hi+1.6-b)/2+.01,[50,58,66])}
+if(P>=4&&P<8.8){const xr=xB0+20+(1-ez(cl(sg(P,4)*2.5)))*80,rr=100-tsh-ex*k*Math.max(PL.aB,PL.aA,.5)-1.8,RC=[215,130,50];tube(xr-2,xr+2,()=>rr,4,()=>RC,1,1);
+bar(PT(0,xr,rr),PT(180,xr,rr),1,RC);bar(PT(90,xr,rr),PT(270,xr,rr),1,RC);
+[0,90,180,270].forEach(th=>{const wall=roB(th,xr)-tsh-.2,e=th%180==0?wall:wall-2.5;bar(PT(th,xr,rr),PT(th,xr,Math.max(rr+2,e)),1.1,[170,175,182]);box(PT(th,xr,Math.max(rr+2,e)),NN(th),CC(th),AX,.6,3,3,[235,200,80])})}
+const nb=PL.br.length;
+if(P>=5&&P<8.8)PL.br.forEach((j,i)=>{const th=j*45,ap=ez(cl(sg(P,5)*nb-i));if(ap<=0)return;const a=roA(th),b=rBe[ix(th)],hi=Math.max(a,b),lo=Math.min(a,b),bh=PL.pre[j]>0,n=NN(th),c=CC(th),cw=st.c[j],sl=(1-cw)*9,xw=bh?8:-8,xl=bh?-12:12;
+box(PT(th,0,hi+1.5+(1-ap)*14),AX,c,n,17,6,.6,[190,150,70]);box(PT(th,xl,(lo+hi+.9)/2),AX,c,n,1.3,5,(hi+.9-lo)/2+.01,[225,110,50]);
+box(add(PT(th,xw,hi+.35),mul(c,3+sl)),AX,c,n,3.6,4.2,.4,[40,46,54]);
+if(cw>0&&cw<1){const hc=add(PT(th,xw,hi+4),mul(c,9+sl+Math.abs(Math.sin(cw*20))*3.5));box(hc,AX,c,n,2.2,2.2,2.2,[70,74,80]);bar(hc,add(hc,add(mul(n,14),mul(c,6))),.5,[150,100,60])}});
+let headP=null;
+if(P>=8){const w=sg(P,8),wa=360*cl(w/.8);for(let i=0;i<40;i++){const t0=i*9;if(t0>=wa)break;const t1=Math.min(t0+9,wa),hot=cl(1-(wa-t1)/70),r0=hiAt(t0)+.9,r1=hiAt(t1)+.9;Q([PT(t0,-3.2,r0),PT(t1,-3.2,r1),PT(t1,3.2,r1),PT(t0,3.2,r0)],[125+130*hot,128+10*hot,136-90*hot])}
+if(w<.8){const r=hiAt(wa)+1;bar(PT(wa,0,r),PT(wa,0,r+16),2.2,[40,44,50]);box(PT(wa,0,r+1.5),AX,CC(wa),NN(wa),3,3,1,[255,200,80]);headP=PT(wa,0,r+20)}}
+/* paint */
+cx.clearRect(0,0,W,H);const f4=[[-270,fy,-170],[270,fy,-170],[270,fy,170],[-270,fy,170]].map(scr);cx.beginPath();f4.forEach((q,i)=>i?cx.lineTo(q[0],q[1]):cx.moveTo(q[0],q[1]));cx.closePath();cx.fillStyle='rgba(130,150,160,.16)';cx.fill();
+cx.strokeStyle='rgba(130,150,160,.35)';cx.lineWidth=1;cx.beginPath();for(let x=-240;x<=240;x+=40){const a=scr([x,fy,-170]),b=scr([x,fy,170]);cx.moveTo(a[0],a[1]);cx.lineTo(b[0],b[1])}for(let z=-160;z<=160;z+=40){const a=scr([-270,fy,z]),b=scr([270,fy,z]);cx.moveTo(a[0],a[1]);cx.lineTo(b[0],b[1])}cx.stroke();
+polys.sort((a,b)=>a.z-b.z);const sc=SC();
+for(const p of polys){const v=p.v;let n=nrm(crs(sub(v[1],v[0]),sub(v[2],v[0])));if(n[2]<0)n=mul(n,-1);const l=.4+.6*Math.max(0,-.4*n[0]+.55*n[1]+.73*n[2]);cx.beginPath();v.forEach((q,i)=>{const X=W/2+q[0]*sc,Y=H*.52-q[1]*sc;i?cx.lineTo(X,Y):cx.moveTo(X,Y)});cx.closePath();cx.fillStyle=`rgba(${p.col[0]*l|0},${p.col[1]*l|0},${p.col[2]*l|0},${p.al})`;cx.fill();if(p.al>=1){cx.strokeStyle=cx.fillStyle;cx.lineWidth=.7;cx.stroke()}}
+/* overlays */
+const ink=getComputedStyle(document.documentElement).getPropertyValue('--ink').trim()||'#14232d',i0=Math.min(N-1,Math.floor(P));cx.font='600 15px Barlow Semi Condensed,Arial Narrow,sans-serif';cx.fillStyle=ink;cx.textAlign='left';cx.fillText(`Step ${i0+1}/${N}: ${STEPS[i0][0]}`,12,22);
+cx.font='12px Barlow,sans-serif';cx.fillStyle='#7d93a1';cx.fillText(`Deformation drawn ×${ex.toFixed(0)} for visibility · readings in the table are real mm`,12,H-12);
+if(P<1){const d=Math.min(3,Math.floor(P*4)),th=d*45,xm=xA1-12,p1=PT(th,xm,roA(th)-tsh),p2=PT(th+180,xm,roA(th+180)-tsh),a=scr(p1),b=scr(p2);cx.strokeStyle='#e4572e';cx.lineWidth=2.5;cx.beginPath();cx.moveTo(a[0],a[1]);cx.lineTo(b[0],b[1]);cx.stroke();cx.fillStyle='#e4572e';cx.font='600 14px Barlow,sans-serif';cx.fillText(`trammel ${th}° : Ø ${(2*PL.R+2*PL.dA(th)).toFixed(1)} mm`,(a[0]+b[0])/2+10,(a[1]+b[1])/2-8)}
+if(gi>=0){const th=gi*45,q=scr(PT(th,0,hiAt(th)+10)),v=hl[gi];cx.fillStyle=Math.abs(v)<=PL.lim?'#1f8a5b':'#e4572e';cx.font='600 15px Barlow,sans-serif';cx.fillText(`Hi-Lo ${th}° : ${v>=0?'+':''}${v.toFixed(1)} mm`,q[0]+8,q[1]-6)}
+if(headP){const q=scr(headP);cx.fillStyle='#e4572e';cx.font='12px Barlow,sans-serif';cx.fillText('SAW head (on the rolls the shell turns under a fixed head)',Math.min(q[0]+8,W-330),q[1])}
+if(P>=8.8){cx.fillStyle='#1f8a5b';cx.font='600 14px Barlow,sans-serif';cx.fillText('Ring and bridges removed · lug scars ground flush, PT/MT',12,42)}
+/* end-view inset */
+const ox=W-92,oy=104,rp=r=>62+1.86*(r-100),pol=(th,r)=>[ox+r*Math.sin(th*DR),oy-r*Math.cos(th*DR)];cx.fillStyle='rgba(130,150,160,.16)';cx.fillRect(ox-86,oy-92,172,184);cx.strokeStyle='rgba(130,150,160,.6)';cx.strokeRect(ox-86,oy-92,172,184);
+const outline=(arr,col,dash)=>{cx.beginPath();for(let i=0;i<=40;i++){const q=pol((i%40)*9,rp(arr[i%40]));i?cx.lineTo(q[0],q[1]):cx.moveTo(q[0],q[1])}cx.setLineDash(dash);cx.strokeStyle=col;cx.lineWidth=2;cx.stroke();cx.setLineDash([])};
+outline(rAa,ink,[5,4]);outline(rBe,'#4a90c0',[]);
+if(P>=4&&P<8.8){cx.beginPath();cx.arc(ox,oy,50,0,7);cx.strokeStyle='#d78232';cx.lineWidth=2;cx.stroke();[0,90,180,270].forEach(th=>{const a=pol(th,50),b=pol(th,rp(rBe[ix(th)])-4);cx.beginPath();cx.moveTo(a[0],a[1]);cx.lineTo(b[0],b[1]);cx.stroke()})}
+for(let j=0;j<8;j++){const q=pol(j*45,rp(rAa[j*5])+(P>=5&&P<8.8&&PL.br.includes(j)?0:0));cx.beginPath();cx.arc(q[0],q[1],P>=2?4:2,0,7);const c=P>=2?col3(hl[j]):[130,150,160];cx.fillStyle=`rgb(${c})`;cx.fill();if(P>=5&&P<8.8&&PL.br.includes(j)){cx.strokeStyle='#e4572e';cx.lineWidth=2;cx.strokeRect(q[0]-6,q[1]-6,12,12)}}
+cx.fillStyle=ink;cx.font='11px Barlow,sans-serif';cx.textAlign='center';cx.fillText('End view · dashed A · blue B',ox,oy+86);cx.textAlign='left';
+/* table */
+const row=j=>{const v=hl[j],c=P<2?'':Math.abs(v)<=PL.goal?'st-ok':Math.abs(v)<=PL.lim?'':'st-bad';return`<tr><td>${j*45}°</td><td>${PL.h0[j].toFixed(1)}</td><td class="${c}">${P<2?'—':v.toFixed(1)}</td><td class="l ${c}">${P<2?'—':Math.abs(v)<=PL.goal?'✔ within shop goal':Math.abs(v)<=PL.lim?'⚠ within UW-33, above goal':'✘ above UW-33'}</td></tr>`};
+const t=`<table><thead><tr><th>Station</th><th>Hi-Lo before, mm</th><th>Hi-Lo now, mm</th><th class="l">Status</th></tr></thead><tbody>${[0,1,2,3,4,5,6,7].map(row).join('')}</tbody></table>`;if(t!==tbl){tbl=t;$('#sht').innerHTML=t}
+$('#shs').value=P*100;[...$('#shl').children].forEach((li,j)=>li.className=j==i0?'on':j<i0?'done':'')}
+function info(){const stag=PL.R*Math.abs(w180(PL.sB+PL.rotF-PL.sA))*DR,sOK=stag>=Math.max(5*I.t,100),uo=I.D*.01,oOK=I.oa<=uo&&I.ob<=uo;
+$('#shsp').innerHTML=[[`UW-33 Hi-Lo limit (Cat. B) ${PL.lim.toFixed(1)} mm`],[`shop goal ≤ ${PL.goal.toFixed(1)} mm`],[`UG-80(a) ΔD ≤ ${uo.toFixed(0)} mm: ${oOK?'ovality ✔':'ovality ✘ re-roll'}`,oOK],[`seam stagger ${stag.toFixed(0)} mm ${sOK?'✔':'✘'}`,sOK]].map(x=>`<span class="${x[1]===true?'v-ok':x[1]===false?'v-bad':''}">${x[0]}</span>`).join('');
+$('#shnote').textContent=(PL.br.length?`${PL.br.length} blanko bridge plate(s) needed, at ${PL.br.map(j=>j*45+'°').join(', ')}.`:'No blanko needed: every station is within the shop goal after the ring.')+' Flat spots are a local rolling error the ring cannot remove, so they are the stations the blankos fix. Limits: ASME VIII-1 Table UW-33 (Category B) and UG-80(a)(1); confirm against your edition and project specification. Teaching model: the real ring stays in until the procedure allows removal.'}
+function read(){FLD.forEach(f=>{const v=parseFloat($('#shi_'+f[0]).value);if(isFinite(v))I[f[0]]=v});I.D=Math.max(500,I.D);I.t=Math.max(4,I.t);I.oa=Math.max(0,I.oa);I.ob=Math.max(0,I.ob);FLT=$('#shfl').checked;plan();info();dirty=true}
+FLD.forEach(f=>$('#shi_'+f[0]).oninput=read);$('#shfl').onchange=read;$('#shx').onchange=()=>dirty=true;
+const stop=()=>{play=false;$('#shp').textContent='▶ Play'};
+$('#shp').onclick=()=>{if(P>=N-.01)P=0;play=!play;$('#shp').textContent=play?'❚❚ Pause':'▶ Play';dirty=true};
+$('#shn').onclick=()=>{P=Math.min(N-.001,Math.floor(P)+1);stop();dirty=true};$('#shb').onclick=()=>{P=Math.max(0,Math.ceil(P)-1);stop();dirty=true};
+$('#shs').oninput=e=>{P=e.target.value/100;stop();dirty=true};$('#shr').onclick=()=>{cam={yaw:-.62,pitch:.3,zoom:1};dirty=true};
+[...$('#shl').children].forEach((li,i)=>{const gI=()=>{P=i;stop();dirty=true};li.onclick=gI;li.onkeydown=e=>e.key=='Enter'&&gI()});
+cv.onpointerdown=e=>{drag=[e.clientX,e.clientY];cv.setPointerCapture(e.pointerId)};cv.onpointermove=e=>{if(!drag)return;cam.yaw+=(e.clientX-drag[0])*.008;cam.pitch=cl(cam.pitch+(e.clientY-drag[1])*.008,-.25,1.3);drag=[e.clientX,e.clientY];dirty=true};cv.onpointerup=cv.onpointercancel=()=>drag=null;
+cv.addEventListener('wheel',e=>{e.preventDefault();cam.zoom=cl(cam.zoom*Math.exp(-e.deltaY*.0012),.5,2.6);dirty=true},{passive:false});
+function tick(n){const dt=Math.min(.05,(n-last)/1000||0);last=n;if(s.hidden||!cv.offsetParent)dirty=true;else{if(play){P+=dt*.38*+$('#shv').value;if(P>=N-.001){P=N-.001;stop();$('#shp').textContent='↺ Replay'}dirty=true}if(dirty){dirty=false;frame()}}requestAnimationFrame(tick)}
+plan();info();requestAnimationFrame(tick)})();
+</script>
+<script>
+/* ---------- 3D · shell plate longitudinal seam fit-up (axis plate rings + blanko bridges) ---------- */
+(function(){
+const s=document.getElementById('fitup');if(!s)return;
+const $=q=>s.querySelector(q),cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),sg=(p,i)=>cl(p-i),ez=t=>t*t*(3-2*t),DR=Math.PI/180,gs=(a,q)=>Math.exp(-a*a/(2*q*q));
+const STEPS=[
+['Rolled plate, edges pre-bent','The plate is rolled to radius with both edges pre-bent so no flat zones remain at the seam. Check the radius with a template (UG-79) and the ovality (UG-80(a): ΔD ≤ 1 % of D). The edges are still open.'],
+['Close the gap','On the rolls, pull the edges together with pull-up dogs or a hydraulic jack to a 2–3 mm root gap. Now any radial step between the two edges shows up along the seam.'],
+['Read the Hi-Lo along the seam','Slide the Hi-Lo gauge across the seam at every 1/8 of its length. + means the right edge is high. A longitudinal seam is Category A in UW-33. Anything above the shop goal (about half the limit) is corrected before tacking.'],
+['Axis plate: two roundness rings','Slide two rings (spiders with four jack screws) in, at about 1/4 and 3/4 of the length. Wind the jacks, the seam-side jack first, until the section is round: peaking and the end-to-end step at the seam fall together. The rings stay in until the weld is made.'],
+['Blanko: weld the fit-up bridge plates','At every station still above the shop goal, weld a bridge plate to the LOW edge so it overhangs the seam with a stand-off above the HIGH edge. Use the production WPS and a qualified welder for the lugs.'],
+['Drive the pins / wedges','Hammer a tapered pin or wedge between each bridge and the HIGH edge to force it in until flush. Gauge after every few blows and do not over-drive: the plate springs back.'],
+['Tack from the middle outwards, re-gauge','Tack 50 mm at 150–250 mm centres, starting in the middle and working to both ends. Weld run-off tabs at both ends. Gauge again: every Hi-Lo must be within the UW-33 limit before welding.'],
+['Weld, strip, test plate','Weld with the rings and bridges in, from tab to tab. Remove them once enough weld is deposited, cut the lugs 3 mm proud, grind flush and PT/MT the scars. Cut off the tabs; the production test plate (UW-9) is welded with the seam.']];
+const N=STEPS.length,FLD=[['D','Ø inside, mm',2000],['t','t, mm',14],['ov','Ovality, mm',14],['tw','End-to-end twist, mm',3]];
+s.insertAdjacentHTML('beforeend',`<div class="card" data-fu="long" hidden><h2>3D · Shell plate longitudinal seam fit-up · axis plate and blanko</h2><p class="note" style="margin:0 0 8px">Drag to orbit, scroll to zoom. The rolled course is closed on its seam. The <b>axis plate</b> rings round the section and the <b>blanko</b> bridges with pins or wedges remove the steps that remain.</p><div class="row"><div style="flex:2 1 520px"><canvas id="lgc" class="stage v3" width="880" height="540" style="width:100%;height:auto" role="img" aria-label="3D longitudinal seam fit-up, drag to rotate"></canvas><div class="ctrl"><button class="btn go" id="lgp">▶ Play</button><button class="btn" id="lgb" aria-label="Previous step">◀</button><button class="btn" id="lgn" aria-label="Next step">▶|</button><input type="range" id="lgs" min="0" max="${N*100}" value="0" aria-label="Progress"><select id="lgv" aria-label="Speed"><option value=".5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select><label><input type="checkbox" id="lgx"> X-ray</label><button class="btn" id="lgr">Reset view</button></div><div class="fld" id="lgf"></div><div class="spec" id="lgsp"></div></div><div style="flex:1 1 300px"><ol class="steps" id="lgl"></ol></div></div><div class="scroll" id="lgt"></div><p class="note" id="lgnote"></p></div>`);
+$('#lgf').innerHTML=FLD.map(f=>`<label>${f[1]} <input type="number" id="lgi_${f[0]}" value="${f[2]}" step="any"></label>`).join('')+'<label><input type="checkbox" id="lgfl" checked> flat spots at the seam</label>';
+$('#lgl').innerHTML=STEPS.map((x,i)=>`<li tabindex="0"><b>${i+1}. ${x[0]}</b>${x[1]}</li>`).join('');
+const cv=$('#lgc'),cx=cv.getContext('2d'),W=cv.width,H=cv.height,L=140,xs=j=>-L/2+L*(j+.5)/8;
+let I={D:2000,t:14,ov:14,tw:3},FLT=true,PL,cam={yaw:-.75,pitch:.35,zoom:1},P=0,play=false,last=0,drag=null,dirty=true,polys=[],tbl='';
+function plan(){
+const R=I.D/2,k=100/(R+I.t),lim=I.t<=13?I.t/4:I.t<=51?3:Math.min(I.t/16,10),goal=lim/2,ov=I.ov/4,cor=Array(8).fill(0),fl=[0,2.5,0,0,0,-2,0,0].map(v=>FLT?v:0),
+sm=Array.from({length:8},(_,j)=>{const u=2*(j-3.5)/7;return I.tw*u+.4*I.ov*(1-u*u)}),
+M=st=>sm.map((v,j)=>fl[j]+v*(1-st.kap)-st.c.reduce((q,c,i)=>q+c*cor[i]*gs(j-i,.8),0)),z8=Array(8).fill(0),kF=.8,h0=M({kap:0,c:z8}),pre=M({kap:kF,c:z8}),br=[];
+pre.forEach((v,j)=>{if(Math.abs(v)>goal){br.push(j);cor[j]=.85*v}});
+PL={R,k,lim,goal,ov,M,br,pre,h0,kF,ex:cl(3.2/Math.max(ov*k,Math.max(...h0.map(Math.abs))*k/2,.002),1,40)}}
+const state=P=>{const nb=PL.br.length,c=Array(8).fill(0);PL.br.forEach((j,i)=>c[j]=ez(cl(sg(P,5)*nb-i)));return{kap:PL.kF*ez(cl((sg(P,3)-.35)/.65)),c}};
+const add=(a,b)=>[a[0]+b[0],a[1]+b[1],a[2]+b[2]],mul=(a,k)=>[a[0]*k,a[1]*k,a[2]*k],sub=(a,b)=>add(a,mul(b,-1)),crs=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],nrm=a=>mul(a,1/(Math.hypot(a[0],a[1],a[2])||1)),
+PT=(th,x,r)=>[x,r*Math.cos(th*DR),r*Math.sin(th*DR)],NN=th=>[0,Math.cos(th*DR),Math.sin(th*DR)],CC=th=>[0,-Math.sin(th*DR),Math.cos(th*DR)],AX=[1,0,0],
+view=p=>{const cy=Math.cos(cam.yaw),sy=Math.sin(cam.yaw),cp=Math.cos(cam.pitch),sp=Math.sin(cam.pitch),z0=-p[0]*sy+p[2]*cy;return[p[0]*cy+p[2]*sy,p[1]*cp-z0*sp,p[1]*sp+z0*cp]},
+SC=()=>W/520*cam.zoom,scr=p=>{const q=view(p),k=SC();return[W/2+q[0]*k,H*.52-q[1]*k]};
+function Q(pts,col,al=1){const v=pts.map(view);polys.push({v,z:(v[0][2]+v[1][2]+v[2][2]+v[v.length-1][2])/4,col,al})}
+function box(c,u,v,w,a,b,d,col,al=1){const V=[];for(const i of[-1,1])for(const j of[-1,1])for(const k of[-1,1])V.push(add(c,add(add(mul(u,a*i),mul(v,b*j)),mul(w,d*k))));[[0,1,3,2],[4,5,7,6],[0,1,5,4],[2,3,7,6],[0,2,6,4],[1,3,7,5]].forEach(f=>Q(f.map(i=>V[i]),col,al))}
+function bar(p,q,hw,col,al=1){const d=sub(q,p),l=Math.hypot(d[0],d[1],d[2])/2;if(l<1e-3)return;const w=nrm(d);let u=crs(w,[0,0,1]);if(Math.hypot(u[0],u[1],u[2])<.2)u=crs(w,[0,1,0]);u=nrm(u);box(mul(add(p,q),.5),u,crs(w,u),w,hw,hw,l,col,al)}
+function tube(x0,x1,ro,ti,col,al,nA,angs){for(let i=0;i<angs.length-1;i++){const t0=angs[i],t1=angs[i+1];for(let a=0;a<nA;a++){const xa=x0+(x1-x0)*a/nA,xb=x0+(x1-x0)*(a+1)/nA,r00=ro(t0,xa),r10=ro(t1,xa),r01=ro(t0,xb),r11=ro(t1,xb);
+Q([PT(t0,xa,r00),PT(t1,xa,r10),PT(t1,xb,r11),PT(t0,xb,r01)],col,al);Q([PT(t0,xa,r00-ti),PT(t1,xa,r10-ti),PT(t1,xb,r11-ti),PT(t0,xb,r01-ti)],col.map(v=>v*.62),al)}
+[x0,x1].forEach(x=>Q([PT(t0,x,ro(t0,x)),PT(t1,x,ro(t1,x)),PT(t1,x,ro(t1,x)-ti),PT(t0,x,ro(t0,x)-ti)],col.map(v=>v*.85),al))}}
+function roll(xc,sgn){const y0=-114*Math.cos(35*DR),z0=sgn*114*Math.sin(35*DR),p=(x,i)=>[x,y0+14*Math.cos(i*DR*360/14),z0+14*Math.sin(i*DR*360/14)];for(let i=0;i<14;i++)Q([p(xc-10,i),p(xc+10,i),p(xc+10,i+1),p(xc-10,i+1)],i%7==0?[205,85,50]:[92,102,112]);Q(Array.from({length:14},(_,i)=>p(xc-10,i)),[110,120,130]);Q(Array.from({length:14},(_,i)=>p(xc+10,i)),[110,120,130])}
+function frame(){
+const st=state(P),ex=PL.ex,k=PL.k,tsh=Math.max(k*I.t,1.3),fy=-114*Math.cos(35*DR)-17,ms=PL.M(st),hg=1.5+(1-ez(sg(P,1)))*12,hl=ms;polys=[];
+const mAt=x=>{const u=cl((x+L/2)/L*8-.5,0,7),i=Math.min(6,Math.floor(u)),f=u-i;return ms[i]*(1-f)+ms[i+1]*f},
+ro=(th,x)=>100+ex*k*(PL.ov*Math.cos(2*(th-90)*DR)+(th<180?1:-1)*.5*mAt(x)*gs(Math.min(th,360-th),22)),
+angs=[hg];for(let v=9;v<360;v+=9)if(v>hg+2&&v<358-hg)angs.push(v);angs.push(360-hg);const full=Array.from({length:41},(_,i)=>i*9);
+const alS=$('#lgx').checked?.3:1-.7*ez(cl((P-2.9)*5))*(1-ez(cl((P-7.8)*5))),SA=[148,162,174],ED=[96,106,116],hiAt=j=>Math.max(ro(hg,xs(j)),ro(360-hg,xs(j)));
+[-45,45].forEach(xc=>{[-1,1].forEach(sn=>roll(xc,sn));box([xc,fy+1.6,0],AX,[0,1,0],[0,0,1],13,1.6,70,[70,78,86])});
+tube(-L/2,L/2,ro,tsh,SA,alS,8,angs);
+for(let a=0;a<8;a++)[hg,360-hg].forEach(th=>{const xa=-L/2+L*a/8,xb=xa+L/8,r=ro(th,(xa+xb)/2);Q([PT(th,xa,r),PT(th,xb,r),PT(th,xb,r-tsh),PT(th,xa,r-tsh)],ED,alS)});
+const col3=v=>{v=Math.abs(v);return v<=PL.goal?[40,170,100]:v<=PL.lim?[235,170,40]:[220,70,40]},gi=P>=2&&P<3?Math.min(7,Math.floor((P-2)*8)):P>=6.5&&P<7?Math.min(7,Math.floor((P-6.5)*16)):-1;
+for(let j=0;j<8;j++){if(P<2||j==gi||(P<3&&j>gi))continue;box(PT(0,xs(j),hiAt(j)+.9),CC(0),AX,NN(0),1.4,1.4,.6,col3(hl[j]))}
+if(gi>=0){const x=xs(gi),a=ro(hg,x),b=ro(360-hg,x),hi=Math.max(a,b);box(PT(0,x,hi+2.6),CC(0),AX,NN(0),10,3,1,[50,58,66]);box(PT(0,x,hi+3.7),CC(0),AX,NN(0),4,2,.3,col3(hl[gi]));
+box(add(PT(0,x,(a+hi+1.6)/2),mul(CC(0),7)),CC(0),AX,NN(0),1.2,2.6,(hi+1.6-a)/2+.01,[50,58,66]);box(add(PT(0,x,(b+hi+1.6)/2),mul(CC(0),-7)),CC(0),AX,NN(0),1.2,2.6,(hi+1.6-b)/2+.01,[50,58,66])}
+if(P>=3&&P<7.8){const rr=100-tsh-ex*k*Math.max(PL.ov,Math.max(...PL.h0.map(Math.abs))/2,.5)-1.8,RC=[215,130,50];[-L/4,L/4].forEach((x0,q)=>{const xr=x0+(1-ez(cl(sg(P,3)*2.5)))*(q?90:-90)*0+(1-ez(cl(sg(P,3)*2.5)))*80;
+tube(xr-2,xr+2,()=>rr,4,RC,1,1,full);bar(PT(0,xr,rr),PT(180,xr,rr),1,RC);bar(PT(90,xr,rr),PT(270,xr,rr),1,RC);
+[0,90,180,270].forEach(th=>{const e=ro(th||hg,xr)-tsh-.2-(th%180?2.5:0);bar(PT(th,xr,rr),PT(th,xr,Math.max(rr+2,e)),1.1,[170,175,182]);box(PT(th,xr,Math.max(rr+2,e)),NN(th),CC(th),AX,.6,3,3,[235,200,80])})})}
+const nb=PL.br.length;
+if(P>=4&&P<7.8)PL.br.forEach((j,i)=>{const x=xs(j),ap=ez(cl(sg(P,4)*nb-i));if(ap<=0)return;const a=ro(hg,x),b=ro(360-hg,x),hi=Math.max(a,b),lo=Math.min(a,b),hs=PL.pre[j]>0?1:-1,cw=st.c[j],sl=(1-cw)*9,c=CC(0),n=NN(0);
+box(PT(0,x,hi+1.5+(1-ap)*14),c,AX,n,17,6,.6,[190,150,70]);box(add(PT(0,x,(lo+hi+.9)/2),mul(c,-hs*12)),c,AX,n,1.3,5,(hi+.9-lo)/2+.01,[225,110,50]);
+box(add(PT(0,x,hi+.35),mul(c,hs*(8+sl))),c,AX,n,3.6,4.2,.4,[40,46,54]);
+if(cw>0&&cw<1){const hc=add(PT(0,x,hi+4),mul(c,hs*(14+sl+Math.abs(Math.sin(cw*20))*3.5)));box(hc,c,AX,n,2.2,2.2,2.2,[70,74,80]);bar(hc,add(hc,add(mul(n,14),mul(c,hs*6))),.5,[150,100,60])}});
+if(P>=6){[-1,1].forEach(sn=>box(PT(0,sn*(L/2+5),100),CC(0),AX,NN(0),8,5,.6,[170,150,110]));const order=[3,4,2,5,1,6,0,7];order.forEach((j,idx)=>{const tp=ez(cl((P-6)*16-idx));if(tp>0)box(PT(0,xs(j),hiAt(j)+.6),CC(0),AX,NN(0),1.6*tp,3*tp,.7*tp,[225,110,50])})}
+let headP=null;
+if(P>=7){const w=sg(P,7),xh=-L/2-6+(L+12)*cl(w/.8);for(let j=0;j<8;j++){const xa=xs(j)-L/16,xb=Math.min(xs(j)+L/16,xh);if(xb<=xa)continue;const hot=cl(1-(xh-xb)/40),r=hiAt(j)+.9,c=mul(CC(0),3.2);Q([sub(PT(0,xa,r),c),sub(PT(0,xb,r),c),add(PT(0,xb,r),c),add(PT(0,xa,r),c)],[125+130*hot,128+10*hot,136-90*hot])}
+if(w<.8){const r=hiAt(3)+1;bar(PT(0,xh,r),PT(0,xh,r+16),2.2,[40,44,50]);box(PT(0,xh,r+1.5),CC(0),AX,NN(0),3,3,1,[255,200,80]);headP=PT(0,xh,r+20)}}
+cx.clearRect(0,0,W,H);const f4=[[-270,fy,-170],[270,fy,-170],[270,fy,170],[-270,fy,170]].map(scr);cx.beginPath();f4.forEach((q,i)=>i?cx.lineTo(q[0],q[1]):cx.moveTo(q[0],q[1]));cx.closePath();cx.fillStyle='rgba(130,150,160,.16)';cx.fill();
+cx.strokeStyle='rgba(130,150,160,.35)';cx.lineWidth=1;cx.beginPath();for(let x=-240;x<=240;x+=40){const a=scr([x,fy,-170]),b=scr([x,fy,170]);cx.moveTo(a[0],a[1]);cx.lineTo(b[0],b[1])}for(let z=-160;z<=160;z+=40){const a=scr([-270,fy,z]),b=scr([270,fy,z]);cx.moveTo(a[0],a[1]);cx.lineTo(b[0],b[1])}cx.stroke();
+polys.sort((a,b)=>a.z-b.z);const sc=SC();
+for(const p of polys){const v=p.v;let n=nrm(crs(sub(v[1],v[0]),sub(v[2],v[0])));if(n[2]<0)n=mul(n,-1);const l=.4+.6*Math.max(0,-.4*n[0]+.55*n[1]+.73*n[2]);cx.beginPath();v.forEach((q,i)=>{const X=W/2+q[0]*sc,Y=H*.52-q[1]*sc;i?cx.lineTo(X,Y):cx.moveTo(X,Y)});cx.closePath();cx.fillStyle=`rgba(${p.col[0]*l|0},${p.col[1]*l|0},${p.col[2]*l|0},${p.al})`;cx.fill();if(p.al>=1){cx.strokeStyle=cx.fillStyle;cx.lineWidth=.7;cx.stroke()}}
+const ink=getComputedStyle(document.documentElement).getPropertyValue('--ink').trim()||'#14232d',i0=Math.min(N-1,Math.floor(P));cx.font='600 15px Barlow Semi Condensed,Arial Narrow,sans-serif';cx.fillStyle=ink;cx.textAlign='left';cx.fillText(`Step ${i0+1}/${N}: ${STEPS[i0][0]}`,12,22);
+cx.font='12px Barlow,sans-serif';cx.fillStyle='#7d93a1';cx.fillText(`Deformation drawn ×${ex.toFixed(0)} for visibility · readings in the table are real mm`,12,H-12);
+if(gi>=0){const q=scr(PT(0,xs(gi),hiAt(gi)+10)),v=hl[gi];cx.fillStyle=Math.abs(v)<=PL.lim?'#1f8a5b':'#e4572e';cx.font='600 15px Barlow,sans-serif';cx.fillText(`Hi-Lo ${gi+1}/8 : ${v>=0?'+':''}${v.toFixed(1)} mm`,q[0]+8,q[1]-6)}
+if(headP){const q=scr(headP);cx.fillStyle='#e4572e';cx.font='12px Barlow,sans-serif';cx.fillText('SAW head runs tab to tab (shell fixed on the rolls)',Math.min(q[0]+8,W-300),q[1])}
+if(P>=7.8){cx.fillStyle='#1f8a5b';cx.font='600 14px Barlow,sans-serif';cx.fillText('Rings and bridges removed · lug scars ground flush, PT/MT',12,42)}
+const ox=W-92,oy=104,rp=r=>62+1.86*(r-100),pol=(th,r)=>[ox+r*Math.sin(th*DR),oy-r*Math.cos(th*DR)];cx.fillStyle='rgba(130,150,160,.16)';cx.fillRect(ox-86,oy-92,172,184);cx.strokeStyle='rgba(130,150,160,.6)';cx.strokeRect(ox-86,oy-92,172,184);
+cx.beginPath();angs.forEach((th,i)=>{const q=pol(th,rp(ro(th,0)));i?cx.lineTo(q[0],q[1]):cx.moveTo(q[0],q[1])});cx.strokeStyle='#4a90c0';cx.lineWidth=2;cx.stroke();
+if(P>=3&&P<7.8){cx.beginPath();cx.arc(ox,oy,50,0,7);cx.strokeStyle='#d78232';cx.stroke()}
+cx.fillStyle=ink;cx.font='11px Barlow,sans-serif';cx.textAlign='center';cx.fillText('Section at mid-length · seam at top',ox,oy+86);cx.textAlign='left';
+const row=j=>{const v=hl[j],c=P<2?'':Math.abs(v)<=PL.goal?'st-ok':Math.abs(v)<=PL.lim?'':'st-bad';return`<tr><td>${j+1} / 8</td><td>${PL.h0[j].toFixed(1)}</td><td class="${c}">${P<2?'—':v.toFixed(1)}</td><td class="l ${c}">${P<2?'—':Math.abs(v)<=PL.goal?'✔ within shop goal':Math.abs(v)<=PL.lim?'⚠ within UW-33, above goal':'✘ above UW-33'}</td></tr>`};
+const t=`<table><thead><tr><th>Station</th><th>Hi-Lo before, mm</th><th>Hi-Lo now, mm</th><th class="l">Status</th></tr></thead><tbody>${[0,1,2,3,4,5,6,7].map(row).join('')}</tbody></table>`;if(t!==tbl){tbl=t;$('#lgt').innerHTML=t}
+$('#lgs').value=P*100;[...$('#lgl').children].forEach((li,j)=>li.className=j==i0?'on':j<i0?'done':'')}
+function info(){const uo=I.D*.01,oOK=I.ov<=uo;$('#lgsp').innerHTML=[[`UW-33 Hi-Lo limit (Cat. A) ${PL.lim.toFixed(1)} mm`],[`shop goal ≤ ${PL.goal.toFixed(1)} mm`],[`UG-80(a) ΔD ≤ ${uo.toFixed(0)} mm: ${oOK?'ovality ✔':'ovality ✘ re-roll'}`,oOK]].map(x=>`<span class="${x[1]===true?'v-ok':x[1]===false?'v-bad':''}">${x[0]}</span>`).join('');
+$('#lgnote').textContent=(PL.br.length?`${PL.br.length} blanko bridge plate(s) needed, at station(s) ${PL.br.map(j=>j+1).join(', ')} of 8.`:'No blanko needed: every station is within the shop goal after the rings.')+' Twist and bow are what the rings can remove; flat spots at the seam are the local errors the blankos fix. Limits: ASME VIII-1 Table UW-33 (Category A) and UG-80(a)(1); confirm against your edition and project specification.'}
+function read(){FLD.forEach(f=>{const v=parseFloat($('#lgi_'+f[0]).value);if(isFinite(v))I[f[0]]=v});I.D=Math.max(500,I.D);I.t=Math.max(4,I.t);I.ov=Math.max(0,I.ov);FLT=$('#lgfl').checked;plan();info();dirty=true}
+FLD.forEach(f=>$('#lgi_'+f[0]).oninput=read);$('#lgfl').onchange=read;$('#lgx').onchange=()=>dirty=true;
+const stop=()=>{play=false;$('#lgp').textContent='▶ Play'};
+$('#lgp').onclick=()=>{if(P>=N-.01)P=0;play=!play;$('#lgp').textContent=play?'❚❚ Pause':'▶ Play';dirty=true};
+$('#lgn').onclick=()=>{P=Math.min(N-.001,Math.floor(P)+1);stop();dirty=true};$('#lgb').onclick=()=>{P=Math.max(0,Math.ceil(P)-1);stop();dirty=true};
+$('#lgs').oninput=e=>{P=e.target.value/100;stop();dirty=true};$('#lgr').onclick=()=>{cam={yaw:-.75,pitch:.35,zoom:1};dirty=true};
+[...$('#lgl').children].forEach((li,i)=>{const g=()=>{P=i;stop();dirty=true};li.onclick=g;li.onkeydown=e=>e.key=='Enter'&&g()});
+cv.onpointerdown=e=>{drag=[e.clientX,e.clientY];cv.setPointerCapture(e.pointerId)};cv.onpointermove=e=>{if(!drag)return;cam.yaw+=(e.clientX-drag[0])*.008;cam.pitch=cl(cam.pitch+(e.clientY-drag[1])*.008,-.25,1.3);drag=[e.clientX,e.clientY];dirty=true};cv.onpointerup=cv.onpointercancel=()=>drag=null;
+cv.addEventListener('wheel',e=>{e.preventDefault();cam.zoom=cl(cam.zoom*Math.exp(-e.deltaY*.0012),.5,2.6);dirty=true},{passive:false});
+function tick(n){const dt=Math.min(.05,(n-last)/1000||0);last=n;if(s.hidden||!cv.offsetParent)dirty=true;else{if(play){P+=dt*.38*+$('#lgv').value;if(P>=N-.001){P=N-.001;stop();$('#lgp').textContent='↺ Replay'}dirty=true}if(dirty){dirty=false;frame()}}requestAnimationFrame(tick)}
+plan();info();requestAnimationFrame(tick)})();
+</script>
+<script>
+/* ---------- 3D · pipe to flange fit-up ---------- */
+(function(){
+const s=document.getElementById('fitup');if(!s)return;
+const $=q=>s.querySelector(q),cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),sg=(p,i)=>cl(p-i),ez=t=>t*t*(3-2*t),DR=Math.PI/180;
+const STEPS=[
+['Check parts · orient the bolt holes','Confirm class, facing and material and look for scratches on the gasket face. Lay a spirit level across the two top bolt holes and turn the flange until the bubble centres: no hole on the vertical centreline, two holes straddle it.'],
+['Bring the flange to the pipe · set the gap','Support the flange so its weight does not drag the joint. Pass a gap rod (2–3 mm root gap) at 12, 3, 6 and 9 o’clock. A wedge-shaped gap means the flange is tilted.'],
+['Axis plate: line-up clamp in the pipe end','Put an internal clamp (a ring with jack screws) in the pipe end and wind it until the pipe bore matches the hub. The ovality is rounded out and the Hi-Lo at 12, 3, 6 and 9 falls. Limit about 1.5 mm, or as the project spec says.'],
+['Square the face · try-square','Stand the try-square on the pipe with its blade against the flange face. Tap or shim the flange until there is no light gap: face square to the pipe axis within ±0.5°. Pass the gap rod again at the four points.'],
+['Tack','Tack at 12, 6, 3 and 9 with the root WPS, then re-check gap, squareness and hole position. Break and re-fit any tack that moved the flange.'],
+['Weld in balanced quadrants','Weld root, fill and cap in alternating quadrants with back-stepping and low heat input so the sealing face stays flat. Keep spatter off the gasket face.'],
+['Remove the clamp · inspect','Take out the clamp, VT 100 %, then RT/UT/PT per the line class. Lay a straightedge across the face and check flatness, hole position and squareness before bolt-up.']];
+const N=STEPS.length,FLD=[['OD','Pipe OD, mm',273.1],['wt','Wall, mm',9.3],['tl','Flange tilt, °',1.5],['ho','Hole rotation, °',6],['ov','Pipe ovality, mm',3]];
+s.insertAdjacentHTML('beforeend',`<div class="card" data-fu="flange" hidden><h2>3D · Pipe to flange fit-up</h2><p class="note" style="margin:0 0 8px">Drag to orbit, scroll to zoom. The flange starts tilted, with its holes turned and the pipe end oval. Follow the steps to see each check and fix. Flange proportions are schematic.</p><div class="row"><div style="flex:2 1 520px"><canvas id="pfc" class="stage v3" width="880" height="540" style="width:100%;height:auto" role="img" aria-label="3D pipe to flange fit-up, drag to rotate"></canvas><div class="ctrl"><button class="btn go" id="pfp">▶ Play</button><button class="btn" id="pfb" aria-label="Previous step">◀</button><button class="btn" id="pfn" aria-label="Next step">▶|</button><input type="range" id="pfs" min="0" max="${N*100}" value="0" aria-label="Progress"><select id="pfv" aria-label="Speed"><option value=".5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select><button class="btn" id="pfr">Reset view</button></div><div class="fld" id="pff"></div><div class="spec"><span>Gap 2–3 mm</span><span>Square ±0.5°</span><span>Holes straddle centreline, ≤ 1.5 mm</span><span>Hi-Lo ≤ 1.5 mm</span></div></div><div style="flex:1 1 300px"><ol class="steps" id="pfl"></ol></div></div><div class="scroll" id="pft"></div><p class="note">Limits are typical shop values; the project specification and the code of construction govern. Tilt and ovality are drawn exaggerated; the table shows real values.</p></div>`);
+$('#pff').innerHTML=FLD.map(f=>`<label>${f[1]} <input type="number" id="pfi_${f[0]}" value="${f[2]}" step="any"></label>`).join('');
+$('#pfl').innerHTML=STEPS.map((x,i)=>`<li tabindex="0"><b>${i+1}. ${x[0]}</b>${x[1]}</li>`).join('');
+const cv=$('#pfc'),cx=cv.getContext('2d'),W=cv.width,H=cv.height,R=40,G0=2.4,FY=-56;
+let I={OD:273.1,wt:9.3,tl:1.5,ho:6,ov:3},cam={yaw:-.75,pitch:.3,zoom:1},P=0,play=false,last=0,drag=null,dirty=true,polys=[],tbl='',mp=null;
+const add=(a,b)=>[a[0]+b[0],a[1]+b[1],a[2]+b[2]],mul=(a,k)=>[a[0]*k,a[1]*k,a[2]*k],sub=(a,b)=>add(a,mul(b,-1)),crs=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],nrm=a=>mul(a,1/(Math.hypot(a[0],a[1],a[2])||1)),
+PT=(th,x,r)=>[x,r*Math.cos(th*DR),r*Math.sin(th*DR)],NN=th=>[0,Math.cos(th*DR),Math.sin(th*DR)],CC=th=>[0,-Math.sin(th*DR),Math.cos(th*DR)],AX=[1,0,0],
+view=p=>{const cy=Math.cos(cam.yaw),sy=Math.sin(cam.yaw),cp=Math.cos(cam.pitch),sp=Math.sin(cam.pitch),x=p[0]+70,z0=-x*sy+p[2]*cy;return[x*cy+p[2]*sy,p[1]*cp-z0*sp,p[1]*sp+z0*cp]},
+SC=()=>W/340*cam.zoom,scr=p=>{const q=view(p),k=SC();return[W/2+q[0]*k,H*.52-q[1]*k]};
+function Q(pts,col,al=1,zb=0){const v=pts.map(p=>view(mp?mp(p):p));polys.push({v,z:(v[0][2]+v[1][2]+v[2][2]+v[v.length-1][2])/4+zb,col,al})}
+function box(c,u,v,w,a,b,d,col,al=1){const V=[];for(const i of[-1,1])for(const j of[-1,1])for(const k of[-1,1])V.push(add(c,add(add(mul(u,a*i),mul(v,b*j)),mul(w,d*k))));[[0,1,3,2],[4,5,7,6],[0,1,5,4],[2,3,7,6],[0,2,6,4],[1,3,7,5]].forEach(f=>Q(f.map(i=>V[i]),col,al))}
+function bar(p,q,hw,col,al=1){const d=sub(q,p),l=Math.hypot(d[0],d[1],d[2])/2;if(l<1e-3)return;const w=nrm(d);let u=crs(w,[0,0,1]);if(Math.hypot(u[0],u[1],u[2])<.2)u=crs(w,[0,1,0]);u=nrm(u);box(mul(add(p,q),.5),u,crs(w,u),w,hw,hw,l,col,al)}
+const full=Array.from({length:41},(_,i)=>i*9);
+function tube(x0,x1,ro,ti,col,al,nA){for(let i=0;i<40;i++){const t0=full[i],t1=full[i+1];for(let a=0;a<nA;a++){const xa=x0+(x1-x0)*a/nA,xb=x0+(x1-x0)*(a+1)/nA,r00=ro(t0,xa),r10=ro(t1,xa),r01=ro(t0,xb),r11=ro(t1,xb);
+Q([PT(t0,xa,r00),PT(t1,xa,r10),PT(t1,xb,r11),PT(t0,xb,r01)],col,al);Q([PT(t0,xa,r00-ti),PT(t1,xa,r10-ti),PT(t1,xb,r11-ti),PT(t0,xb,r01-ti)],col.map(v=>v*.62),al)}
+[x0,x1].forEach(x=>Q([PT(t0,x,ro(t0,x)),PT(t1,x,ro(t1,x)),PT(t1,x,ro(t1,x)-ti),PT(t0,x,ro(t0,x)-ti)],col.map(v=>v*.85),al))}}
+function frame(){
+const k=40/(I.OD/2),tw=Math.max(k*I.wt,2),a4=I.ov/4,exo=a4>0?cl(2.6/(a4*k),1,40):1,tl=I.tl*(1-ez(sg(P,3))),rho=I.ho*(1-ez(cl((P-.3)/.7))),xoff=(1-ez(cl(sg(P,1)*2)))*70,kap=.8*ez(cl((sg(P,2)-.3)/.5)),
+td=tl*4*DR,X0=G0/2+xoff,cs=Math.cos(td),sn=Math.sin(td);polys=[];
+const FT=p=>{const q0=p[0],q1=p[1]+R;return[q0*cs+q1*sn+X0,-q0*sn+q1*cs-R,p[2]]},dov=th=>a4*Math.cos(2*(th-30)*DR),
+ro=(th,x)=>R+exo*k*dov(th)*(1-kap*ez(cl(1+(x+1.2)/70))),alP=P>=2&&P<6.5?.4:1,PC=[124,154,182],FL=[150,158,168];
+[-140,-80].forEach(x=>{box([x,FY+1.5,0],AX,[0,1,0],[0,0,1],7,1.5,34,[70,78,86]);[-1,1].forEach(q=>bar([x,FY+3,q*24],[x,-28,q*28],2.2,[92,102,112]))});
+tube(-170,-G0/2,ro,tw,PC,alP,3);
+mp=FT;tube(0,16,(th,x)=>40+12*x/16,tw,[168,176,186],1,2);tube(16,28,()=>62,22+tw,FL,1,1);
+for(let q=0;q<8;q++){const a=22.5+45*q+rho,c=PT(a,28.1,50),n=NN(a),t=CC(a);Q(Array.from({length:8},(_,i)=>add(c,add(mul(n,4.5*Math.cos(i*Math.PI/4)),mul(t,4.5*Math.sin(i*Math.PI/4))))),[26,30,36],1,2)}mp=null;
+const gp=a=>FT(PT(a,28,50));
+if(P<1.3){const p1=gp(-22.5+rho),p2=gp(22.5+rho),d=sub(p2,p1),a=sub(p1,mul(d,.5)),b=add(p2,mul(d,.5)),bub=cl(rho*.05,-.4,.4),mid=add(mul(add(p1,p2),.5),[2.6,0,0]);
+bar(add(a,[1.8,0,0]),add(b,[1.8,0,0]),1.6,[230,190,60]);box(add(mid,mul(d,bub)),nrm(d),[0,1,0],AX,3,1.6,1.4,Math.abs(rho)<.25?[40,170,100]:[250,250,250])}
+if(P>=2&&P<6.5){const xr=-26-(1-ez(cl(sg(P,2)*3)))*90,rr=R-tw-exo*k*a4-1.4,RC=[215,130,50];tube(xr-2,xr+2,()=>rr,4,RC,1,1);bar(PT(0,xr,rr),PT(180,xr,rr),1,RC);bar(PT(90,xr,rr),PT(270,xr,rr),1,RC);
+[0,90,180,270].forEach(th=>{const e=Math.max(rr+2,ro(th,xr)-tw-.2);bar(PT(th,xr,rr),PT(th,xr,e),1.1,[170,175,182]);box(PT(th,xr,e),NN(th),CC(th),AX,.6,3,3,[235,200,80])})}
+const gapAt=th=>2.5+I.OD*Math.tan(tl*DR)*(1-Math.cos(th*DR))/2,hlAt=th=>Math.abs(a4*Math.cos(2*(th-30)*DR)*(1-kap)),
+gr=P>=1.55&&P<2?Math.min(3,Math.floor((P-1.55)/.45*4)):P>=3.55&&P<4?Math.min(3,Math.floor((P-3.55)/.45*4)):-1,gi=P>=2.5&&P<3?Math.min(3,Math.floor((P-2.5)*8)):-1;
+if(gr>=0)bar(PT(gr*90,0,R+16),PT(gr*90,0,R-2),.5,[220,220,60]);
+if(gi>=0){const th=gi*90,n=NN(th),c=CC(th);box(PT(th,0,R+3.2),AX,c,n,9,3,1,[50,58,66]);[-6,6].forEach(x=>box(PT(th,x,R+1.7),AX,c,n,1.2,2.6,1.7,[50,58,66]))}
+if(P>=3&&P<4){const m=FT([28,R+1.2,0]);bar([m[0]-34,R+1.2,0],[m[0]-.9,R+1.2,0],1,[210,214,220]);bar([m[0]-.9,R+1.2,0],[m[0]-.9,R+36,0],1,[210,214,220])}
+if(P>=4){[0,180,90,270].forEach((th,i)=>{const tp=ez(cl((P-4)*4-i));if(tp>0)box(PT(th,0,R+.7),AX,CC(th),NN(th),2.2*tp,3.2*tp,.9*tp,[225,110,50])})}
+let head=null;
+if(P>=5){const u=cl(sg(P,5)/.85)*4,ST=[0,180,90,270];for(let q=0;q<4;q++){const f=cl(u-q);for(let a=0;a<10;a++){const t0=ST[q]+9*a,t1=t0+9;if(a/10>=f)break;const hot=q==Math.floor(u)&&u<4?cl(1-(f-a/10)*3):0;Q([PT(t0,-2.4,R+1),PT(t1,-2.4,R+1),PT(t1,2.4,R+1),PT(t0,2.4,R+1)],[125+130*hot,128+10*hot,136-90*hot])}}
+if(u<4){const q=Math.floor(u),th=ST[q]+90*cl(u-q);bar(PT(th,0,R+1),PT(th,0,R+16),1.8,[40,44,50]);box(PT(th,0,R+2),AX,CC(th),NN(th),2.6,2.6,1,[255,200,80]);head=PT(th,0,R+20)}}
+if(P>=6){const m=FT([30.5,0,0]);bar([m[0],0,-68],[m[0],0,68],.8,[200,200,210])}
+cx.clearRect(0,0,W,H);const f4=[[-190,FY,-110],[70,FY,-110],[70,FY,110],[-190,FY,110]].map(scr);cx.beginPath();f4.forEach((q,i)=>i?cx.lineTo(q[0],q[1]):cx.moveTo(q[0],q[1]));cx.closePath();cx.fillStyle='rgba(130,150,160,.16)';cx.fill();
+cx.strokeStyle='rgba(130,150,160,.35)';cx.lineWidth=1;cx.beginPath();for(let x=-180;x<=60;x+=40){const a=scr([x,FY,-110]),b=scr([x,FY,110]);cx.moveTo(a[0],a[1]);cx.lineTo(b[0],b[1])}for(let z=-100;z<=100;z+=40){const a=scr([-190,FY,z]),b=scr([70,FY,z]);cx.moveTo(a[0],a[1]);cx.lineTo(b[0],b[1])}cx.stroke();
+polys.sort((a,b)=>a.z-b.z);const sc=SC();
+for(const p of polys){const v=p.v;let n=nrm(crs(sub(v[1],v[0]),sub(v[2],v[0])));if(n[2]<0)n=mul(n,-1);const l=.4+.6*Math.max(0,-.4*n[0]+.55*n[1]+.73*n[2]);cx.beginPath();v.forEach((q,i)=>{const X=W/2+q[0]*sc,Y=H*.52-q[1]*sc;i?cx.lineTo(X,Y):cx.moveTo(X,Y)});cx.closePath();cx.fillStyle=`rgba(${p.col[0]*l|0},${p.col[1]*l|0},${p.col[2]*l|0},${p.al})`;cx.fill();if(p.al>=1){cx.strokeStyle=cx.fillStyle;cx.lineWidth=.7;cx.stroke()}}
+const ink=getComputedStyle(document.documentElement).getPropertyValue('--ink').trim()||'#14232d',i0=Math.min(N-1,Math.floor(P));cx.font='600 15px Barlow Semi Condensed,Arial Narrow,sans-serif';cx.fillStyle=ink;cx.textAlign='left';cx.fillText(`Step ${i0+1}/${N}: ${STEPS[i0][0]}`,12,22);
+cx.font='12px Barlow,sans-serif';cx.fillStyle='#7d93a1';cx.fillText(`Tilt drawn ×4 and ovality ×${exo.toFixed(0)} for visibility · table shows real values`,12,H-12);
+const lab=(p,t,ok)=>{const q=scr(p);cx.fillStyle=ok?'#1f8a5b':'#e4572e';cx.font='600 14px Barlow,sans-serif';cx.fillText(t,q[0]+8,q[1]-6)};
+if(gr>=0){const g=gapAt(gr*90);lab(PT(gr*90,0,R+18),`gap ${gr?['','3','6','9'][gr]:'12'} o’clock: ${g.toFixed(1)} mm`,g>=2&&g<=3.05)}
+if(gi>=0){const h=hlAt(gi*90);lab(PT(gi*90,0,R+10),`Hi-Lo ${['12','3','6','9'][gi]} o’clock: ${h.toFixed(1)} mm`,h<=1.5)}
+if(P>=3&&P<4)lab([FT([28,R+36,0])[0],R+36,0],`face tilt ${tl.toFixed(2)}°`,tl<=.5);
+if(head){const q=scr(head);cx.fillStyle='#e4572e';cx.font='12px Barlow,sans-serif';cx.fillText('quadrants 12→3, 6→9, 3→6, 9→12 (back-step)',Math.min(q[0]+8,W-300),q[1])}
+const rows=[0,90,180,270].map((th,i)=>['Gap rod '+['12','3','6','9'][i]+' o’clock',P<1.5?null:gapAt(th),'2–3 mm',v=>v>=2&&v<=3.05,1]);
+rows.push(['Hi-Lo, worst of 4',P<2?null:Math.max(...[0,90,180,270].map(hlAt)),'≤ 1.5 mm',v=>v<=1.5,1],['Face tilt',P<1.5?null:tl,'≤ 0.5°',v=>v<=.5,2],['Hole offset at bolt circle',I.OD*.625*Math.tan(rho*DR),'≤ 1.5 mm',v=>v<=1.5,1]);
+const t=`<table><thead><tr><th>Check</th><th>Now</th><th>Limit</th><th class="l">Status</th></tr></thead><tbody>${rows.map(r=>{const ok=r[1]==null?'':r[3](r[1])?'st-ok':'st-bad';return`<tr><td>${r[0]}</td><td class="${ok}">${r[1]==null?'—':r[1].toFixed(r[4])}</td><td>${r[2]}</td><td class="l ${ok}">${r[1]==null?'—':ok=='st-ok'?'✔ OK':'✘ correct before tacking'}</td></tr>`}).join('')}</tbody></table>`;if(t!==tbl){tbl=t;$('#pft').innerHTML=t}
+$('#pfs').value=P*100;[...$('#pfl').children].forEach((li,j)=>li.className=j==i0?'on':j<i0?'done':'')}
+function read(){FLD.forEach(f=>{const v=parseFloat($('#pfi_'+f[0]).value);if(isFinite(v))I[f[0]]=v});I.OD=Math.max(60,I.OD);I.wt=Math.max(2,I.wt);I.ov=Math.max(0,I.ov);dirty=true}
+FLD.forEach(f=>$('#pfi_'+f[0]).oninput=read);
+const stop=()=>{play=false;$('#pfp').textContent='▶ Play'};
+$('#pfp').onclick=()=>{if(P>=N-.01)P=0;play=!play;$('#pfp').textContent=play?'❚❚ Pause':'▶ Play';dirty=true};
+$('#pfn').onclick=()=>{P=Math.min(N-.001,Math.floor(P)+1);stop();dirty=true};$('#pfb').onclick=()=>{P=Math.max(0,Math.ceil(P)-1);stop();dirty=true};
+$('#pfs').oninput=e=>{P=e.target.value/100;stop();dirty=true};$('#pfr').onclick=()=>{cam={yaw:-.75,pitch:.3,zoom:1};dirty=true};
+[...$('#pfl').children].forEach((li,i)=>{const g=()=>{P=i;stop();dirty=true};li.onclick=g;li.onkeydown=e=>e.key=='Enter'&&g()});
+cv.onpointerdown=e=>{drag=[e.clientX,e.clientY];cv.setPointerCapture(e.pointerId)};cv.onpointermove=e=>{if(!drag)return;cam.yaw+=(e.clientX-drag[0])*.008;cam.pitch=cl(cam.pitch+(e.clientY-drag[1])*.008,-.25,1.3);drag=[e.clientX,e.clientY];dirty=true};cv.onpointerup=cv.onpointercancel=()=>drag=null;
+cv.addEventListener('wheel',e=>{e.preventDefault();cam.zoom=cl(cam.zoom*Math.exp(-e.deltaY*.0012),.5,2.6);dirty=true},{passive:false});
+function tick(n){const dt=Math.min(.05,(n-last)/1000||0);last=n;if(s.hidden||!cv.offsetParent)dirty=true;else{if(play){P+=dt*.38*+$('#pfv').value;if(P>=N-.001){P=N-.001;stop();$('#pfp').textContent='↺ Replay'}dirty=true}if(dirty){dirty=false;frame()}}requestAnimationFrame(tick)}
+requestAnimationFrame(tick)})();
+/* ---- show each 3D card only with its own fit-up chip ---- */
+(function(){const s=document.getElementById('fitup'),u=s&&s.querySelector('#uch');if(!u)return;const upd=()=>{const b=u.querySelector('button[aria-pressed=true]'),k=b&&b.dataset.k;s.querySelectorAll('[data-fu]').forEach(c=>c.hidden=c.dataset.fu!=k)};u.addEventListener('click',upd);upd()})();
+</script>
+</body></html>
