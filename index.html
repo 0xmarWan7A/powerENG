@@ -138,11 +138,11 @@ ol.steps li{padding:10px}
 </style></head><body>
 <script>window.__h0=location.hash.slice(1)</script>
 <div id="app-static">
-<header><div><div class="eyebrow"><span class="brand" style="text-transform:none;font-size:17px;letter-spacing:.3px">petro<b>Power</b></span> · Static equipment</div><h1>PV Fab Lab · Steel, Flanges & Fit-up</h1><p>Companion module for the ASME VIII-1 simulator — reference tables and animated fit-up procedures</p></div>
+<header><div><div class="eyebrow"><span class="brand" style="text-transform:none;font-size:17px;letter-spacing:.3px">petro<b>Power</b></span> · Fabrication & Welding</div></div>
 <div class="hbtns"><button class="btn" id="to-hub">← Equipment</button><button class="btn" id="theme" aria-label="Toggle theme">Theme</button><button class="btn" id="out">Sign out</button></div></header>
 <div class="tabs" role="tablist" id="tabs"></div>
 <main>
-<section id="design" hidden></section><section id="beams" hidden></section><section id="flanges" hidden></section><section id="fitup" hidden></section><section id="weld" hidden></section><section id="pwht" hidden></section><section id="nde" hidden></section>
+<section id="beams" hidden></section><section id="flanges" hidden></section><section id="fitup" hidden></section><section id="weld" hidden></section><section id="pwht" hidden></section><section id="nde" hidden></section>
 <p class="note">NDE acceptance values follow ASME V and VIII-1 (UW-35, UW-51, App. 6/8/12) and API 650 for vacuum box; always confirm against the edition and project specification. Reference values are nominal screening data (EN 10365 / EN 10279 / ASME B16.5). Confirm against the current standard, your project specification and the approved WPS before fabrication.</p>
 </main>
 </div>
@@ -153,11 +153,15 @@ ol.steps li{padding:10px}
 
 <div class="view" id="hub" hidden><div class="ppbar"><div class="brand">petro<b>Power</b></div><div class="hbtns"><button class="btn thm">Theme</button><button class="btn out">Sign out</button></div></div>
 <div class="hubw"><h1>Select equipment</h1><p>Choose a category to open its tools.</p><div class="eqg">
-<button class="eq" data-go="design"><div class="ic"><svg viewBox="0 0 120 90" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M30 26H90A12 17 0 0 1 90 60H30A12 17 0 0 1 30 26Z"/><path d="M52 26V60M68 26V60" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M36 60L32 74H52L48 60M72 60L68 74H88L84 60M18 74H102"/><path d="M56 26V13M64 26V13" /><path d="M51 13H69" stroke="var(--weld)" stroke-width="4"/><path d="M36 26V18M42 26V18" stroke-width="2.2"/><path d="M33 18H45" stroke="var(--weld)" stroke-width="3.4"/></svg></div><div class="tx"><h2>Static equipment</h2><p>Pressure vessels: ASME VIII-1 design, steel beams, flanges, fit-up, welding, PWHT and NDE.</p><span class="pill ok">Available</span></div></button>
+<button class="eq" data-go="beams"><div class="ic"><svg viewBox="0 0 120 90" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 70H54L60 64L66 70H108"/><path d="M12 78H108" stroke-width="1.6"/><path d="M54 70L60 64L66 70" stroke="var(--weld)" stroke-width="4"/><path d="M62 54L88 22"/><path d="M88 22L100 14L106 22L94 30Z" stroke-width="2.4"/><path d="M62 54L66 58" stroke="var(--weld)" stroke-width="4.5"/><path d="M48 56L40 48M58 46L56 36M70 50L78 44" stroke="var(--weld)" stroke-width="2.2"/></svg></div><div class="tx"><h2>Fabrication &amp; Welding</h2><p>Steel beams, flanges and classes, fit-up procedures, welding, PWHT and NDE reference and animations.</p><span class="pill ok">Available</span></div></button>
+<button class="eq" data-go="vessel"><div class="ic"><svg viewBox="0 0 120 90" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M30 26H90A12 17 0 0 1 90 60H30A12 17 0 0 1 30 26Z"/><path d="M52 26V60M68 26V60" stroke-width="1.6" stroke-dasharray="3 3"/><path d="M36 60L32 74H52L48 60M72 60L68 74H88L84 60M18 74H102"/><path d="M56 26V13M64 26V13" /><path d="M51 13H69" stroke="var(--weld)" stroke-width="4"/><path d="M36 26V18M42 26V18" stroke-width="2.2"/><path d="M33 18H45" stroke="var(--weld)" stroke-width="3.4"/></svg></div><div class="tx"><h2>Pressure vessels</h2><p>ASME VIII-1 / API 510 vessel design: shell, heads, MAWP, hydrotest, supports and detailed CAD drawing export.</p><span class="pill ok">Available</span></div></button>
+<button class="eq" data-go="tank"><div class="ic"><svg viewBox="0 0 120 90" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M26 36V72H94V36"/><path d="M22 36L60 18L98 36"/><path d="M26 48H94M26 60H94" stroke-width="1.6"/><path d="M60 18V10" stroke="var(--weld)" stroke-width="4"/><path d="M94 72L84 50L98 38" stroke-width="2"/><path d="M14 72H106"/><path d="M26 60H18V72" stroke="var(--weld)" stroke-width="3.4"/></svg></div><div class="tx"><h2>Storage tanks</h2><p>API 650 atmospheric tank design: shell, bottom, roof, wind, anchorage, plate layout and detailed CAD drawing export.</p><span class="pill ok">Available</span></div></button>
 <button class="eq" data-go="rotating"><div class="ic"><svg viewBox="0 0 120 90" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="52" cy="50" r="22"/><circle cx="52" cy="50" r="7" stroke="var(--weld)"/><path d="M52 43C60 38 66 44 64 50M52 57C44 62 38 56 40 50" stroke-width="2"/><path d="M62 30V15M76 36V15"/><path d="M57 15H81" stroke="var(--weld)" stroke-width="4"/><path d="M31 41H17M31 59H17"/><path d="M14 35V65" stroke="var(--weld)" stroke-width="4"/><path d="M74 44H82V56H74"/><rect x="82" y="38" width="30" height="24" rx="3"/><path d="M90 38V62M98 38V62M106 38V62" stroke-width="1.6"/><path d="M88 62V72M106 62V72M10 72H114"/><path d="M46 72V68M58 72V68" stroke-width="2.2"/></svg></div><div class="tx"><h2>Rotating equipment</h2><p>Pumps, compressors and drivers.</p><span class="pill">Coming soon</span></div></button>
 <button class="eq" data-go="hydraulic"><div class="ic"><svg viewBox="0 0 120 90" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="10" y="64" width="66" height="16" rx="8"/><circle cx="20" cy="72" r="3" stroke-width="2"/><circle cx="66" cy="72" r="3" stroke-width="2"/><path d="M14 64V48H38L44 32H62V64"/><path d="M48 36H58V46H46Z" stroke-width="2"/><path d="M62 52L86 22L108 50" stroke-width="4.5"/><path d="M68 56L80 42M92 30L98 40" stroke-width="2.4" stroke="var(--weld)"/><path d="M108 50L116 58L108 68L98 60Z" stroke="var(--weld)"/></svg></div><div class="tx"><h2>Hydraulic system</h2><p>Heavy equipment hydraulics and circuits.</p><span class="pill">Coming soon</span></div></button>
 </div></div></div>
 
+<div class="view" id="app-tank" hidden><div class="ppbar"><div class="brand">petro<b>Power</b></div><div class="hbtns"><button class="btn tohub">← Equipment</button><button class="btn thm">Theme</button><button class="btn out">Sign out</button></div></div><div id="tk_body"></div></div>
+<div class="view" id="app-vessel" hidden><div class="ppbar"><div class="brand">petro<b>Power</b></div><div class="hbtns"><button class="btn tohub">← Equipment</button><button class="btn thm">Theme</button><button class="btn out">Sign out</button></div></div><main><div class="eyebrow">Pressure vessels</div><section id="design" hidden></section></main></div>
 <div class="view" id="soon-rot" hidden><div class="ppbar"><div class="brand">petro<b>Power</b></div><div class="hbtns"><button class="btn thm">Theme</button><button class="btn out">Sign out</button></div></div>
 <div class="soonw"><div class="ic"><svg viewBox="0 0 120 90" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="52" cy="50" r="22"/><circle cx="52" cy="50" r="7" stroke="var(--weld)"/><path d="M52 43C60 38 66 44 64 50M52 57C44 62 38 56 40 50" stroke-width="2"/><path d="M62 30V15M76 36V15"/><path d="M57 15H81" stroke="var(--weld)" stroke-width="4"/><path d="M31 41H17M31 59H17"/><path d="M14 35V65" stroke="var(--weld)" stroke-width="4"/><path d="M74 44H82V56H74"/><rect x="82" y="38" width="30" height="24" rx="3"/><path d="M90 38V62M98 38V62M106 38V62" stroke-width="1.6"/><path d="M88 62V72M106 62V72M10 72H114"/><path d="M46 72V68M58 72V68" stroke-width="2.2"/></svg></div><span class="pill">Coming soon</span><h1 style="margin-top:12px">Rotating equipment</h1><p>Pump, compressor and driver tools are on the way. This module is not available yet.</p><button class="btn go tohub">← Back to equipment</button></div></div>
 <div class="view" id="soon-hyd" hidden><div class="ppbar"><div class="brand">petro<b>Power</b></div><div class="hbtns"><button class="btn thm">Theme</button><button class="btn out">Sign out</button></div></div>
@@ -166,7 +170,7 @@ ol.steps li{padding:10px}
 const $=(s,r=document)=>r.querySelector(s),c=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),seg=(P,i)=>c(P-i),ez=t=>t*t*(3-2*t);
 $('#theme').onclick=()=>{const r=document.documentElement,d=getComputedStyle(r).getPropertyValue('--bg').trim()=='#0e1920';r.dataset.theme=d?'light':'dark'};
 /* ---------- tabs ---------- */
-const TABS=[['design','Vessel design'],['beams','Steel beams'],['flanges','Flanges & classes'],['fitup','Fit-up procedures'],['weld','Welding'],['pwht','PWHT'],['nde','NDE']];
+const TABS=[['beams','Steel beams'],['flanges','Flanges & classes'],['fitup','Fit-up procedures'],['weld','Welding'],['pwht','PWHT'],['nde','NDE']];
 TABS.forEach(([id,t],i)=>{const b=document.createElement('button');b.className='tab';b.role='tab';b.textContent=t;b.onclick=()=>show(id);b.dataset.id=id;$('#tabs').append(b)});
 function show(id){TABS.forEach(([k])=>{$('#'+k).hidden=k!=id;$('.tab[data-id='+k+']').setAttribute('aria-selected',k==id)});location.hash=id}
 /* ---------- beams ---------- */
@@ -272,16 +276,11 @@ const sv=$('#qs');sv.onpointerdown=e=>{drag=true;lx=e.clientX;ly=e.clientY;sv.se
 $('#qp').onclick=()=>{spin=!spin;$('#qp').textContent=spin?'⏸ Spin':'▶ Spin'};$('#qr').onclick=()=>{yaw=-.6;pit=.45;draw()};
 (function loop(){if(spin&&!drag){yaw+=.012;draw()}requestAnimationFrame(loop)})();tbl();info();draw()})();
 /* ---------- flanges ---------- */
-const CL=[[150,'19.6','Utilities, cooling water, low-pressure process lines, atmospheric tanks'],[300,'51.1','General process piping, moderate pressure hydrocarbon service'],[600,'102.1','High-pressure process, steam headers, pump discharge'],[900,'153.2','High-pressure oil & gas, heavy steam'],[1500,'255.3','Wellhead, high-pressure gas injection, hydrotest manifolds'],[2500,'425.5','Extreme pressure, subsea and special high-pressure service'],[3000,'B16.11','Not a B16.5 flange class: forged socket-weld and threaded fittings, couplings and small-bore flanges (B16.11 Class 3000 / 6000 / 9000, roughly Sch 80 / 160 / XXS pipe)']];
-const FD={2:{150:[152,120.7,'4 × 5/8"'],300:[165,127,'8 × 5/8"'],600:[165,127,'8 × 5/8"'],900:[215.9,165.1,'8 × 7/8"'],1500:[215.9,165.1,'8 × 7/8"'],2500:[235,171.5,'8 × 1"']},4:{150:[229,190.5,'8 × 5/8"'],300:[254,200,'8 × 3/4"'],600:[273,215.9,'8 × 7/8"'],900:[292.1,235,'8 × 1-1/8"'],1500:[311.2,241.3,'8 × 1-1/4"'],2500:[355.6,273.1,'8 × 1-1/2"']},6:{150:[279,241.3,'8 × 3/4"'],300:[318,269.9,'12 × 3/4"'],600:[356,292.1,'12 × 1"'],900:[381,317.5,'12 × 1"'],1500:[393.7,317.5,'12 × 1-3/8"'],2500:[482.6,368.3,'8 × 2"']},8:{150:[343,298.5,'8 × 3/4"'],300:[381,330.2,'12 × 7/8"'],600:[419,349.2,'12 × 1-1/8"'],900:[469.9,393.7,'12 × 1-3/8"'],1500:[482.6,393.7,'12 × 1-5/8"'],2500:[552.5,438.2,'12 × 2"']}};
-(function(){const s=$('#flanges');let nps=4;
-s.innerHTML=`<div class="card"><h2>Pressure classes (ASME B16.5)</h2><div class="chips" id="fch"></div><div class="scroll"><table><thead><tr><th>Class</th><th>OD mm</th><th>Bolt circle mm</th><th>Bolts</th><th>Max bar @38 °C</th><th class="l">Typical use</th></tr></thead><tbody id="fb"></tbody></table></div><p class="note">Ratings: material group 1.1 (A105 / SA-516-70 class), 38 °C. Rating falls as temperature rises — read the P-T table in B16.5. Dimensions shown for NPS 2–8, Class 150–2500; "—" means see the B16.5 table. Class 3000 is a B16.11 rating for forged small-bore fittings, not a B16.5 flange class.</p></div>
-<div class="card"><h2>Flange types</h2><div class="scroll"><table><thead><tr><th class="l">Type</th><th class="l">Joined by</th><th class="l">Use</th></tr></thead><tbody>
+(function(){const s=$('#flanges');
+s.innerHTML=`<div class="card"><h2>Flange types</h2><div class="scroll"><table><thead><tr><th class="l">Type</th><th class="l">Joined by</th><th class="l">Use</th></tr></thead><tbody>
 ${[['Weld neck (WN)','Butt weld, full penetration','Severe or cyclic service, high pressure; best for RT inspection'],['Slip-on (SO)','Two fillet welds','Low pressure, utilities, easy fit-up'],['Socket weld (SW)','One fillet + 1.6 mm gap','Small bore ≤ NPS 2 high pressure'],['Lap joint (LJ)','Stub end butt weld','Spool pieces needing rotating flange, stainless lines'],['Threaded (THD)','Taper thread','Non-welded, low-hazard small bore'],['Blind (BL)','Bolted','Line end, vessel manway cover']].map(r=>`<tr>${r.map(v=>`<td class="l">${v}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
 <h3>Facings</h3><div class="spec"><span>RF — raised face (most common)</span><span>FF — flat face (cast iron mating)</span><span>RTJ — ring joint (high pressure / temp)</span></div></div>`;
-function t(){$('#fb').innerHTML=CL.map(([k,p,u])=>{const d=(FD[nps]||{})[k]||['—','—','—'];return `<tr><td>${k}</td><td>${d[0]}</td><td>${d[1]}</td><td>${d[2]}</td><td>${p}</td><td class="l">${u}</td></tr>`}).join('')}
-$('#fch').innerHTML=Object.keys(FD).map(n=>`<button class="chip" aria-pressed="${n==nps}">NPS ${n}</button>`).join('');
-$('#fch').querySelectorAll('button').forEach(b=>b.onclick=()=>{nps=+b.textContent.slice(4);$('#fch').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x==b));t()});t()})();
+})();
 /* ---------- flanges: full table NPS 1/2-24 + shapes ---------- */
 (function(){const s=$('#flanges'),SZ=[['1/2',15,21.3,34.9],['3/4',20,26.7,42.9],['1',25,33.4,50.8],['1-1/4',32,42.2,63.5],['1-1/2',40,48.3,73],['2',50,60.3,92.1],['2-1/2',65,73,104.8],['3',80,88.9,127],['3-1/2',90,101.6,139.7],['4',100,114.3,157.2],['5',125,141.3,185.7],['6',150,168.3,215.9],['8',200,219.1,269.9],['10',250,273.1,323.8],['12',300,323.9,381],['14',350,355.6,412.8],['16',400,406.4,469.9],['18',450,457.2,533.4],['20',500,508,584.2],['24',600,609.6,692.2]],
 C={150:['88.9|11.2|60.3|4 × 1/2','98.6|12.7|69.9|4 × 1/2','108|14.3|79.4|4 × 1/2','117.3|15.9|88.9|4 × 1/2','127|17.5|98.6|4 × 1/2','152.4|19.1|120.7|4 × 5/8','177.8|22.3|139.7|4 × 5/8','190.5|23.9|152.4|4 × 5/8','215.9|23.9|177.8|8 × 5/8','228.6|23.9|190.5|8 × 5/8','254|23.9|215.9|8 × 3/4','279.4|25.4|241.3|8 × 3/4','342.9|28.6|298.5|8 × 3/4','406.4|30.2|362|12 × 7/8','482.6|31.8|431.8|12 × 7/8','533.4|35|476.3|12 × 1','596.9|36.6|539.8|16 × 1','635|39.7|577.9|16 × 1-1/8','698.5|42.9|635|20 × 1-1/8','812.8|47.7|749.3|20 × 1-1/4'],
@@ -303,7 +302,7 @@ FC=[[`Raised face (RF)`,`Gasket sits on a raised disc: 1.6 mm (Cl. 150/300), 6.4
 [`Flat face (FF)`,`Whole face flat; mates with cast-iron or low-pressure equipment.`,pg('10,8 130,8 130,40 10,40')],
 [`Ring joint (RTJ)`,`Steel oval or octagonal ring in a machined groove; high pressure and temperature.`,pg('10,8 130,8 130,40 80,40 77,31 63,31 60,40 10,40')+`<ellipse cx="70" cy="34" rx="6" ry="3.5" fill="var(--weld)" stroke="var(--ink)"/>`],
 [`Male and female (M&F)`,`Raised ridge fits a recess and confines the gasket; always used as a pair.`,pg('10,4 130,4 130,24 90,24 90,29 50,29 50,24 10,24')+pg('10,24 50,24 50,29 90,29 90,24 130,24 130,50 10,50','steel2')]];
-s.insertAdjacentHTML('beforeend',`<div class="card"><h2>All sizes NPS 1/2–24 · ASME B16.5</h2><div class="chips" id="ytc">${KLS.map(k=>`<button class="chip" aria-pressed="${k==kl}">Class ${k}</button>`).join('')}</div><div class="row"><div class="scroll"><table><thead><tr><th>NPS</th><th>DN</th><th>Pipe OD</th><th>Flange OD</th><th>Min t</th><th>Bolt circle</th><th>Bolts × dia (in)</th><th>RF dia</th></tr></thead><tbody id="ytb"></tbody></table></div><div><svg id="yfv" viewBox="0 0 320 300" class="stage" role="img" aria-label="Dimensioned flange elevation (face view)"></svg><div class="chips" id="ytp" style="margin-top:10px"></div><div class="fld"><label>Pipe <select id="ysch"><option value="40">Sch 40</option><option value="80">Sch 80</option></select></label><label>Y mm <input type="number" id="yyv" placeholder="auto" step="1"></label><label>Set-back mm <input type="number" id="ysb" placeholder="auto" step="0.5"></label></div><svg id="yfs" viewBox="0 0 380 290" class="stage" role="img" aria-label="Dimensioned flange half-section"></svg><p class="note">Elevation and half-section are drawn from the table for the selected size and class. Pipe wall comes from the schedule chosen. Hub proportions are schematic: type the real Y (length through hub) from B16.5 in the Y field, and the set-back if your procedure differs from the pipe wall.</p></div></div><div class="spec" id="yso"></div><div class="spec" id="yis"></div><p class="note">Dimensions in mm, nominal. Bolts are stud diameter in inches. Min t includes the 1.6 mm raised face for Class 150/300 and excludes the 6.4 mm raised face for Class 600. Click a row to draw the face and the half-section, both dimensioned. Classes 900, 1500 and 2500 are typed from the B16.5 tables: NPS 3½ is not a listed size above Class 600 and Class 2500 stops at NPS 12. Check against the current standard before use. Class 3000 / 6000 / 9000 belong to B16.11 forged fittings, not B16.5 flanges.</p></div><div class="card"><h2>Flange types · shapes (half-section, bore on the left)</h2><div class="fg">${TY.map(t=>`<div><svg viewBox="0 0 140 84" class="stage" role="img" aria-label="${t[0]} section"><line x1="20" y1="0" x2="20" y2="84" stroke="var(--mut)" stroke-dasharray="6 3 2 3"/>${t[3]}</svg><b>${t[0]}</b><p>${t[1]}. ${t[2]}.</p></div>`).join('')}</div><h3>Facings</h3><div class="fg">${FC.map(t=>`<div><svg viewBox="0 0 140 56" class="stage" role="img" aria-label="${t[0]}">${t[2]}</svg><b>${t[0]}</b><p>${t[1]}</p></div>`).join('')}</div><p class="note">Red = weld metal. Section drawings are schematic, not to scale.</p></div>`);
+s.insertAdjacentHTML('beforeend',`<div class="card"><h2>All sizes NPS 1/2–24 · ASME B16.5</h2><div class="chips" id="ytc">${KLS.map(k=>`<button class="chip" aria-pressed="${k==kl}">Class ${k}</button>`).join('')}</div><div class="scroll"><table><thead><tr><th>NPS</th><th>DN</th><th>Pipe OD</th><th>Flange OD</th><th>Min t</th><th>Bolt circle</th><th>Bolts × dia (in)</th><th>RF dia</th></tr></thead><tbody id="ytb"></tbody></table></div><div class="chips" id="ytp" style="margin-top:14px"></div><div class="fld"><label>Pipe <select id="ysch"><option value="5S">Sch 5S</option><option value="10S">Sch 10S</option><option value="10">Sch 10</option><option value="20">Sch 20</option><option value="30">Sch 30</option><option value="STD">STD</option><option value="40" selected>Sch 40</option><option value="60">Sch 60</option><option value="XS">XS</option><option value="80">Sch 80</option><option value="100">Sch 100</option><option value="120">Sch 120</option><option value="140">Sch 140</option><option value="160">Sch 160</option><option value="XXS">XXS</option></select></label><label>Y mm <input type="number" id="yyv" placeholder="auto" step="1"></label><label>Set-back mm <input type="number" id="ysb" placeholder="auto" step="0.5"></label></div><div class="row" style="margin-top:6px"><div><svg id="yfv" viewBox="0 0 320 300" class="stage" role="img" aria-label="Dimensioned flange elevation (face view)"></svg></div><div><svg id="yfs" viewBox="0 0 380 290" class="stage" role="img" aria-label="Dimensioned flange half-section"></svg></div></div><p class="note">Elevation and half-section are drawn from the table for the selected size and class. Pipe wall comes from the schedule chosen. Hub proportions are schematic: type the real Y (length through hub) from B16.5 in the Y field, and the set-back if your procedure differs from the pipe wall.</p><div class="spec" id="yso"></div><div class="spec" id="yis"></div><p class="note">Dimensions in mm, nominal. Bolts are stud diameter in inches. Min t includes the 1.6 mm raised face for Class 150/300 and excludes the 6.4 mm raised face for Class 600. Click a row to draw the face and the half-section, both dimensioned. Classes 900, 1500 and 2500 are typed from the B16.5 tables: NPS 3½ is not a listed size above Class 600 and Class 2500 stops at NPS 12. Check against the current standard before use. Class 3000 / 6000 / 9000 belong to B16.11 forged fittings, not B16.5 flanges.</p></div><div class="card"><h2>Flange types · shapes (half-section, bore on the left)</h2><div class="fg">${TY.map(t=>`<div><svg viewBox="0 0 140 84" class="stage" role="img" aria-label="${t[0]} section"><line x1="20" y1="0" x2="20" y2="84" stroke="var(--mut)" stroke-dasharray="6 3 2 3"/>${t[3]}</svg><b>${t[0]}</b><p>${t[1]}. ${t[2]}.</p></div>`).join('')}</div><h3>Facings</h3><div class="fg">${FC.map(t=>`<div><svg viewBox="0 0 140 56" class="stage" role="img" aria-label="${t[0]}">${t[2]}</svg><b>${t[0]}</b><p>${t[1]}</p></div>`).join('')}</div><p class="note">Red = weld metal. Section drawings are schematic, not to scale.</p></div>`);
 const fr=b=>b.split('-').reduce((a,p)=>a+(p.includes('/')?p.split('/')[0]/p.split('/')[1]:+p),0);
 let ft=0;
 const ld=(px,py,t,lx,ly,a)=>{const e=a=='end'?lx-t.length*5.8-4:lx+t.length*5.8+4;return`<polyline points="${px.toFixed(1)},${py.toFixed(1)} ${e.toFixed(1)},${ly-4}" fill="none" stroke="var(--weld)" stroke-width="1"/><circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="2" fill="var(--weld)"/>`+dTx(lx,ly,t,a)};
@@ -315,9 +314,9 @@ o+=dH('m3',cx-R,cx+R,cy+R+24,'Ø OD '+od,cy)+dLn(cx-Rb,cy,cx+Rb,cy,'m3',1)+dTx(c
 o+=ld(cx-Rp*.707,cy-Rp*.707,'Ø pipe '+z[2],6,16,'start')+ld(cx+Rf*.707,cy-Rf*.707,'Ø RF '+z[3],314,16,'end')+ld(cx+Rb*Math.cos(a0),cy+Rb*Math.sin(a0),n+' × Ø'+bd.toFixed(1),314,276,'end');
 $('#yfv').innerHTML=o;
 $('#yso').innerHTML=[`Rating ${RT[kl]} bar @ 38 °C (group 1.1)`,`${n} holes, pitch ${st}°, straddling the centreline`,`hole Ø ${bd.toFixed(1)} mm for ${bs} in studs`,`RF Ø ${z[3]} · pipe OD ${z[2]}`].map(x=>`<span>${x}</span>`).join('');sect()}
-const W40=[2.77,2.87,3.38,3.56,3.68,3.91,5.16,5.49,5.74,6.02,6.55,7.11,8.18,9.27,10.31,11.13,12.7,14.27,15.09,17.48],W80=[3.73,3.91,4.55,4.85,5.08,5.54,7.01,7.62,8.08,8.56,9.53,10.97,12.7,15.09,17.48,19.05,21.44,23.83,26.19,30.96],SKD=[10,13,13,13,13,16,16,16,16,19];
-function sect(){const q0=C[kl][sel];if(!q0){$('#yfs').innerHTML=dTx(190,145,'Not listed in ASME B16.5 for this class and size');$('#yis').innerHTML='';return}
-const z=SZ[sel],r=q0.split('|'),od=+r[0],tt=+r[1],bc=+r[2],n=parseInt(r[3]),bd=fr(r[3].split('× ')[1])*25.4+1.6,A=z[2],rD=z[3],rh=kl<600?1.6:6.4,tb=kl<600?tt-1.6:tt,wl=(+$('#ysch').value==80?W80:W40)[sel],Lf=rh+tb,Dk=SKD[sel],g=1.6,yin=+$('#yyv').value,sin=+$('#ysb').value;
+const SCH={"5S": [1.65, 1.65, 1.65, 1.65, 1.65, 1.65, 2.11, 2.11, 2.11, 2.11, 2.77, 2.77, 2.77, 3.4, 3.96, 3.96, 4.19, 4.19, 4.78, 5.54], "10S": [2.11, 2.11, 2.77, 2.77, 2.77, 2.77, 3.05, 3.05, 3.05, 3.05, 3.4, 3.4, 3.76, 4.19, 4.57, 4.78, 4.78, 4.78, 5.54, 6.35], "10": [2.11, 2.11, 2.77, 2.77, 2.77, 2.77, 3.05, 3.05, 3.05, 3.05, 3.4, 3.4, 3.76, 4.19, 4.57, 6.35, 6.35, 6.35, 6.35, 6.35], "20": [null, null, null, null, null, null, null, null, null, null, null, null, 6.35, 6.35, 6.35, 7.92, 7.92, 7.92, 9.53, 9.53], "30": [null, null, null, null, null, null, null, null, null, null, null, null, 7.04, 7.8, 8.38, 9.53, 9.53, 11.13, 12.7, 14.27], "STD": [2.77, 2.87, 3.38, 3.56, 3.68, 3.91, 5.16, 5.49, 5.74, 6.02, 6.55, 7.11, 8.18, 9.27, 9.53, 9.53, 9.53, 9.53, 9.53, 9.53], "40": [2.77, 2.87, 3.38, 3.56, 3.68, 3.91, 5.16, 5.49, 5.74, 6.02, 6.55, 7.11, 8.18, 9.27, 10.31, 11.13, 12.7, 14.27, 15.09, 17.48], "60": [null, null, null, null, null, null, null, null, null, null, null, null, 10.31, 12.7, 14.27, 15.09, 16.66, 19.05, 20.62, 24.61], "XS": [3.73, 3.91, 4.55, 4.85, 5.08, 5.54, 7.01, 7.62, 8.08, 8.56, 9.53, 10.97, 12.7, 12.7, 12.7, 12.7, 12.7, 12.7, 12.7, 12.7], "80": [3.73, 3.91, 4.55, 4.85, 5.08, 5.54, 7.01, 7.62, 8.08, 8.56, 9.53, 10.97, 12.7, 15.09, 17.48, 19.05, 21.44, 23.83, 26.19, 30.96], "100": [null, null, null, null, null, null, null, null, null, null, null, null, 15.09, 18.26, 21.44, 23.83, 26.19, 29.36, 32.54, 38.89], "120": [null, null, null, null, null, null, null, null, null, 11.13, 12.7, 14.27, 18.26, 21.44, 25.4, 27.79, 30.96, 34.93, 38.1, 46.02], "140": [null, null, null, null, null, null, null, null, null, null, null, null, 20.62, 25.4, 28.58, 31.75, 36.53, 39.67, 44.45, 52.37], "160": [4.78, 5.56, 6.35, 6.35, 7.14, 8.74, 9.53, 11.13, null, 13.49, 15.88, 18.26, 23.01, 28.58, 33.32, 35.71, 40.49, 45.24, 50.01, 59.54], "XXS": [7.47, 7.82, 9.09, 9.7, 10.15, 11.07, 14.02, 15.24, null, 17.12, 19.05, 21.95, 22.23, 25.4, 25.4, null, null, null, null, null]};const SKD=[10,13,13,13,13,16,16,16,16,19];
+function sect(){const sch=$('#ysch');[...sch.options].forEach(o=>o.disabled=SCH[o.value][sel]==null);if(SCH[sch.value][sel]==null)sch.value='40';const q0=C[kl][sel];if(!q0){$('#yfs').innerHTML=dTx(190,145,'Not listed in ASME B16.5 for this class and size');$('#yis').innerHTML='';return}
+const z=SZ[sel],r=q0.split('|'),od=+r[0],tt=+r[1],bc=+r[2],n=parseInt(r[3]),bd=fr(r[3].split('× ')[1])*25.4+1.6,A=z[2],rD=z[3],rh=kl<600?1.6:6.4,tb=kl<600?tt-1.6:tt,wl=SCH[sch.value][sel],Lf=rh+tb,Dk=SKD[sel],g=1.6,yin=+$('#yyv').value,sin=+$('#ysb').value;
 if(ft==2&&!Dk){$('#yfs').innerHTML=dTx(190,145,'Socket-weld flanges are made for NPS 4 and smaller');$('#yis').innerHTML='';return}
 const Yd=Lf+(ft==2?.6:.4)*tb,Ys=Math.max(yin>0?yin:Yd,Lf+.1,ft==2&&Dk?Dk+3:0),ss=sin>0?sin:Math.max(3,wl),hH=1.6*tb,hx=A/2+(ft==0?.7:ft==2?.6:.5)*tb,rin=A/2-wl,
 topA=ft==0?Lf+hH+.5*tb:ft==3?Lf:Ys+1.2*tb,k=Math.min(215/(od/2),165/topA),yb=214,X=q=>48+q*k,Y=a=>yb-a*k,M=a=>'M'+a.map(q=>X(q[0]).toFixed(1)+','+Y(q[1]).toFixed(1)).join('L')+'Z';
@@ -349,7 +348,7 @@ if(ft==1||ft==2){const xY=X(od/2)+82;o+=dEx(X(hx),Y(Ys),xY+4,Y(Ys))+dEx(X(rD/2),
 if(ft==1){o+=dLn(xr-10,Y(ss),xr-10,Y(0),'m4',1)+dTx(xr-16,Y(0)-4,'s = '+ss.toFixed(1),'end')+dV('m4',Y(Ys),Y(ss),xr-44,'L = '+(Ys-ss).toFixed(1)+' pipe inside',xr)}
 if(ft==2){o+=dV('m4',Y(Ys),Y(Ys-Dk),xr-44,'D = '+Dk,X(A/2))+dV('m4',Y(Ys),Y(Ys-Dk+g),xr-76,'L = '+(Dk-g).toFixed(1)+' pipe inside',xr)+dLn(xr-10,Y(Ys-Dk+g),xr-10,Y(Ys-Dk),'m4',1)+dTx(xr-14,Y(Ys-Dk)+14,'gap '+g,'end')}
 o+=dTx(372,282,['Weld neck','Slip-on','Socket weld','Blind'][ft]+' · NPS '+z[0]+' · Class '+kl+' · pipe wall '+wl,'end');
-$('#yfs').innerHTML=o;$('#yis').innerHTML=sp.map(x=>`<span>${x}</span>`).join('')}
+$('#yfs').innerHTML=o;$('#yis').innerHTML=(ft==3?sp:[`pipe wall ${wl} mm (${sch.selectedOptions[0].textContent}, B36.10M / B36.19M)`,...sp]).map(x=>`<span>${x}</span>`).join('')}
 $('#ytp').innerHTML=['Weld neck','Slip-on','Socket weld','Blind'].map((x,j)=>`<button class="chip" aria-pressed="${j==ft}">${x}</button>`).join('');
 $('#ytp').querySelectorAll('button').forEach((b,j)=>b.onclick=()=>{ft=j;$('#ytp').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x==b));sect()});
 ['#ysch','#yyv','#ysb'].forEach(i=>{$(i).oninput=$(i).onchange=sect});
@@ -1140,7 +1139,7 @@ requestAnimationFrame(tick)}
 plan();verdict();prs();requestAnimationFrame(tick);
 if(window.ResizeObserver)new ResizeObserver(()=>{dirty=1}).observe(s)})();
 
-{const h0=location.hash.slice(1);show(['design','beams','flanges','fitup','weld','pwht','nde'].includes(h0)?h0:'design')}
+{const h0=location.hash.slice(1);show(['beams','flanges','fitup','weld','pwht','nde'].includes(h0)?h0:'beams')}
 </script><script>
 /* ---------- 3D · shell course to shell course fit-up · ovality correction (axis plate + blanko bridges) ---------- */
 (function(){
@@ -1525,12 +1524,61 @@ else if(q[1]=='C'){if(i<1||i>=nc)return;a=cu[i];r=R+Math.max(cs[i-1],cs[i])}
 else{if(i>2)return;a=i==1?cu[0]:cu[nc];r=R+cs[i==1?0:nc-1]}
 Tg.push(vt?[r,H-a]:[a,r]);mm.push(m)});
 if(!Tg.length)return;const k=gi++,t0=Tg[0],lbl=mm.length>1?mm[0]+'-'+mm[mm.length-1]:mm[0];
-if(vt)wsy(V1,Ro+pe+7*gp+k*85*S,t0[1]+8*S,w.o,Tg,lbl);else wsy(V1,t0[0]+9*S,Ro+pe+(nz.length+1)*gp+8*S+k*17*S,w.o,Tg,lbl)})};
-const V1=mkV(),V2=mkV(),V3=mkV(),V4=mkV(),V5=mkV(),p1=q=>[q[0],q[1]],p2=q=>[q[0],-q[2]],p3=q=>[-q[2],q[1]],yb=-Ro-Math.max(hs,pe);
+if(vt)wsy(VW,Ro+pe+3*gp+k*85*S,t0[1]+8*S,w.o,Tg,lbl);else wsy(VW,t0[0]+9*S,Ro+pe+3*gp+8*S+k*17*S,w.o,Tg,lbl)})};
+const V1=mkV(),V2=mkV(),V3=mkV(),V4=mkV(),V5=mkV(),VW=mkV(),V6=mkV(),V7=mkV(),V8=mkV(),V9=mkV(),p1=q=>[q[0],q[1]],p2=q=>[q[0],-q[2]],p3=q=>[-q[2],q[1]],yb=-Ro-Math.max(hs,pe);
 if(sph){[V1,V2,V3].forEach(V=>{circ(V);cd(V,yb,1)})}
 else if(vt){prof(V1);sk2(V1);circ(V2);V2.C([0,0],R+tmax,'HID');V2.C([0,0],R+tmax+60,'HID');cd(V2,yb,1);prof(V3);sk2(V3);dim(V3,[-Ro,H],[Ro,H],gp,'OD '+Math.round(2*Ro))}
 else{prof(V1);sad(V1,0);prof(V2);sad(V2,1);circ(V3);sad(V3,2);dim(V2,[OAL,-Ro],[OAL,Ro],-gp,'OD '+Math.round(2*Ro));cd(V3,yb,1)}
-nz.forEach((n,j)=>{noz(V1,p1,n,j);noz(V2,p2,n,j);noz(V3,p3,n,j)});wsV1();
+const wmap=()=>{if(sph){circ(VW);cd(VW,yb,1)}else{prof(VW);nz.forEach((n,j)=>noz(VW,p1,n,j));cu.forEach((a,i)=>{const nm2=i==0?'H1':i==ws.length?'H2':'C'+i;VW.T(AM(a,Ro+(vt?12*S:6*S)),nm2,th,'TEXT',0,1)})}wsV1();lab(VW,'WELD MAP - JOINT MARKS AND WELDING SYMBOLS')},
+saddle=()=>{if(sph||vt)return;const N1=(v,k=0)=>(+v).toFixed(k),
+Q=d.W*9.81/2/1000,Qo=d.Wo*9.81/2/1000,A=Math.round(.2*Ls/10)*10,b=Math.max(200,Math.ceil(Math.max(D/12,Q*1.2)/10)*10),
+tww=Math.max(6,Math.min(tmax,12)),ext=Math.ceil(1.56*Math.sqrt(Ro*tmax)/10)*10,bw=b+2*ext,Rw=Ro+tww,
+sn=Math.sin(pi/3),xh=Rw*sn,yh=-Rw*Math.cos(pi/3),Hs=Math.max(250,Math.round(.15*D/50)*50),yb=-Rw-Hs,
+nw=Math.min(5,Math.max(3,Math.ceil(b/130))),chord=2*xh,tw=Math.max(10,Math.ceil(Q*1000/(100*nw*chord))),
+tb=Q>150?20:16,Lb=Math.ceil(2*(xh+60)/10)*10,Bb=b+120,bx=xh+35,by=Bb/2-35,
+sig=Q*1000/(nw*tw*chord),pc=Q*1000/(Lb*Bb),lw=Math.max(6,Math.round(.7*tww)),lv=Math.max(6,Math.round(.7*tw)),
+dT=Math.max(0,(d.Td-20)*12e-6*(Ls-2*A)/2),
+arc=(r,f0,f1,n)=>{const a=[];for(let i=0;i<=n;i++){const f=(f0+(f1-f0)*i/n)*pi/180;a.push([r*Math.sin(f),-r*Math.cos(f)])}return a},
+rect=(x0,y0,x1,y1)=>[[x0,y0],[x0,y1],[x1,y1],[x1,y0],[x0,y0]];
+/* front view: section at the saddle, looking along the vessel axis */
+V6.C([0,0],Ro,'OUT');V6.C([0,0],R,'THIN');V6.L([-Ro-30*S,0],[Ro+30*S,0],'CEN');V6.L([0,Ro+30*S],[0,yb-tb-230],'CEN');
+{const wp=[...arc(Rw,-66,66,30),...arc(Ro,66,-66,30)];wp.push(wp[0]);V6.P(wp,'OUT')}
+V6.P([[-xh,yh],[-xh,yb],[xh,yb],[xh,yh]],'OUT');V6.P(rect(-Lb/2,yb,Lb/2,yb-tb),'OUT');
+V6.P([[-Lb/2-60,yb-tb],[-Lb/2-60,yb-tb-200],[Lb/2+60,yb-tb-200],[Lb/2+60,yb-tb]],'SUP');
+[-1,1].forEach(q=>{const x=q*bx;V6.L([x,yb-tb-180],[x,yb+30],'HID');V6.P(rect(x-18,yb,x+18,yb+22),'OUT')});
+V6.T([0,R*.45],'SADDLE ANGLE 120%%d (WEAR PLATE 132%%d)',th,'TEXT',0,1);V6.T([0,yb+Hs/2],'WEB / RIB PLATES t='+tw,th,'TEXT',0,1);
+dim(V6,[-Lb/2,yb-tb],[Lb/2,yb-tb],-(240+gp),'Lb '+Lb);dim(V6,[-Lb/2,yb],[-Lb/2,-Rw],3*gp,'H '+Hs);dim(V6,[-Ro,Ro],[Ro,Ro],2*gp,'OD '+Math.round(2*Ro));dim(V6,[0,yb],[0,yb-tb],-(Lb/2+90),'tb '+tb);
+{const xs=Ro+250,w1=Rw*Math.sin(66*pi/180),y1=-Rw*Math.cos(66*pi/180);
+wsy(V6,xs,y1+10*S,{a:{k:'F',leg:lw},all:1,tail:['SMAW E7018','MT or PT','continuous']},[w1,y1],'W1');
+wsy(V6,xs,yh-35*S,{a:{k:'F',leg:lv},b:{k:'F',leg:lv},tail:['SMAW E7018','both sides']},[xh,yh],'W2');
+wsy(V6,xs,yb+10*S,{a:{k:'F',leg:lv},b:{k:'F',leg:lv},tail:['SMAW E7018','both sides']},[xh,yb],'W3')}
+/* side view: along the vessel, through the saddle */
+V7.L([-bw/2-200,-Ro],[bw/2+200,-Ro],'OUT');V7.L([-bw/2-200,-R],[bw/2+200,-R],'THIN');V7.P(rect(-bw/2,-Ro,bw/2,-Rw),'OUT');
+for(let i=0;i<nw;i++){const x0=-b/2+i*(b-tw)/(nw-1);V7.P(rect(x0,-Rw,x0+tw,yb),'OUT')}
+V7.P(rect(-Bb/2,yb,Bb/2,yb-tb),'OUT');V7.P([[-Bb/2-60,yb-tb],[-Bb/2-60,yb-tb-200],[Bb/2+60,yb-tb-200],[Bb/2+60,yb-tb]],'SUP');
+[-1,1].forEach(q=>{const x=q*by;V7.L([x,yb-tb-180],[x,yb+30],'HID');V7.P(rect(x-18,yb,x+18,yb+22),'OUT')});V7.L([0,-R+40],[0,yb-tb-230],'CEN');
+dim(V7,[-Bb/2,yb-tb],[Bb/2,yb-tb],-(240+gp),'Bb '+Bb);dim(V7,[-b/2,-R],[b/2,-R],2*gp,'b '+b);dim(V7,[-bw/2,-R],[bw/2,-R],4*gp,'WEAR PL '+bw);
+V7.T([bw/2+260,-Rw-tww],'SHELL / WEAR PLATE',th,'TEXT',0,0);
+/* plan: base plates, S1 fixed and S2 sliding */
+const gx=Lb+330;[0,1].forEach(j=>{const ox=j*gx;V8.P(rect(ox-Lb/2,-Bb/2,ox+Lb/2,Bb/2),'OUT');V8.L([ox-Lb/2-30,0],[ox+Lb/2+30,0],'CEN');V8.L([ox,-Bb/2-30],[ox,Bb/2+30],'CEN');
+for(let i=0;i<nw;i++){const y0=-b/2+i*(b-tw)/(nw-1);V8.P(rect(ox-xh,y0,ox+xh,y0+tw),'HID')}
+[-1,1].forEach(sx=>[-1,1].forEach(sy=>{const cx=ox+sx*bx,cy=sy*by;if(!j)V8.C([cx,cy],13.5,'OUT');else{V8.C([cx,cy-15],13.5,'OUT');V8.C([cx,cy+15],13.5,'OUT');V8.L([cx-13.5,cy-15],[cx-13.5,cy+15],'OUT');V8.L([cx+13.5,cy-15],[cx+13.5,cy+15],'OUT')}}));
+V8.T([ox,Bb/2+2*gp],j?'SADDLE S2 - SLIDING, SLOTS 27 x 60':'SADDLE S1 - FIXED, HOLES 27',th,'TEXT',0,1)});
+dim(V8,[-bx,-by],[bx,-by],-(35+gp),'BOLTS '+Math.round(2*bx));dim(V8,[-Lb/2,-Bb/2],[Lb/2,-Bb/2],-(35+4*gp),'Lb '+Lb);
+dim(V8,[-bx,-by],[-bx,by],25+2*gp,Math.round(2*by));dim(V8,[gx+Lb/2,-Bb/2],[gx+Lb/2,Bb/2],-3*gp,'Bb '+Bb);
+/* design data */
+let y=0;const ln=(s2,h=th)=>{V9.T([0,y],s2,h,'TEXT',0,0);y-=(h+2*S)*1.4};
+ln('SADDLE SUPPORT DESIGN (ZICK SCREENING)',5*S);y-=3*S;
+[`Vessel ID ${D} - OD ${Math.round(2*Ro)} - T/T ${Ls} mm - ${d.mat}`,`Empty ${Math.round(d.We)} kg - test (water) ${Math.round(d.W)} kg - operating ${Math.round(d.Wo)} kg`,
+`Load per saddle Q = ${N1(Q)} kN (test, governing) - ${N1(Qo)} kN (operating)`,`Saddle centre A = ${A} mm from each tangent line (A <= 0.2 L) - spacing ${Math.round(Ls-2*A)} mm`,
+`Contact angle 120 deg - wear plate 132 deg, t ${tww} mm, width ${bw} mm (${ext} mm each side of the saddle)`,`Saddle width b = ${b} mm - ${nw} plates (2 webs + ${nw-2} rib) t ${tw} mm`,
+`Base plate ${Lb} x ${Bb} x ${tb} mm - height to vessel OD H = ${Hs} mm`,`Anchor bolts 4 x M24 per saddle - S1 fixed, S2 slotted 27 x 60`,
+`Plate compression ${N1(sig,1)} MPa (limit 100) ${sig<=100?'OK':'CHECK'} - concrete bearing ${N1(pc,2)} MPa (limit 5) ${pc<=5?'OK':'CHECK'}`,
+`Thermal growth at the sliding saddle about ${N1(dT,1)} mm - slot allows +/- 15 mm ${dT<=15?'OK':'LONGER SLOT'}`].forEach(x=>ln(x));
+y-=3*S;ln('WELDS',5*S);ln(`W1 wear plate to shell: fillet leg ${lw} mm all round, MT or PT`);ln(`W2 web / rib plates to wear plate: fillet leg ${lv} mm both sides`);ln(`W3 web / rib plates to base plate: fillet leg ${lv} mm both sides`);
+y-=3*S;ln('NOTE',5*S);ln('Zick longitudinal bending, tangential shear and ring stresses are for the Designer.');ln('Saddle plates SA-36 / S275 typical. Wear plate same material as the shell.');ln('Weld wear plate to the shell before PWHT. Leave one saddle free to slide.');
+lab(V6,'FRONT VIEW - SECTION AT SADDLE');lab(V7,'SIDE VIEW');lab(V8,'PLAN - BASE PLATES')};
+nz.forEach((n,j)=>{noz(V1,p1,n,j);noz(V2,p2,n,j);noz(V3,p3,n,j)});wmap();saddle();
 if(!sph){if(!vt){const a=.2*Ls;ad(V1,xT1,xT1+a,1,Math.round(a));ad(V1,xT1+a,xT2-a,1,Math.round(Ls-2*a));ad(V1,xT2-a,xT2,1,Math.round(a))}
  cu.slice(1).forEach((a,i)=>ad(V1,cu[i],a,2,ws[i]));ad(V1,xT1,xT2,3,'T/T '+Ls);ad(V1,0,OAL,4,'OAL '+Math.round(OAL));
  if(vt){dim(V1,[Ro+pe,sk],[Ro+pe,0],gp,'SKIRT '+sk);dim(V1,[Ro+pe,H],[Ro+pe,0],5*gp,'OAH '+Math.round(H))}
@@ -1544,14 +1592,18 @@ if(d.wd&&d.wd.length){let y5=0;const l5=(s,h,x,yy)=>V5.T([x,yy],asx(s),h,'TEXT',
 l5('WELD SYMBOL SCHEDULE (AWS A2.4 / ISO 2553)',5*S,0,y5);y5-=9.8*S;
 ['Below the line = arrow side, above = other side. Size left of the symbol.','Tail = process / NDE / note. CJP = complete joint penetration.','Weld finish per UW-35. Sizes are screening values; WPS and PQR per ASME IX.'].forEach(s=>{l5(s,th,0,y5);y5-=(th+2*S)*1.4});
 y5-=6*S;{const rh=34*S,n=d.wd.length,cols=n>8?2:1,per=Math.ceil(n/cols),y0=y5;d.wd.forEach((w,i)=>{const c=Math.floor(i/per),x=c*150*S,yt=y0-(i%per)*rh;l5(w.m.join(' ')+' - '+w.j,th,x,yt);wsy(V5,x+12*S,yt-12*S,w.o)})}}
-return[V1,V2,V3,V4,V5]},
-lay=S=>{const[V1,V2,V3,V4,V5]=build(S),g=24*S,B1=bb(V1),B2=bb(V2),B3=bb(V3),B4=bb(V4),x3=B1[2]+g-B3[0],y2=B1[3]+g-B2[1],E=[...V1,...V2.map(o=>mv(o,0,y2)),...V3.map(o=>mv(o,x3,0)),...V4.map(o=>mv(o,B3[0]+x3-B4[0],B2[3]+y2-B4[3]))],x4=B3[0]+x3-B4[0];if(V5.length){const B5=bb(V5);E.push(...V5.map(o=>mv(o,Math.max(B3[2]+x3,x4+B4[2])+g-B5[0],B2[3]+y2-B5[3])))}const b=bb(E);return{E,S,w:b[2]-b[0],h:b[3]-b[1],x0:b[0],y0:b[1]}};
-let best=null;for(const[nm,w,h]of[['A1',841,594],['A0',1189,841]]){for(const S of SC){const r=lay(S);if(r.w<=(w-35)*S&&r.h<=(h-70)*S){if(!best||S<best.r.S)best={nm,w,h,r};break}}if(best&&best.r.S<=50)break}
+return{V1,V2,V3,V4,V5,VW,V6,V7,V8,V9}},
+bc={},BD=S=>bc[S]||(bc[S]=build(S)),
+fin0=(S,E)=>{const b=bb(E);return{E,S,w:b[2]-b[0],h:b[3]-b[1],x0:b[0],y0:b[1]}},
+lay1=S=>{const{V1,V2,V3,V4}=BD(S),g=24*S,B1=bb(V1),B2=bb(V2),B3=bb(V3),B4=bb(V4),x3=B1[2]+g-B3[0],y2=B1[3]+g-B2[1];return fin0(S,[...V1,...V2.map(o=>mv(o,0,y2)),...V3.map(o=>mv(o,x3,0)),...V4.map(o=>mv(o,B3[0]+x3-B4[0],B2[3]+y2-B4[3]))])},
+lay2=S=>{const{VW,V5}=BD(S),g=24*S,BW=bb(VW),E=[...VW];if(V5.length){const B5=bb(V5);E.push(...V5.map(o=>d.vt?mv(o,BW[2]+g-B5[0],BW[3]-B5[3]):mv(o,BW[0]-B5[0],BW[1]-g-B5[3])))}return fin0(S,E)},
+lay3=S=>{const{V6,V7,V8,V9}=BD(S),g=24*S,B6=bb(V6),B7=bb(V7),B8=bb(V8),B9=bb(V9),x7=B6[2]+g-B7[0],y8=Math.max(B6[3],B7[3])+g-B8[1];return fin0(S,[...V6,...V7.map(o=>mv(o,x7,0)),...V8.map(o=>mv(o,0,y8)),...V9.map(o=>mv(o,B8[2]+g-B9[0],y8+B8[3]-B9[3]))])};
+const fin=(lay,ttl)=>{let best=null;for(const[nm,w,h]of[['A1',841,594],['A0',1189,841]]){for(const S of SC){const r=lay(S);if(r.w<=(w-35)*S&&r.h<=(h-70)*S){if(!best||S<best.r.S)best={nm,w,h,r};break}}if(best&&best.r.S<=50)break}
 if(!best)best={nm:'A0',w:1189,h:841,r:lay(1000)};
 const{nm,w,h,r}=best,S=r.S,W=w*S,HH=h*S,E=r.E.map(o=>mv(o,20*S+((w-30)*S-r.w)/2-r.x0,55*S+((h-65)*S-r.h)/2-r.y0)),
 ln=(p,q)=>E.push({t:'L',p,q,l:'FRAME'}),rc=(a,b,c,e)=>{ln([a,b],[c,b]);ln([c,b],[c,e]);ln([c,e],[a,e]);ln([a,e],[a,b])},tt=(x,y,s,hh)=>E.push({t:'T',p:[x,y],s,h:hh,l:'TEXT',r:0,c:0});
 rc(0,0,W,HH);rc(20*S,10*S,W-10*S,HH-10*S);rc(W-200*S,10*S,W-10*S,55*S);ln([W-200*S,32*S],[W-10*S,32*S]);
-tt(W-195*S,44*S,'PRESSURE VESSEL - GENERAL ARRANGEMENT',5*S);tt(W-195*S,36*S,d.head,3.5*S);tt(W-195*S,24*S,`SCALE 1:${S}   SHEET ${nm}   UNITS mm (drawn full size)`,3.5*S);tt(W-195*S,17*S,'Generated by PV Fab Lab. Screening design: verify with the Designer.',3*S);
+tt(W-195*S,44*S,ttl,5*S);tt(W-195*S,36*S,d.head,3.5*S);tt(W-195*S,24*S,`SCALE 1:${S}   SHEET ${nm}   UNITS mm (drawn full size)`,3.5*S);tt(W-195*S,17*S,'Generated by petroPower. Screening design: verify with the Designer.',3*S);
 const f=v=>(+v).toFixed(3),g=(...a)=>a.join('\n')+'\n',LY={OUT:[7,'CONTINUOUS'],THIN:[8,'CONTINUOUS'],WELD:[30,'CONTINUOUS'],CEN:[1,'CENTER'],HID:[5,'DASHED'],DIM:[3,'CONTINUOUS'],TEXT:[2,'CONTINUOUS'],NOZ:[4,'CONTINUOUS'],SUP:[6,'CONTINUOUS'],FRAME:[7,'CONTINUOUS'],WSYM:[5,'CONTINUOUS']};
 let o=g(0,'SECTION',2,'HEADER',9,'$ACADVER',1,'AC1009',9,'$LTSCALE',40,S,0,'ENDSEC',0,'SECTION',2,'TABLES',0,'TABLE',2,'LTYPE',70,3,
 0,'LTYPE',2,'CONTINUOUS',70,0,3,'Solid line',72,65,73,0,40,0,0,'LTYPE',2,'DASHED',70,0,3,'Dashed',72,65,73,2,40,18,49,12,49,-6,0,'LTYPE',2,'CENTER',70,0,3,'Center',72,65,73,4,40,50,49,32,49,-6,49,6,49,-6,0,'ENDTAB',0,'TABLE',2,'LAYER',70,10);
@@ -1567,7 +1619,7 @@ const PV={OUT:'var(--ink)',THIN:'var(--mut)',WELD:'var(--weld)',CEN:'#d4453a',HI
 tx=s=>s.replace(/%%c/g,'\u00d8').replace(/%%d/g,'\u00b0').replace(/&/g,'&amp;').replace(/</g,'&lt;'),
 mk=(P,std)=>{const st=e=>`stroke="${P[e.l]}" fill="none" stroke-width="${f((['OUT','FRAME','NOZ'].includes(e.l)?.5:.25)*S)}"${e.l=='CEN'?` stroke-dasharray="${14*S} ${3*S} ${3*S} ${3*S}"`:e.l=='HID'?` stroke-dasharray="${4*S} ${2*S}"`:''}`,Y=v=>f(HH-v);
  return`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${HH}" ${std?`width="${w}mm" height="${h}mm"`:'role="img" aria-label="CAD drawing preview"'} font-family="Barlow Semi Condensed,Arial Narrow,Arial,sans-serif">${std?`<rect width="${W}" height="${HH}" fill="#fff"/>`:''}`+E.map(e=>e.t=='L'?`<line x1="${f(e.p[0])}" y1="${Y(e.p[1])}" x2="${f(e.q[0])}" y2="${Y(e.q[1])}" ${st(e)}/>`:e.t=='C'?`<circle cx="${f(e.c[0])}" cy="${Y(e.c[1])}" r="${f(e.r)}" ${st(e)}/>`:e.t=='P'?`<polyline points="${e.pts.map(p=>f(p[0])+','+Y(p[1])).join(' ')}" ${st(e)}/>`:e.t=='S'?`<polygon points="${e.pts.map(p=>f(p[0])+','+Y(p[1])).join(' ')}" fill="${P.DIM}"/>`:`<text x="${f(e.p[0])}" y="${Y(e.p[1])}" font-size="${f(e.h)}" text-anchor="${e.c?'middle':'start'}" dominant-baseline="${e.c?'central':'auto'}" fill="${P.TEXT}" transform="rotate(${-e.r} ${f(e.p[0])} ${Y(e.p[1])})">${tx(e.s)}</text>`).join('')+'</svg>'};
-return{dxf:o,svg:mk(PV,0),svgFile:mk(PF,1),S,nm}};
+return{dxf:o,svg:mk(PV,0),svgFile:mk(PF,1),S,nm}};return{ga:fin(lay1,'PRESSURE VESSEL - GENERAL ARRANGEMENT'),weld:fin(lay2,'WELDING DETAILS - WELD MAP AND SYMBOLS'),saddle:d.sph||d.vt?null:fin(lay3,'SADDLE SUPPORT DESIGN')}};
 
 const calc=()=>{nzRd();const pu=Sv('dpu'),G=V('dg'),leth=Sv('dle')=='1',P=V('dp'),T=V('dt'),Vc=V('dv'),CA=V('dc'),Wm=V('dw'),WHm=V('dh'),PLm=V('dwl'),auto=Sv('dpm')=='a',md=Sv('dmm')=='m'?V('dm'):Math.min(V('dam'),FLT[+Sv('df')]==null?1e9:FLT[+Sv('df')]),ex=Sv('dx'),life=V('dly'),rate=V('dcr'),fm=FMAT(Sv('df'),T,md),mk=MAT[Sv('dmat')=='auto'?fm[0]:Sv('dmat')],ov=V('dso'),out=$('#dout'),Sh=ov>0?ov:sAt(mk[4],T),Sc=ov>0?ov:mk[4][0][1],E0=Sv('drt')=='auto'?.85:+Sv('drt');
 const WH=auto?PLATE(mk,20)[0]:WHm,stk=auto?t=>PLATE(mk,t):()=>[Wm,PLm];['dw','dwl','dh'].forEach(i=>{$('#'+i).disabled=auto});
@@ -1723,8 +1775,12 @@ rp.push(...nzR);const rr=rp.map(x=>{const c=x[4],lim=c.mw+c.st,u=c.Pi/lim*100;re
 hdr=['Component','Type','Material','Size','P + static MPa','t req + CA mm','t nom mm','MAWP MPa','Used','Weight kg','Result'],
 repH=`<div class="card"><h2>${lamp(worst(rr.map(x=>x[10].includes('weld')?'bad':'ok')))}6 · Component report (PV Elite style)</h2>${tbl(hdr,rr)}<div class="spec"><span>Governing: ${gov[0]} (MAWP ${N(mwc,2)} MPa)</span><span>Empty ${N(emp,0)} kg</span><span>Test ${N(emp+vs*1000,0)} kg</span><span>Operating ${N(emp+vs*1000*G,0)} kg</span><span>Hydrotest ${N(Ph,2)} MPa</span><span>Stress at test ${N(sig,0)} MPa</span></div><div class="ctrl"><button class="btn" id="drc">Download component report (CSV)</button></div><p class="note">MAWP column is the pressure each component can carry (hot, corroded) before static head is deducted. Used = (P + static) ÷ that pressure. Both heads are checked for the worse (bottom) static head. Weights are plate only, from nominal thickness.</p></div>`;
 
-const cdD={sph,vt:or=='v',D,R:D/2,Ls:sph?0:Ls,SF,hh0:sph?0:hp.h,hq:sph?null:hp.q,tH:sph?cs[0].tn:hd.tf,cs:cs.map(c=>c.tn),ws:sph?[]:ws.slice(),sk:sph?0:sk,nz:nzC.map(z=>({mk:z.mk,sv:z.sv,n:z.n,OD:z.OD,tn:z.tn,c:z.c,p:z.p,pad:z.pad,Dp:z.Dp,te:z.te,cls:z.cls,o:z.o||0,ax:z.ax||0})),wd:WD,notes:[mk[0]+' - '+pos,`Design ${N(P,2)} MPa(g) at ${T} %%dC`,`MAWP ${N(mws,2)} MPa - Hydrotest ${N(Ph,2)} MPa`,`CA ${CA} mm - ${pwT} - ${nde}`,`Empty weight ${N(emp,0)} kg`],head:`ID ${D}`+(sph?'':` x T/T ${Ls}`)+' - '+pos},
-cadH=`<div class="card"><h2>8 · CAD drawing export · multi-view, real dimensions</h2><p class="note" style="margin:0 0 8px">Front elevation, plan view and end / side view with dimension lines, weld seams, shell courses, nozzles at their set orientation and axial position, supports, nozzle schedule and a title block. The DXF is drawn full size in millimetres (1 unit = 1 mm) on separate layers; the sheet frame is drawn at the scale shown.</p><div class="ctrl"><button class="btn go" id="dcad">Download DXF (AutoCAD, BricsCAD, LibreCAD, FreeCAD)</button><button class="btn" id="dsv">Download SVG (printable to scale)</button></div><div class="stage" id="dcp"></div><p class="note">Nozzle orientation and axial position are set in the nozzle schedule above. Torispherical heads are drawn with their real knuckle and crown arcs; head and shell outer lines follow the ordered thicknesses. Saddles and skirt are schematic, to be detailed by the Designer.</p></div>`;
+const cdD={W:emp+vs*1000,Wo:emp+vs*1000*G,We:emp,mat:mk[0],Td:T,sph,vt:or=='v',D,R:D/2,Ls:sph?0:Ls,SF,hh0:sph?0:hp.h,hq:sph?null:hp.q,tH:sph?cs[0].tn:hd.tf,cs:cs.map(c=>c.tn),ws:sph?[]:ws.slice(),sk:sph?0:sk,nz:nzC.map(z=>({mk:z.mk,sv:z.sv,n:z.n,OD:z.OD,tn:z.tn,c:z.c,p:z.p,pad:z.pad,Dp:z.Dp,te:z.te,cls:z.cls,o:z.o||0,ax:z.ax||0})),wd:WD,notes:[mk[0]+' - '+pos,`Design ${N(P,2)} MPa(g) at ${T} %%dC`,`MAWP ${N(mws,2)} MPa - Hydrotest ${N(Ph,2)} MPa`,`CA ${CA} mm - ${pwT} - ${nde}`,`Empty weight ${N(emp,0)} kg`],head:`ID ${D}`+(sph?'':` x T/T ${Ls}`)+' - '+pos},
+cadH=`<div class="card"><h2>8 · CAD drawing export · three separate drawings</h2><p class="note" style="margin:0 0 8px">Each drawing is its own sheet and its own file. DXF is drawn full size in millimetres (1 unit = 1 mm) on separate layers; the sheet frame is drawn at the scale shown in the title block. Nozzle orientation and axial position come from the nozzle schedule above.</p>
+<h3>Drawing 1 · Pressure vessel layout</h3><p class="note" style="margin:0 0 6px">Front elevation, plan and end view with dimensions, shell courses, nozzles, supports and nozzle schedule.</p><div class="ctrl"><button class="btn go" id="dcad1">Download DXF</button><button class="btn" id="dsv1">Download SVG</button></div><div class="stage" id="dcp1"></div>
+<h3>Drawing 2 · Welding details</h3><p class="note" style="margin:0 0 6px">Weld map with joint marks and welding symbols on the vessel, plus the welding symbol schedule with the joint sketches (AWS A2.4 / ISO 2553).</p><div class="ctrl"><button class="btn go" id="dcad2">Download DXF</button><button class="btn" id="dsv2">Download SVG</button></div><div class="stage" id="dcp2"></div>
+<h3>Drawing 3 · Saddle support design</h3><p class="note" style="margin:0 0 6px">Front section, side view and base plates (fixed and sliding saddle), with load, plate sizes, anchor bolts and saddle welds (Zick screening, horizontal vessels).</p><div class="ctrl"><button class="btn go" id="dcad3">Download DXF</button><button class="btn" id="dsv3">Download SVG</button></div><div class="stage" id="dcp3"></div>
+<p class="note">Torispherical heads are drawn with their real knuckle and crown arcs. Saddle sizes are screening values from the Zick method: the Designer confirms the stresses and details.</p></div>`;
 out.innerHTML=`<div class="card"><h2>${lamp(all)}Detected from the code</h2><div class="spec">${chips.map(x=>`<span>${x}</span>`).join('')}</div></div>
 ${sec('1 · Mechanical properties',mp)}
 ${sec('2 · Mechanical calculations',mc,`<h3>${sph?'Sphere':'Shell courses'} (top to bottom)</h3>${tbl(['Course','P + static MPa','t req + CA mm','Order t mm','MAWP at top MPa','Light'],cr1)}<p class="note">Circumferential stress governs (same E on all seams). Mill under-tolerance 0.3 mm. Long seams of adjacent courses staggered ≥ 5t (UW-9(d)).</p>`)}
@@ -1736,24 +1792,516 @@ ${weldH}
 ${repH}
 ${nzH}
 ${cadH}
-<p class="note">Green = passes, amber = needs a decision or an input, red = fails. Screening only: allowable stresses are from the Sec. II-D table values coded here, so check them against the edition you design to. Nozzle reinforcement (UG-37), external pressure, wind, seismic and saddle loads are not included. Design thickness, PWHT and RT must be confirmed by the Designer.</p>`;$('#drc').onclick=()=>{const q=[hdr,...rr.map(x=>x.slice(0,10)),[],['Governing',gov[0],'MAWP MPa',N(mwc,2),'Hydrotest MPa',N(Ph,2),'Empty kg',N(emp,0)]],a=document.createElement('a');a.href=URL.createObjectURL(new Blob([q.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n')],{type:'text/csv'}));a.download='component-report.csv';a.click()};{let G;try{G=cadGen(cdD)}catch(e){console.error(e)}const dl=(n,t,m)=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:m}));a.download=n;a.click()};if(G){$('#dcp').innerHTML=G.svg;$('#dcad').onclick=()=>dl('vessel-GA-multiview.dxf',G.dxf,'application/dxf');$('#dsv').onclick=()=>dl('vessel-GA-multiview.svg',G.svgFile,'image/svg+xml')}else $('#dcad').disabled=$('#dsv').disabled=true}};
+<p class="note">Green = passes, amber = needs a decision or an input, red = fails. Screening only: allowable stresses are from the Sec. II-D table values coded here, so check them against the edition you design to. Nozzle reinforcement (UG-37), external pressure, wind, seismic and saddle loads are not included. Design thickness, PWHT and RT must be confirmed by the Designer.</p>`;$('#drc').onclick=()=>{const q=[hdr,...rr.map(x=>x.slice(0,10)),[],['Governing',gov[0],'MAWP MPa',N(mwc,2),'Hydrotest MPa',N(Ph,2),'Empty kg',N(emp,0)]],a=document.createElement('a');a.href=URL.createObjectURL(new Blob([q.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n')],{type:'text/csv'}));a.download='component-report.csv';a.click()};{let G;try{G=cadGen(cdD)}catch(e){console.error(e)}const dl=(n,t,m)=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:m}));a.download=n;a.click()};[['1','ga','vessel-1-layout'],['2','weld','vessel-2-welding-details'],['3','saddle','vessel-3-saddle-support']].forEach(([n,k,f])=>{const q=G&&G[k];if(q){$('#dcp'+n).innerHTML=q.svg;$('#dcad'+n).onclick=()=>dl(f+'.dxf',q.dxf,'application/dxf');$('#dsv'+n).onclick=()=>dl(f+'.svg',q.svgFile,'image/svg+xml')}else{$('#dcad'+n).disabled=$('#dsv'+n).disabled=true;$('#dcp'+n).innerHTML='<p class="note" style="padding:10px">'+(n=='3'&&G?'The saddle drawing is made for horizontal vessels on saddles. This vessel is vertical or spherical.':'Drawing could not be generated.')+'</p>'}})}};
 s.querySelectorAll('input,select').forEach(e=>e.oninput=e.onchange=calc);$('#df').onchange=()=>{const f=FL[+Sv('df')];if(f[1]!=null){$('#dg').value=f[1];$('#dle').value=f[2]}calc()};nzDraw();$('#dnz').addEventListener('input',()=>calc());$('#dnz').addEventListener('change',()=>calc());$('#dnz').onclick=e=>{const b=e.target;if(b.id=='dna'){nzRd();NZ.push({mk:'N'+(NZ.length+1),sv:'Spare',n:2,s:2,c:1,p:200,o:0,ax:0});nzDraw();calc()}else if(b.classList.contains('zd')){nzRd();NZ.splice(+b.closest('.fld').dataset.i,1);nzDraw();calc()}};calc()})();
 /* ---- show each 3D card only with its own fit-up chip ---- */
 (function(){const s=document.getElementById('fitup'),u=s&&s.querySelector('#uch');if(!u)return;const upd=()=>{const b=u.querySelector('button[aria-pressed=true]'),k=b&&b.dataset.k;s.querySelectorAll('[data-fu]').forEach(c=>c.hidden=c.dataset.fu!=k)};u.addEventListener('click',upd);upd()})();
 </script>
 
 <script>
+/* ---- petroPower: API 650 storage tank module ---- */
+(function(){
+const root=document.getElementById('app-tank'),q=s=>root.querySelector(s),F=(v,d=0)=>(+v).toFixed(d),sum=a=>a.reduce((x,y)=>x+y,0);
+const BASE=.15,STEEL=7850,BBL=.158987294928,PLATES=[5,6,8,10,12,14,16,18,20,22,25,28,30,32,35,38,40,45,50];
+const DEF={name:'Tank-2400 BBL',customer:'NORPETCO',project:'CONSTRUCT 4 EA TANKS 2400BBL',d:6200,courses:'1500,1500,1500,1500,1500,1500,1500,1500,750',tdr:'6,6,6,6,6,6,6,6,6',hll:12000,nll:11000,sg:.98,caS:0,caB:3,caR:0,sd:145,st:154,bt:10,bp:50,rt:6,slope:.168,rs:738,ta:'L80x80x8',pi:.5,wind:160,na:8,ad:33,aa:130,a0:23,s0:136.2,pl:6000,pkm:'',bdm:'',plm:'',rdm:'',
+noz:`SN01A,6" outlet,168,270,300,200
+SN01B,6" inlet,168,90,300,200
+SN02A,4" drain,114,168,200,175
+SN03A,4" overflow,114,168,12350,175
+SN03B,4" spare,114,35,350,175
+SN04A,4" foam chamber,114,185,12500,175
+SN05A,3" sample,89,350,300,175
+SM01A,24" manway,636,225,750,274
+CD01,600x600 clean-out,600,315,175,146`,
+rnoz:`RM01A,24" roof manway,626,270,2000,247
+RN01A,8" hatch,229,90,2500,150
+RN02A,6" vacuum relief,173,0,0,150
+RN03A,4" vent,118,0,1600,150
+RN04A,6" flame arrestor,173,300,2500,150
+RN04B,6" spare,173,120,2500,150
+RN05A,3" level indicator,93,225,2600,150`};
+const FL=[['name','Tank name'],['customer','Customer'],['project','Project'],['d','Inside diameter (mm)'],['courses','Course heights bottom→top (mm, comma list)'],['tdr','Thickness already on drawings (mm, blank = auto)'],['hll','Design liquid level (mm)'],['nll','Normal liquid level (mm)'],['sg','Design specific gravity'],['caS','Shell corrosion allowance (mm)'],['caB','Bottom CA (mm)'],['caR','Roof CA (mm)'],['sd','Allowable design stress Sd (MPa)'],['st','Allowable test stress St (MPa)'],['bt','Bottom plate (mm)'],['bp','Bottom projection (mm)'],['rt','Roof plate (mm)'],['slope','Roof slope (rise/run)'],['rs','Roof structure weight (kg)'],['ta','Top angle'],['pi','Internal pressure (kPa)'],['wind','Design wind (km/h)'],['na','Anchor bolts (no.)'],['ad','Anchor bolt dia (mm)'],['aa','Anchor allowable (MPa)'],['a0','First anchor angle (deg)'],['s0','Stairway start angle (deg)'],['pl','Plate length (mm)'],['pkm','Measured max peaking (mm, blank = not yet)'],['bdm','Measured max banding (mm)'],['plm','Measured out-of-plumb top vs bottom (mm)'],['rdm','Measured max radius deviation at 0.3 m (mm)']];
+const num=new Set(['d','hll','nll','sg','caS','caB','caR','sd','st','bt','bp','rt','slope','rs','pi','wind','na','ad','aa','a0','s0','pl']);
+const isCl=d=>/clean/i.test(d);
+const lst=s=>String(s).split(',').map(x=>x.trim()).filter(x=>x!=='').map(Number);
+const nz=s=>String(s).split('\n').map(l=>l.split(',').map(x=>x.trim())).filter(r=>r.length>=6&&r[0]).map(r=>[r[0],r[1],+r[2],+r[3],+r[4],+r[5]]);
+function design(I){const L=[],step=(t,l)=>L.push([t,l]),R={},n=I.courses.length,D=I.d/1000,Hs=sum(I.courses)/1000,G=I.sg,zb=I.courses.map((_,i)=>sum(I.courses.slice(0,i))),drw=I.tdr;
+const vn=Math.PI/4*D*D*Hs,vh=Math.PI/4*D*D*I.hll/1000,vl=Math.PI/4*D*D*I.nll/1000;Object.assign(R,{vn,vh,vl});
+step('STEP 1 - Geometry and capacity (API 650 5.1)',[`D = ${F(D,3)} m ; H = ${F(Hs,3)} m ; courses = ${n}`,`Nominal capacity = ${F(vn,1)} m3 = ${F(vn/BBL)} bbl`,`Design level ${I.hll} mm -> ${F(vh,1)} m3 (${F(vh/BBL)} bbl)`,`Normal level ${I.nll} mm -> ${F(vl,1)} m3 (${F(vl/BBL)} bbl)`]);
+const tmn=D<15?5:D<36?6:D<=60?8:10;step('STEP 2 - Minimum nominal shell thickness (5.6.1.1)',[`D = ${F(D,2)} m -> t_min = ${tmn} mm`]);
+const l3=[`1-foot method (5.6.3). Sd=${I.sd}, St=${I.st} MPa, G=${G}, CA=${I.caS} mm`,'td = 4.9 D (H-0.3) G / Sd + CA ;  tt = 4.9 D (H-0.3) / St'],rows=[],ta=[];
+for(let i=0;i<n;i++){const Hd=Math.max(I.hll-zb[i],0)/1e3,Ht=Math.max(Hs*1e3-zb[i],0)/1e3,td=4.9*D*Math.max(Hd-.3,0)*G/I.sd+I.caS,tt=4.9*D*Math.max(Ht-.3,0)/I.st,req=Math.max(td,tt,tmn),sel=PLATES.find(p=>p>=req-1e-9)||Math.ceil(req),ad=Math.max(sel,drw[i]||0),S=4.9*D*Math.max(Hd-.3,0)*G/Math.max(ad-I.caS,1e-6),St=4.9*D*Math.max(Ht-.3,0)/ad;ta.push(ad);
+rows.push({i:i+1,h:I.courses[i],z:zb[i],td,tt,req,sel,ad,S,St,ok:S<=I.sd&&St<=I.st});l3.push(`C${i+1}: h=${I.courses[i]} td=${F(td,2)} tt=${F(tt,2)} req ${F(req,2)} -> ${sel} | adopted ${ad} | S=${F(S)}/${I.sd}, test ${F(St)}/${I.st} ${rows[i].ok?'OK':'FAIL'}`)}
+R.shell=rows;R.ta=ta;step('STEP 3 - Shell plate thickness per course',l3);
+const tbq=6+I.caB,tb=Math.max(I.bt,tbq);R.tb=tb;step('STEP 4 - Bottom plates (5.4 / 5.5)',[`t_min = 6 + CA ${I.caB} = ${tbq} mm ; adopted ${tb} mm`,`Bottom OD = ${F(I.d+2*ta[0]+2*I.bp)} mm`,'Check annular plate requirement against the edition used (5.5.1).']);
+const Rr=D/2,rise=Rr*I.slope*1000,rt=Math.max(I.rt,5+I.caR),ra=Math.PI*Rr*Math.sqrt(Rr*Rr+(rise/1e3)**2);Object.assign(R,{rise,rt,ra});step('STEP 5 - Cone roof (5.10)',[`Roof t = ${rt} mm ; slope ${F(I.slope,3)} (${F(Math.atan(I.slope)*57.2958,1)} deg) ; rise ${F(rise)} mm ; area ${F(ra,1)} m2`,`Top member ${I.ta}`]);
+const qw=.86*(I.wind/190)**2,tu=ta[n-1],htr=sum(I.courses.map((h,i)=>h/1e3*(tu/ta[i])**2.5)),h1=9.47*tu*Math.sqrt((tu/D)**3)*(190/I.wind)**2,nint=Math.max(Math.ceil(htr/h1)-1,0);Object.assign(R,{qw,htr,h1,nint});
+step('STEP 6 - Wind girders (5.9.7)',[`V=${I.wind} km/h -> q=${F(qw,3)} kPa`,`H1 = ${F(h1,1)} m ; transposed height ${F(htr,2)} m -> intermediate girders: ${nint}`]);
+const sk=ta.map((t,i)=>Math.PI*(I.d+t)/1e3*I.courses[i]/1e3*t/1e3*STEEL),bo=(I.d+2*ta[0]+2*I.bp)/1e3,bk=Math.PI/4*bo*bo*tb/1e3*STEEL,rk=ra*rt/1e3*STEEL+I.rs,ws=sum(sk),emp=ws+bk+rk,tk=Math.PI/4*D*D*Hs*1e3;Object.assign(R,{sk,bk,rk,emp,tk});
+const Do=D+2*ta[0]/1e3,Ar=.5*Do*rise/1e3,Mw=qw*(Do*Hs*Hs/2+Ar*(Hs+rise/3e3)),MPi=I.pi*Math.PI/4*D*D*D/2,MDL=(ws+rk)*9.81/1e3*D/2,c1=.6*Mw+MPi,c1l=MDL/1.5,c2=Mw+.4*MPi,c2l=MDL/2,need=c1>c1l||c2>c2l,Mn=Math.max(c1-c1l,c2-c2l,0),Tb=need?4*Mn/(I.na*D):0,As=Math.PI/4*(.9382*I.ad)**2,sb=Tb*1e3/As;Object.assign(R,{Mw,MPi,MDL,need,Tb,sb});
+step('STEP 7 - Overturning and anchorage (5.11, simplified)',[`Mw=${F(Mw)} MPi=${F(MPi)} MDL=${F(MDL)} kN.m`,`0.6Mw+MPi = ${F(c1)} vs MDL/1.5 = ${F(c1l)} ${c1<=c1l?'OK':'NOT OK'}`,`Mw+0.4MPi = ${F(c2)} vs MDL/2 = ${F(c2l)} ${c2<=c2l?'OK':'NOT OK'}`,`Anchorage required: ${need?'YES':'NO'} ; ${I.na} x M${I.ad} -> T=${F(Tb,1)} kN, ${F(sb)} MPa (allow ${I.aa}) ${sb<=I.aa?'OK':'FAIL'}`,'Seismic (Annex E) not evaluated.']);
+step('STEP 8 - Weights',[`Shell ${F(ws)} kg ; bottom ${F(bk)} kg ; roof+structure ${F(rk)} kg`,`Empty ${F(emp)} kg ; hydrotest water ${F(tk)} kg`]);
+const pl=ta.map((t,i)=>{const c=Math.PI*(I.d+2*t),np=Math.ceil(c/I.pl);return{i:i+1,c,np,lp:c/np,t,h:I.courses[i]}});R.pl=pl;
+step('STEP 9 - Shell plate layout',pl.map(p=>`C${p.i}: OD circ ${F(p.c)} mm -> ${p.np} plates ${F(p.lp)} x ${p.h} x ${p.t}`));
+const sn=I.snoz,rn=I.rnoz;step('STEP 10 - Appurtenances',[...sn.map(o=>`${o[0]} ${o[1]} OD ${o[2]} @${o[3]} deg EL ${o[4]} proj ${o[5]}`),...rn.map(o=>`${o[0]} ${o[1]} OD ${o[2]} @${o[3]} deg R ${o[4]} proj ${o[5]}`)]);
+const chk=[];R.off=pl.map((p,i)=>p.lp*(BASE+(i%3)/3));for(let i=1;i<n;i++){const d=Math.abs(R.off[i]-R.off[i-1]),m=Math.max(5*Math.max(ta[i],ta[i-1]),150);if(d<m)chk.push(`Seam stagger C${i}/C${i+1} = ${F(d)} mm < ${F(m)} mm`)}
+sn.forEach(o=>{const i=zb.findIndex((z,k)=>o[4]>=z&&o[4]<z+I.courses[k]);if(i<0){chk.push(`${o[0]}: elevation outside shell`);return}const p=pl[i],x=o[3]/360*p.c;for(let k=0;k<p.np;k++){const s=R.off[i]+k*p.lp,d=Math.abs(x-s)%p.c,dd=Math.min(d,p.c-d);if(dd<o[2]/2+150)chk.push(`${o[0]} within ${F(dd)} mm of vertical seam in C${i+1} (needs ${F(o[2]/2+150)}): rotate nozzle or shift seam`)}if(!isCl(o[1])&&(o[4]+o[2]/2>zb[i]+I.courses[i]||o[4]-o[2]/2<zb[i]))chk.push(`${o[0]} crosses horizontal seam / course edge`)});
+if(Math.max(...rows.map(r=>r.S/I.sd))>1)chk.push('Shell stress exceeds Sd');if(sb>I.aa)chk.push('Anchor stress exceeds allowable');if(nint>0)chk.push(`${nint} intermediate wind girder(s) required`);if(!chk.length)chk.push('No layout or stress problems found');R.chk=chk;
+const acc=[],A=(cl,cr,rq,ac,ok)=>acc.push([cl,cr,rq,ac,ok===null?'CHECK':ok?'PASS':'FAIL']),mg=Math.min(...rows.map(r=>r.ad-Math.max(r.td,r.tt))),mxS=Math.max(...rows.map(r=>r.S)),mxT=Math.max(...rows.map(r=>r.St)),tam=String(I.ta).match(/(\d+)\D+(\d+)\D+(\d+)/),rta=D<=11?[50,5]:D<=18?[50,6]:[75,10];
+A('5.6.1.1','Minimum nominal shell thickness',`>= ${tmn} mm`,`${Math.min(...ta)} mm`,Math.min(...ta)>=tmn);
+A('5.6.3','Adopted t >= required (td, tt) every course','margin >= 0',`worst margin ${F(mg,2)} mm`,mg>=-1e-9);
+A('5.6.3','Product stress <= Sd',`<= ${I.sd} MPa`,`${F(mxS)} MPa (${F(mxS/I.sd*100)}%)`,mxS<=I.sd);
+A('5.6.3','Hydrotest stress <= St',`<= ${I.st} MPa`,`${F(mxT)} MPa (${F(mxT/I.st*100)}%)`,mxT<=I.st);
+A('5.6.3.1','One-foot method limit','D <= 61 m',`D = ${F(D,2)} m`,D<=61);
+A('5.6.1','Upper course not thicker than lower','non-increasing upward',ta.join(' / '),ta.every((t,i)=>!i||t<=ta[i-1]));
+A('5.4.1','Bottom plate nominal thickness',`>= ${tbq} mm (6 + CA)`,`${tb} mm`,tb>=tbq);
+A('5.4.2','Bottom plate projection beyond shell','>= 50 mm',`${I.bp} mm`,I.bp>=50);
+A('5.5.1','Annular bottom plate needed by stress','not needed if S <= 160 and St <= 172 MPa',`S ${F(rows[0].S)} / St ${F(rows[0].St)} MPa`,rows[0].S<=160&&rows[0].St<=172?true:null);
+A('5.10.2.2','Roof plate nominal thickness',`>= ${5+I.caR} mm`,`${rt} mm`,rt>=5+I.caR);
+A('5.10.2.1','Cone roof slope (supported)','1:16 to 9:12 (0.0625 to 0.75)',F(I.slope,3),I.slope>=.0625&&I.slope<=.75);
+A('5.1.5.9','Top angle minimum size',`>= L${rta[0]}x${rta[0]}x${rta[1]}`,I.ta,tam?(+tam[1]>=rta[0]&&+tam[3]>=rta[1]):null);
+A('5.9.7','Intermediate wind girders','none required (Htr <= H1)',`Htr ${F(htr,2)} m, H1 ${F(h1,1)} m, need ${nint}`,nint==0);
+A('5.11.2','Overturning, criterion 1',`0.6Mw+MPi <= MDL/1.5`,`${F(c1)} vs ${F(c1l)} kN.m`,c1<=c1l?true:null);
+A('5.11.2','Overturning, criterion 2',`Mw+0.4MPi <= MDL/2`,`${F(c2)} vs ${F(c2l)} kN.m`,c2<=c2l?true:null);
+if(need)A('5.12','Anchor bolt stress (anchorage required)',`<= ${I.aa} MPa`,`${F(sb)} MPa, ${F(Tb,1)} kN/bolt`,sb<=I.aa);
+A('5.6.1','Design liquid level within shell height',`HLL <= ${Hs*1e3} mm`,`${I.hll} mm`,I.hll<=Hs*1e3);
+A('5.1.5.2','Vertical seam offset between courses','>= 5t (and >= 150 mm)',R.chk.some(c=>/stagger/.test(c))?'violated':'OK',!R.chk.some(c=>/stagger/.test(c)));
+A('5.7.3','Nozzle clear of seams / course edges','spacing per 5.7.3',R.chk.some(c=>/seam|crosses/.test(c))?'clash found':'OK',!R.chk.some(c=>/seam|crosses/.test(c)));
+A('5.7.2','Nozzle / manway reinforcement','by Designer','not calculated',null);
+A('Annex E','Seismic design','by Designer','not calculated',null);
+A('5.2 / 5.3','Material group, toughness, joint efficiency','per plate grade and design metal temperature','not checked',null);
+{const mn=v=>(v===''||v==null||!isFinite(+v))?null:Math.abs(+v),pk=mn(I.pkm),bd=mn(I.bdm),pm=mn(I.plm),rd=mn(I.rdm),Rn=I.d/2,sg=r=>r-Math.sqrt(Math.max(r*r-202500,0)),plL=Math.min(sum(I.courses)/200,125),rdL=D<12?13:D<45?19:D<75?25:32,nV=sum(pl.map(p=>p.np)),nH=n-1,cm=Math.max(...pl.map(p=>p.c)),
+t1=ta[0],tab=t1<=5?5:t1<=20?6:t1<=32?8:10,fs=Math.min(13,Math.max(Math.min(t1,tb),tab)),ov=Math.max(5*tb,25),tmx=Math.max(...ta),rf=Math.min(5,rt),
+Lv=sum(pl.map(p=>p.np*p.h/1000)),Lh=sum(pl.slice(0,n-1).map(p=>p.c/1000)),sv=1+Math.ceil(Math.max(Lv-3,0)/30),sh=n>1?1+Math.ceil(Math.max(Lh-3,0)/60):0,
+nd=tmx>25?'100% RT of shell butt joints (thinner plate > 25 mm)':tmx>10?`Spot RT: min ${sv} vertical + ${sh} horizontal, plus every V/H intersection`:`Spot RT: min ${sv} vertical + ${sh} horizontal, >=25% of spots at V/H intersections (min 2)`,
+ft=v=>v==null?'not measured yet':F(v,1)+' mm',
+tr=[['7.5.4(a)','Peaking at vertical joints, 900 mm horizontal sweep board cut to tank radius','<= 13 mm',ft(pk),pk==null?null:pk<=13],['7.5.4(b)','Banding at horizontal joints, 900 mm straight vertical sweep board','<= 13 mm',ft(bd),bd==null?null:bd<=13],['7.5.2','Out-of-plumb, top of shell to bottom',`<= ${F(plL,0)} mm (H/200, max 125)`,ft(pm),pm==null?null:pm<=plL],['7.5.3',`Radius at 0.3 m above bottom weld, D = ${F(D,1)} m`,`+/- ${rdL} mm`,ft(rd),rd==null?null:rd<=rdL]];
+tr.forEach(x=>A(...x));
+const wsch=[['Shell vertical joints','5.1.5.2','Butt, complete penetration and fusion (double-V or per WPS)','Full penetration','SMAW/SAW per WPS and API 650 Sec. 9. '+nd],['Shell horizontal joints','5.1.5.3','Butt, complete penetration and fusion','Full penetration','As vertical joints'],['Shell-to-bottom','5.1.5.7','Continuous fillet, inside and outside',`${fs} mm leg (table min ${tab} for shell t ${t1}; max 13)`,'VT + MT or PT of root and final pass, or vacuum box (8.6)'],['Bottom lap joints','5.1.5.4',`Lap >= ${ov} mm (5 tb, min 25); 3-plate laps >= 300 mm from each other and from shell`,'Full fillet, top side, all seams','Vacuum box (8.6)'],['Annular plates (if required)','5.1.5.5-6','Radial butts with backing strip; lap to bottom plate','Full penetration','Vacuum box; RT of annular butts (8.1.2)'],['Roof plates','5.1.5.9','Lap >= 25 mm, continuous fillet, top side',`${rf} mm`,'VT; vacuum box or leak test'],['Roof to top angle','5.1.5.9','Continuous fillet, top side only',`<= ${rf} mm`,'VT'],['Top angle to shell','5.1.5.9','Continuous fillet, outside; inside per detail','5 mm min (drawing)','VT, MT or PT optional'],['Nozzles, manways, pads','5.7','Neck-to-shell and pad welds per Fig. 5-7 / Table 5-6','By Designer, not computed','VT; pad air test (7.3.5)']];
+Object.assign(R,{fs,wsch,tol:{rows:tr,Rn,Ro:Rn+t1,sag:sg(Rn),sagO:sg(Rn+t1),nV,nH,stV:3*nV,stH:nH*Math.max(8,Math.ceil(cm/2000))}});
+step('STEP 11 - Welding details, peaking and banding (5.1.5, 7.5, 8)',[...wsch.map(r=>`${r[0]} (${r[1]}): ${r[2]}; ${r[3]}; ${r[4]}`),'',...tr.map(r=>`${r[0]} ${r[1]}: limit ${r[2]}; measured ${r[3]}`),`Sweep board: 900 mm chord, rise ${F(sg(Rn),1)} mm at inside radius ${F(Rn)} mm`])}
+R.acc=acc;step('API 650 ACCEPTANCE CRITERIA',acc.map(a=>`[${a[4]}] ${a[0]} ${a[1]}: required ${a[2]} ; actual ${a[3]}`));
+return{steps:L,R}}
+/* ---------------- drawing kit ---------------- */
+const SC=[10,20,25,30,40,50,75,100,150,200];
+function kit(S){const E=[],th=2.5*S,L=(p,q,l='OUT')=>E.push({t:'L',p,q,l}),Rc=(a,b,c,d,l='OUT')=>{L([a,b],[c,b],l);L([c,b],[c,d],l);L([c,d],[a,d],l);L([a,d],[a,b],l)},C=(c,r,l='OUT')=>E.push({t:'C',c,r,l}),T=(s,x,y,h=th,l='TEXT',r=0,c=0)=>E.push({t:'T',p:[x,y],s:''+s,h,l,r,c}),P=(pts,l='OUT',cl)=>E.push({t:'P',pts:cl?[...pts,pts[0]]:pts,l}),
+ar=(x,y,dx,dy)=>{const a=th,px=-dy,py=dx;E.push({t:'S',l:'DIM',pts:[[x,y],[x-dx*a+px*a/3,y-dy*a+py*a/3],[x-dx*a-px*a/3,y-dy*a-py*a/3]]})},
+dh=(x1,x2,y,s,fy)=>{L([x1,fy],[x1,y+th*.6],'DIM');L([x2,fy],[x2,y+th*.6],'DIM');L([x1,y],[x2,y],'DIM');ar(x1,y,1,0);ar(x2,y,-1,0);T(s,(x1+x2)/2,y+th*.4,th,'DIM',0,1)},
+dv=(y1,y2,x,s,fx)=>{L([fx,y1],[x+Math.sign(x-fx)*th*.6,y1],'DIM');L([fx,y2],[x+Math.sign(x-fx)*th*.6,y2],'DIM');L([x,y1],[x,y2],'DIM');ar(x,y1,0,1);ar(x,y2,0,-1);T(s,x-th*.5,(y1+y2)/2,th,'DIM',90,1)},
+tbl=(x,y,w,rows,h=th)=>{const rh=h*2,tw=sum(w);rows.forEach((r,i)=>{const yy=y-i*rh;L([x,yy],[x+tw,yy],i?'THIN':'OUT');let xx=x;r.forEach((v,j)=>{T(v,xx+h*.4,yy-rh*.7,h*(i?.85:.9));xx+=w[j]})});L([x,y-rows.length*rh],[x+tw,y-rows.length*rh],'OUT');let xx=x;[...w,0].forEach(v=>{L([xx,y],[xx,y-rows.length*rh],'THIN');xx+=v});return y-rows.length*rh};
+return{E,th,L,R:Rc,C,T,P,dh,dv,tbl}}
+const bb=E=>{let a=1e18,b=1e18,c=-1e18,d=-1e18;const u=(x,y)=>{a=Math.min(a,x);c=Math.max(c,x);b=Math.min(b,y);d=Math.max(d,y)};E.forEach(e=>{if(e.t=='L')u(...e.p),u(...e.q);else if(e.t=='C')u(e.c[0]-e.r,e.c[1]-e.r),u(e.c[0]+e.r,e.c[1]+e.r);else if(e.t=='T'){const w=e.h*.55*e.s.length;if(e.r==90)u(e.p[0]-e.h,e.p[1]-w/2),u(e.p[0]+e.h,e.p[1]+w/2);else if(e.c)u(e.p[0]-w/2,e.p[1]-e.h/2),u(e.p[0]+w/2,e.p[1]+e.h/2);else u(e.p[0],e.p[1]),u(e.p[0]+w,e.p[1]+e.h)}else e.pts.forEach(p=>u(...p))});return[a,b,c,d]};
+const mv=(e,x,y)=>{const o={...e};if(e.p)o.p=[e.p[0]+x,e.p[1]+y];if(e.q)o.q=[e.q[0]+x,e.q[1]+y];if(e.c)o.c=[e.c[0]+x,e.c[1]+y];if(e.pts)o.pts=e.pts.map(p=>[p[0]+x,p[1]+y]);return o};
+const rad=Math.PI/180,sn=a=>Math.sin(a*rad),cs=a=>Math.cos(a*rad);
+/* sheet 1 views */
+function elev(k,I,R,S){const{th,L,R:Rc,C,T,P,dh,dv}=k,n=I.courses.length,ta=R.ta,ro=ta.map(t=>I.d/2+t),z=R.shell.map(r=>r.z),H=sum(I.courses),ri=R.rise,tb=R.tb,r0=ro[0],rb=r0+I.bp,Rin=I.d/2;
+Rc(-rb,-tb,rb,0);for(let i=0;i<n;i++)Rc(-ro[i],z[i],ro[i],z[i]+I.courses[i]);
+for(let i=0;i<n;i++){T(`C${i+1}  t=${ta[i]}`,ro[i]+th*8,z[i]+I.courses[i]/2-th/2,th*.9,'TEXT');dv(z[i],z[i]+I.courses[i],-ro[i]-th*3.5-(i%1)*0,I.courses[i],-ro[i])}
+const ra=Math.min(80,I.d/20);L([-ro[n-1],H],[0,H+ri],'OUT');L([0,H+ri],[ro[n-1],H],'OUT');L([-ro[n-1]-ra,H],[-ro[n-1],H],'OUT');Rc(ro[n-1],H-8,ro[n-1]+ra,H);Rc(-ro[n-1]-ra,H-8,-ro[n-1],H);T(`TOP ANGLE ${I.ta}`,ro[n-1]+ra+th,H+th,th*.9);T(`ROOF PL ${R.rt}  SLOPE ${F(I.slope,3)}`,th*2,H+ri+th*1.5,th*.9);
+L([0,-tb-th*6],[0,H+ri+th*5],'CEN');
+[[I.hll,'HLL'],[I.nll,'NLL']].forEach(([h,s],j)=>{L([-Rin,h],[Rin,h],'HID');T(`${s} ${h}`,-Rin+th,h+th*.4,th*.9,'DIM')});
+const prj=(o,e)=>{const[m,d,od,a,el,pr]=o,s=sn(a),x0=r0*s,x1=(r0+pr)*s,hid=cs(a)>0,ly=hid?'HID':'NOZ';
+if(Math.abs(s)<.25){const x=r0*s;C([x,el],od/2,ly);C([x,el],od/2*.85,ly);C([x,el],od*.75,ly)}else{P([[x0,el-od/2],[x1,el-od/2],[x1,el+od/2],[x0,el+od/2]],ly);P([[x1,el-od*.75],[x1,el+od*.75]],ly)}
+if(!hid||Math.abs(s)>.25)T(m,Math.max(x0,x1)+th*(s<0?-5:1),el-th*.4,th*.8,'NOZ',0,0)};
+I.snoz.forEach(o=>prj(o,o[4]));
+I.rnoz.forEach(o=>{const[m,d,od,a,r,pr]=o,x=r*sn(a),zr=H+ri*(1-r/Rin),hid=cs(a)>0;Rc(x-od/2,zr,x+od/2,zr+pr,hid?'HID':'NOZ');T(m,x+od/2+th*.5,zr+pr+th*.3,th*.8,'NOZ')});
+for(let i=0;i<I.na;i++){const a=I.a0+i*360/I.na,x=(r0+120)*sn(a);Rc(x-I.ad/2,-tb-250,x+I.ad/2,0,'SUP')}
+const pts=[];for(let j=0;j<=120;j++){const u=j/120,a=I.s0+360*u;pts.push([(r0+400)*sn(a),u*H])}P(pts,'SUP');T('STAIRWAY',r0+400+th,H*.5,th*.8,'SUP');
+dh(-ro[0],ro[0],-tb-th*3.5,`OD ${F(2*ro[0])}`,-tb);dh(-rb,rb,-tb-th*8,`BOTTOM OD ${F(2*rb)}`,-tb);dh(-Rin,Rin,H+ri+th*4,`ID ${I.d}`,H);dv(0,H,-ro[0]-th*10,`H ${H}`,-ro[0]);dv(H,H+ri,ro[0]+ra+th*34,`RISE ${F(ri)}`,0);
+T('ELEVATION (viewed from south)',-ro[0],-tb-th*13,th*1.4,'TEXT');return k}
+function plan(k,I,R){const{th,L,R:Rc,C,T,P,dh}=k,r0=I.d/2+R.ta[0],Rin=I.d/2;[Rin,r0,r0+I.bp].forEach((r,i)=>C([0,0],r,i<2?'OUT':'THIN'));L([-r0-700,0],[r0+700,0],'CEN');L([0,-r0-700],[0,r0+700],'CEN');
+[0,90,180,270].forEach(a=>T(a+'°',(r0+900)*sn(a)-th,(r0+900)*cs(a)-th/2,th*.9));
+for(let i=0;i<I.na;i++){const a=I.a0+i*360/I.na;C([(r0+120)*sn(a),(r0+120)*cs(a)],I.ad,'SUP');T('AC'+(i+1),(r0+120)*sn(a)+th*.8,(r0+120)*cs(a)+th*.8,th*.7,'SUP')}
+I.snoz.forEach(o=>{const[m,d,od,a,el,pr]=o,s=sn(a),c=cs(a),px=c,py=-s,hw=od/2;const A=(rr,w)=>[(rr*s+px*w),(rr*c+py*w)];if(isCl(d)){P([A(r0,-hw),A(r0+pr,-hw),A(r0+pr,hw),A(r0,hw)],'NOZ',1)}else{P([A(r0,-hw),A(r0+pr,-hw),A(r0+pr,hw),A(r0,hw)],'NOZ',1);P([A(r0+pr,-hw*1.4),A(r0+pr,hw*1.4)],'NOZ')}T(`${m} ${a}°`,(r0+pr)*s+th*(s<0?-7:1),(r0+pr)*c+th*.8,th*.8,'NOZ')});
+I.rnoz.forEach(o=>{const[m,d,od,a,r]=o,x=r*sn(a),y=r*cs(a);C([x,y],od/2,'NOZ');T(m,x+od/2+th*.5,y,th*.8,'NOZ')});
+const sp=[];for(let j=0;j<=90;j++){const a=I.s0+360*j/90;sp.push([(r0+400)*sn(a),(r0+400)*cs(a)])}P(sp,'SUP');
+L([r0+1300,300],[r0+1300,1500],'TEXT');T('N',r0+1300-th*.5,1650,th*2);
+dh(-Rin,Rin,-r0-th*5,`ID ${I.d}`,-Rin*0-r0);T('PLAN',-r0,-r0-th*11,th*1.4);return k}
+function sched(k,I){const{th,tbl,T}=k;T('NOZZLE & APPURTENANCE SCHEDULE',0,th*2,th*1.2);const rows=[['MARK','DESCRIPTION','OD','ORIENT°','ELEV/RAD','PROJ','LOC']];I.snoz.forEach(o=>rows.push([o[0],o[1],o[2],o[3],o[4],o[5],'SHELL']));I.rnoz.forEach(o=>rows.push([o[0],o[1],o[2],o[3],o[4],o[5],'ROOF']));tbl(0,0,[th*7,th*20,th*5,th*7,th*8,th*5,th*6],rows);return k}
+function rollout(k,I,R){const{th,L,R:Rc,C,T,dv}=k,n=I.courses.length,z=R.shell.map(r=>r.z),cm=Math.max(...R.pl.map(p=>p.c));
+T('SHELL ROLL-OUT (viewed from outside, 0° at left edge, clockwise from north)',0,-th*6,th*1.4);
+R.pl.forEach((p,i)=>{const y=z[i],h=I.courses[i];Rc(0,y,p.c,y+h);const off=R.off[i],s=[];for(let j=0;j<p.np;j++){const x=off+j*p.lp;if(x>1&&x<p.c-1){s.push(x);L([x,y],[x,y+h],'WELD')}}const xs=[0,...s,p.c];for(let j=0;j<xs.length-1;j++){const wrap=off>0&&j==0,lab=wrap?p.np:(off>0?j:j+1);T(`SR${String(i+1).padStart(2,'0')}${String.fromCharCode(64+lab)}`,(xs[j]+xs[j+1])/2,y+h/2+th*.2,th*.9,'TEXT',0,1);T(`${F(p.lp)}x${h}x${p.t}`,(xs[j]+xs[j+1])/2,y+h/2-th*1.2,th*.7,'THIN',0,1)}
+T(`C${i+1}`,-th*5,y+h/2-th/2,th);dv(y,y+h,-th*8,h,0)});
+I.snoz.forEach(o=>{const[m,d,od,a,el]=o,i=z.findIndex((zz,k)=>el>=zz&&el<zz+I.courses[k]),c=R.pl[Math.max(i,0)].c,x=a/360*c;if(isCl(d))Rc(x-od/2,el-od/2,x+od/2,el+od/2,'NOZ');else C([x,el],od/2,'NOZ');T(m,x+od/2+th*.4,el-th*.3,th*.8,'NOZ')});
+for(let a=0;a<=360;a+=45){const x=a/360*cm;L([x,sum(I.courses)],[x,sum(I.courses)+th*1.2],'DIM');T(a+'°',x,sum(I.courses)+th*1.8,th*.8,'DIM',0,1)}return k}
+function bom(k,I,R){const{th,tbl,T}=k;T('SHELL SCHEDULE & BILL OF MATERIAL (1 tank)',0,th*2,th*1.2);const r=[['MARK','DESCRIPTION','QTY','KG','t REQ','S/Sd']];R.pl.forEach((p,i)=>{const s=R.shell[i];r.push([`SR${String(i+1).padStart(2,'0')}`,`SHELL PL ${p.t} x ${p.h} x ${F(p.lp)}`,p.np,F(R.sk[i]),F(s.req,2),F(s.S)+'/'+I.sd])});r.push(['BOTTOM',`PL ${R.tb}, OD ${F(I.d+2*R.ta[0]+2*I.bp)} (butt welded, vacuum box test)`,1,F(R.bk),'','']);r.push(['ROOF',`PL ${R.rt} cone + structure`,1,F(R.rk),'','']);r.push(['TOTAL','EMPTY WEIGHT (no attachments)','',F(R.emp),'','']);let y=tbl(0,0,[th*7,th*42,th*5,th*8,th*6,th*10],r);
+const nt=[`DESIGN: API 650  D=${I.d} mm  H=${sum(I.courses)} mm  HLL=${I.hll} mm  SG=${I.sg}`,`CAPACITY: ${F(R.vn,1)} m3 (${F(R.vn/BBL)} bbl) nominal`,`SHELL Sd=${I.sd} / St=${I.st} MPa  CA shell ${I.caS}, bottom ${I.caB}, roof ${I.caR} mm`,`HYDROTEST WATER ${F(R.tk)} kg   MAWP/vacuum: ${I.pi} kPa internal`,'ALL SHELL BUTT WELDS FULL PENETRATION, FULL FUSION. BOTTOM-TO-SHELL: CONTINUOUS FILLET BOTH SIDES.','SCREENING DESIGN - VERIFY AGAINST GOVERNING API 650 EDITION, SEISMIC (ANNEX E) NOT INCLUDED.'];y-=th*3;nt.forEach(s=>{T(s,0,y,th*.9);y-=th*1.6});return k}
+function dets(k,I,R){const{th,L,R:Rc,P,T,dv,dh}=k,t=R.ta[0],tu=R.ta[R.ta.length-1],tb=R.tb,f=R.fs||Math.min(13,Math.max(5,Math.min(t,tb))),sl=I.slope;
+const blk=(x,y,s,fn)=>{const k0=k.E.length;fn();for(let i=k0;i<k.E.length;i++)k.E[i]=mv(k.E[i],x,y);T(s,x-100,y-380,th*1.1)};
+blk(0,0,'1  SHELL-TO-BOTTOM JOINT  (SCALE 1:4)',()=>{Rc(0,0,t,400);P([[-300,0],[-300,-tb],[t+I.bp,-tb],[t+I.bp,0],[-300,0]]);P([[t,0],[t+f,0],[t,f]],'WELD',1);P([[0,0],[-f,0],[0,f]],'WELD',1);dv(-tb,0,t+I.bp+th*4,`tb ${tb}`,t+I.bp);dh(t,t+I.bp,-tb-th*3,`PROJ ${I.bp}`,-tb);dh(0,t,420+th*2,`t ${t}`,400);T(`FILLET ${f} BOTH SIDES`,t+th*3,f+th*3,th*.9,'WELD')});
+blk(800,0,'2  TOP ANGLE & ROOF JOINT  (SCALE 1:4)',()=>{Rc(0,-300,t,0);P([[t,0],[t+80,0],[t+80,8],[t+8,8],[t+8,-72],[t,-72]],'OUT',1);const rr=R.rt;P([[t,8],[t-380,8+380*sl],[t-380,8+380*sl+rr],[t,8+rr]],'OUT',1);P([[t+8,-60],[t+8+5,-60],[t+8,-55]],'WELD',1);T(`TOP ANGLE ${I.ta}`,t+th,-72-th*2,th*.9);T(`ROOF PL ${rr}  (LAP WELD TOP ONLY)`,-380,8+380*sl+rr+th*2,th*.9);T('SLOPE '+F(sl,3),t+th*2,8+rr+th*3,th*.9)});
+blk(0,-800,'3  VERTICAL SHELL SEAM  (SCALE 1:4)',()=>{const g=2,b=t/2*.577;[[-1],[1]].forEach(([s])=>P([[s*300,0],[s*(g/2+b),0],[s*g/2,t/2],[s*(g/2+b),t],[s*300,t]],'OUT'));P([[-g/2-b,0],[g/2+b,0],[g/2,t/2],[g/2+b,t],[-g/2-b,t],[-g/2,t/2]],'WELD',1);dv(0,t,320+th*3,`t ${t}`,300);T('DOUBLE-V, FULL PEN., GAP ~2 mm, PER WPS',-300,-th*3,th*.9)});
+blk(800,-800,'4  HORIZONTAL SHELL SEAM  (SCALE 1:4)',()=>{const t2=R.ta[Math.min(1,R.ta.length-1)],b1=t/2*.577,b2=t2/2*.577,g=2;P([[0,-300],[0,-g/2-b1],[t/2,-g/2],[t,-g/2-b1],[t,-300]],'OUT');P([[0,300],[0,g/2+b2],[t2/2,g/2],[t2,g/2+b2],[t2,300]],'OUT');T(`LOWER t ${t}`,t+th,-150,th*.9);T(`UPPER t ${t2}`,t2+th,150,th*.9);T('FLUSH AT INSIDE, FULL PEN., PER WPS',-th*2,330,th*.9)});{const nzl=I.snoz.slice().sort((a,b)=>b[2]-a[2])[0];if(nzl){const[mk,ds,od,,,pr]=nzl,m=.5,tn=od>300?12:8,pad=Math.round(od*1.8),hf=(pad+200)/2*m,x1=pr*m,fl=36*m,tm=t*m;
+blk(1600,0,`5  SHELL NOZZLE ${mk} - TYPICAL  (SCALE 1:8)`,()=>{const oy=od/2*m,iy=(od/2-tn)*m;Rc(0,iy,tm,hf);Rc(0,-hf,tm,-iy);Rc(tm,iy+tn*m,tm*2,pad/2*m);Rc(tm,-pad/2*m,tm*2,-iy-tn*m);
+L([0,oy],[x1,oy]);L([0,iy],[x1,iy]);L([0,-oy],[x1,-oy]);L([0,-iy],[x1,-iy]);Rc(x1-fl,-od*.75*m,x1,od*.75*m);L([0,0],[x1+th*3,0],'CEN');
+P([[tm*2,oy],[tm*2+t*m,oy],[tm*2,oy+t*m]],'WELD',1);P([[tm*2,-oy],[tm*2+t*m,-oy],[tm*2,-oy-t*m]],'WELD',1);
+dv(-oy,oy,x1+th*5,`OD ${od}`,x1);dv(-pad/2*m,pad/2*m,-th*5,`PAD OD ${pad}`,0);dh(0,x1,hf+th*2,`PROJ ${pr}`,hf);T(`${mk} ${ds}`,x1+th*14,hf-th*2,th*.9);T(`NECK WALL ${tn} (assumed), PAD t = ${t}`,x1+th*14,hf-th*5,th*.9);T('REINFORCEMENT AND WELD SIZES PER 5.7.2 - BY DESIGNER',x1+th*14,hf-th*8,th*.9)})}}
+{const r0=I.d/2+t,xb=t+120,hc=300;
+blk(1600,-800,`6  ANCHOR BOLT CHAIR  (SCALE 1:4)`,()=>{Rc(-300,-tb-300,t+400,-tb,'THIN');P([[-300,0],[-300,-tb],[t+400,-tb],[t+400,0],[-300,0]]);Rc(0,0,t,420);P([[t,0],[t,hc],[t+240,hc],[t+200,0]],'HID');Rc(t,hc,t+240,hc+30);
+Rc(xb-I.ad/2,-tb-300,xb+I.ad/2,hc+30+70);Rc(xb-I.ad*.8,hc+30,xb+I.ad*.8,hc+30+I.ad*.8);P([[t,0],[t+8,0],[t,8]],'WELD',1);dv(0,hc,t+330,`CHAIR HT ${hc}`,t+240);dh(t,xb,-tb-340,'120',-tb-300);T(`${I.na} BOLTS M${I.ad} ON ${F(2*(r0+120))} PCD`,-290,-tb-420,th*.9);T('GUSSETS (HIDDEN) AND TOP PLATE SIZED BY DESIGNER',-290,-tb-420-th*3,th*.9);T('EMBEDMENT / GROUT PER FOUNDATION DESIGN, API 650 5.12',-290,-tb-420-th*6,th*.9)})}
+blk(0,-1600,'7  BOTTOM LAP JOINT  (SCALE 1:4)',()=>{const ov=Math.max(5*tb,25),fb=Math.min(tb,13);P([[-300,0],[ov,0],[ov,tb],[-300,tb],[-300,0]]);P([[0,tb],[300,tb],[300,2*tb],[0,2*tb],[0,tb]]);P([[0,tb],[-fb,tb],[0,tb+fb]],'WELD',1);dh(0,ov,-th*3,`LAP >= ${ov}`,0);T('FULL FILLET, TOP SIDE, ALL SEAMS (5.1.5.4)',-300,2*tb+th*3,th*.9);T('3-PLATE LAPS >= 300 FROM EACH OTHER AND FROM SHELL',-300,2*tb+th*6,th*.9)});
+blk(800,-1600,'8  ROOF PLATE LAP  (SCALE 1:4)',()=>{const rr=R.rt,fr=Math.min(5,rr);P([[-300,0],[25,0],[25,rr],[-300,rr],[-300,0]]);P([[0,rr],[300,rr],[300,2*rr],[0,2*rr],[0,rr]]);P([[0,rr],[-fr,rr],[0,rr+fr]],'WELD',1);dh(0,25,-th*3,'LAP >= 25',0);T(`CONTINUOUS FILLET ${fr} mm, TOP SIDE (5.1.5.9)`,-300,2*rr+th*3,th*.9)});
+blk(1600,-1600,'9  PEAKING / BANDING SWEEP BOARDS  (900 mm)',()=>{const Rn=I.d/2,y0=Math.sqrt(Rn*Rn-202500),pts=[];for(let j=-9;j<=9;j++){const x=j*50;pts.push([x,Math.sqrt(Math.max(Rn*Rn-x*x,0))-y0])}P(pts,'OUT');P([...pts,[450,R.tol.sag+70],[-450,R.tol.sag+70],pts[0]],'THIN');P([[0,R.tol.sag],[-12,R.tol.sag-14],[12,R.tol.sag-14],[0,R.tol.sag]],'WELD',1);T(`PEAKING BOARD: 900 CHORD, R ${F(Rn)}, RISE ${F(R.tol.sag,1)}`,-450,R.tol.sag+70+th*2,th*.9);T('MAX GAP AT VERTICAL JOINT <= 13 mm (7.5.4a)',-450,R.tol.sag+70+th*5,th*.9);Rc(620,-450,700,450,'THIN');L([590,0],[730,0],'WELD');T('BANDING: STRAIGHT 900 BOARD',560,450+th*2,th*.9);T('MAX GAP AT HORIZ. JOINT <= 13 mm (7.5.4b)',560,450+th*5,th*.9)});
+return k}
+function botPlan(k,I,R){const{th,L,C,T,P,dh}=k,pw=I.pw||1500,r0=I.d/2+R.ta[0],rb=r0+I.bp,nb=Math.ceil(2*rb/pw);let cnt=0;
+C([0,0],rb);C([0,0],r0,'THIN');C([0,0],I.d/2,'THIN');L([-rb-500,0],[rb+500,0],'CEN');L([0,-rb-500],[0,rb+500],'CEN');
+for(let b=0;b<nb;b++){const ya=Math.max(-rb,-nb*pw/2+b*pw),yb=Math.min(rb,-nb*pw/2+(b+1)*pw),yn=ya<=0&&yb>=0?0:Math.min(Math.abs(ya),Math.abs(yb)),xh=Math.sqrt(rb*rb-yn*yn),np=Math.ceil(2*xh/I.pl),lp=2*xh/np,off=(b%2)*lp/2;
+if(b>0){const x=Math.sqrt(rb*rb-ya*ya);L([-x,ya],[x,ya],'WELD')}
+const xs=[];for(let j=0;j<np;j++){const x=-xh+off+j*lp;if(off==0&&j==0)continue;xs.push(x);const ym=Math.sqrt(Math.max(rb*rb-x*x,0));L([x,Math.max(ya,-ym)],[x,Math.min(yb,ym)],'WELD')}
+cnt+=xs.length+1;T('BP'+String(b+1).padStart(2,'0'),0,(ya+yb)/2-th/2,th*.9,'TEXT',0,1)}
+I.snoz.length&&0;for(let i=0;i<I.na;i++){const a=I.a0+i*360/I.na;C([(r0+120)*sn(a),(r0+120)*cs(a)],I.ad,'SUP')}
+dh(-rb,rb,-rb-th*5,`BOTTOM OD ${F(2*rb)}`,-rb);T('BOTTOM PLATE LAYOUT',-rb,-rb-th*12,th*1.4);T(`PL ${R.tb} mm, ${nb} strips ${pw} wide, ~${cnt} plates cut from ${pw} x ${I.pl} stock`,-rb,-rb-th*16,th*.9);T('BUTT WELDED WITH BACKING STRIP, VACUUM BOX TESTED. OVERLAP / ORIENTATION PER FABRICATOR.',-rb,-rb-th*19,th*.8);R.bpl=cnt;return k}
+function roofPlan(k,I,R){const{th,L,C,T,dh}=k,Rr=I.d/2+R.ta[R.ta.length-1],n=Math.max(8,Math.ceil(Math.PI*I.d/(I.pw||1500))),nr=Math.max(8,2*Math.ceil(Math.PI*I.d/1700/2)),sl=Math.sqrt((I.d/2)**2+R.rise**2),rings=Math.max(Math.ceil(sl/I.pl)-1,0);
+C([0,0],Rr);C([0,0],I.d/2,'THIN');C([0,0],Math.min(300,Rr/8),'OUT');L([-Rr-500,0],[Rr+500,0],'CEN');L([0,-Rr-500],[0,Rr+500],'CEN');
+for(let i=0;i<n;i++){const a=360*i/n;L([Math.min(300,Rr/8)*sn(a),Math.min(300,Rr/8)*cs(a)],[Rr*sn(a),Rr*cs(a)],'WELD')}
+for(let j=1;j<=rings;j++)C([0,0],Rr*j/(rings+1),'WELD');
+for(let i=0;i<nr;i++){const a=360*(i+.5)/nr;L([0,0],[Rr*sn(a),Rr*cs(a)],'HID')}
+if(I.d>12000)C([0,0],Math.min(400,Rr/6),'SUP');
+I.rnoz.forEach(o=>{const x=o[4]*sn(o[3]),y=o[4]*cs(o[3]);C([x,y],o[2]/2,'NOZ');T(o[0],x+o[2]/2+th*.5,y,th*.8,'NOZ')});
+dh(-Rr,Rr,-Rr-th*5,`ROOF OD ${F(2*Rr)}`,-Rr);T('ROOF PLATE AND RAFTER PLAN',-Rr,-Rr-th*12,th*1.4);
+T(`PL ${R.rt} mm cone, rise ${F(R.rise)} mm, slope ${F(I.slope,3)}, slant ${F(sl)} mm, area ${F(R.ra,1)} m2`,-Rr,-Rr-th*16,th*.9);
+T(`${n} radial roof sectors x ${rings+1} course(s) = ${n*(rings+1)} plates (solid = seams, ring = centre cap)`,-Rr,-Rr-th*19,th*.8);
+T(`${nr} rafters (dashed), max ~1700 mm at outer ring (verify 5.10.4); ${I.d>12000?'centre column ring shown':'self-supported by rafters to top angle'}.`,-Rr,-Rr-th*22,th*.8);R.rpl=n*(rings+1);return k}
+/* ---------------- sheet assembly ---------------- */
+/* ---------------- weld map and weld register ---------------- */
+function bsm(I,R){const ta=R.ta,pw=I.pw||1500,r0=I.d/2+ta[0],rb=r0+I.bp,nb=Math.ceil(2*rb/pw),out=[];let nl=0,ne=0;
+for(let b=0;b<nb;b++){const ya=Math.max(-rb,-nb*pw/2+b*pw),yb=Math.min(rb,-nb*pw/2+(b+1)*pw),yn=ya<=0&&yb>=0?0:Math.min(Math.abs(ya),Math.abs(yb)),xh=Math.sqrt(rb*rb-yn*yn),np=Math.ceil(2*xh/I.pl),lp=2*xh/np,off=(b%2)*lp/2;
+if(b>0){const x=Math.sqrt(Math.max(rb*rb-ya*ya,0));out.push({id:'BL-'+(++nl),a:[-x,ya],b:[x,ya],len:2*x,k:'L'})}
+for(let j=0;j<np;j++){const x=-xh+off+j*lp;if(off==0&&j==0)continue;const ym=Math.sqrt(Math.max(rb*rb-x*x,0)),lo=Math.max(ya,-ym),hi=Math.min(yb,ym);if(hi>lo)out.push({id:'BE-'+(++ne),a:[x,lo],b:[x,hi],len:hi-lo,k:'E'})}}
+return{seams:out,rb,r0}}
+function wreg(I,R){const n=I.courses.length,ta=R.ta,tb=R.tb,tu=ta[n-1],D=I.d,fs=R.fs||Math.min(13,Math.max(5,Math.min(ta[0],tb))),fb=Math.min(tb,13),rr=R.rt,fr=Math.min(5,rr),ND=R.wsch.map(r=>r[4]),rows=[],pd=x=>String(x).padStart(2,'0');
+const kB=(t,L)=>(2*t+.289*t*t)*1.1*L*1000*7.85e-6,kF=(f,L)=>.5*f*f*1.1*L*1000*7.85e-6,add=(g,id,loc,type,t,size,L,nde,kg)=>rows.push({g,id,loc,type,t,size,L,nde,kg});
+R.pl.forEach((p,c)=>{for(let j=0;j<p.np;j++)add('V','V'+(c+1)+'-'+(j+1),`Course ${c+1}, vertical seam ${j+1}`,'Butt, full penetration',ta[c],'Full pen.',I.courses[c]/1e3,ND[0],kB(ta[c],I.courses[c]/1e3))});
+for(let c=0;c<n-1;c++){const L=Math.PI*(D+ta[c]+ta[c+1])/1e3,t=Math.min(ta[c],ta[c+1]);add('H','H'+pd(c+1),`Horizontal seam, course ${c+1} to ${c+2}`,'Butt, full penetration',t,'Full pen.',L,ND[1],kB(t,L))}
+const Li=Math.PI*D/1e3,Lo=Math.PI*(D+2*ta[0])/1e3;add('SB','SB-I','Shell to bottom, inside','Fillet',ta[0],fs+' mm leg',Li,ND[2],kF(fs,Li));add('SB','SB-O','Shell to bottom, outside','Fillet',ta[0],fs+' mm leg',Lo,ND[2],kF(fs,Lo));
+const bs=bsm(I,R);bs.seams.forEach(s=>add(s.k=='L'?'BL':'BE',s.id,s.k=='L'?'Bottom long lap seam':'Bottom end lap seam','Lap, full fillet top side',tb,fb+' mm leg',s.len/1e3,ND[3],kF(fb,s.len/1e3)));
+const Rr=D/2+tu,nR=Math.max(8,Math.ceil(Math.PI*D/(I.pw||1500))),sl=Math.sqrt((D/2)**2+R.rise**2),rings=Math.max(Math.ceil(sl/I.pl)-1,0),cap=Math.min(300,Rr/8),fk=sl/(D/2);
+for(let i=0;i<nR;i++){const L=(sl-cap)/1e3;add('RR','RR-'+(i+1),'Roof radial lap seam','Lap, continuous fillet top side',rr,fr+' mm',L,ND[5],kF(fr,L))}
+for(let j=1;j<=rings;j++){const L=2*Math.PI*Rr*j/(rings+1)*fk/1e3;add('RC','RC-'+j,'Roof ring lap seam','Lap, continuous fillet top side',rr,fr+' mm',L,ND[5],kF(fr,L))}
+const Lr=Math.PI*(D+2*tu)/1e3;add('RT','RT','Roof to top angle (top side only)','Fillet',rr,'<= '+fr+' mm',Lr,ND[6],kF(fr,Lr));add('TA','TA-O','Top angle to shell, outside','Fillet',tu,'5 mm min',Lr,ND[7],kF(5,Lr));
+I.snoz.forEach(o=>{const cl=isCl(o[1]),P=cl?4*o[2]/1e3:Math.PI*o[2]/1e3,pd2=Math.round(o[2]*1.8),Pp=cl?4*pd2/1e3:Math.PI*pd2/1e3;add('NW','NW-'+o[0],`${o[0]} ${o[1]}, neck to shell`,'Fillet / groove per Fig. 5-7',ta[0],'By Designer',P,ND[8],kF(8,P));add('NP','NP-'+o[0],`${o[0]} pad to shell`,'Fillet, pad perimeter',ta[0],'By Designer',Pp,ND[8],kF(8,Pp))});
+I.rnoz.forEach(o=>{const P=Math.PI*o[2]/1e3;add('RW','RW-'+o[0],`${o[0]} ${o[1]}, neck to roof`,'Fillet / groove',rr,'By Designer',P,ND[8],kF(6,P))});
+if(R.need)for(let i=0;i<I.na;i++)add('AC','AC-'+(i+1),`Anchor chair ${i+1} to shell`,'Fillet',ta[0],'8 mm',.85,'VT, MT or PT',kF(8,.85));
+return{rows,bs,nR,rings,Rr,sl,cap}}
+const WG=[['V','Shell vertical seams','Butt, full penetration','Det. 3','SAW or SMAW / FCAW','RT per API 650 8.1 (see weld schedule)'],['H','Shell horizontal seams','Butt, full penetration','Det. 4','SAW or FCAW','RT per API 650 8.1 (see weld schedule)'],['SB','Shell to bottom (inside + outside)','Fillet','Det. 1','SMAW or FCAW','VT + MT/PT of root and final pass, or vacuum box'],['BL','Bottom long lap seams','Lap fillet','Det. 7','SMAW or FCAW','Vacuum box'],['BE','Bottom end lap seams','Lap fillet','Det. 7','SMAW or FCAW','Vacuum box'],['RR','Roof radial lap seams','Lap fillet','Det. 8','SMAW or FCAW','VT; leak test'],['RC','Roof ring lap seams','Lap fillet','Det. 8','SMAW or FCAW','VT; leak test'],['RT','Roof to top angle','Fillet','Det. 2','SMAW or FCAW','VT'],['TA','Top angle to shell','Fillet','Det. 2','SMAW or FCAW','VT, MT or PT optional'],['NW','Shell nozzle neck welds','Fillet / groove','Det. 5','SMAW or FCAW','VT; pad air test'],['NP','Shell nozzle pad welds','Fillet','Det. 5','SMAW or FCAW','VT; pad air test'],['RW','Roof nozzle welds','Fillet / groove','','SMAW or FCAW','VT'],['AC','Anchor chair welds','Fillet','Det. 6','SMAW or FCAW','VT, MT or PT']];
+function wmShell(k,I,R){const{th,L,R:Rc,C,T}=k,n=I.courses.length,z=R.shell.map(r=>r.z),H=sum(I.courses),c0=R.pl[0].c,pd=x=>String(x).padStart(2,'0');
+T('SHELL WELD MAP (rolled out, viewed from outside, 0° at left edge, clockwise from north)',0,-th*6,th*1.4);
+R.pl.forEach((p,i)=>{const y=z[i],h=I.courses[i];Rc(0,y,p.c,y+h);for(let j=0;j<p.np;j++){const x=R.off[i]+j*p.lp;L([x,y],[x,y+h],'WELD');T('V'+(i+1)+'-'+(j+1),x-th*.4,y+h/2-th*2,th*.9,'TEXT',90,0)}T(`C${i+1}  t ${p.t}`,-th*5,y+h/2-th/2,th)});
+for(let i=0;i<n-1;i++){const y=z[i]+I.courses[i],len=Math.min(R.pl[i].c,R.pl[i+1].c);L([0,y],[len,y],'WELD');T('H'+pd(i+1),len+th*.8,y-th*.3,th*.9)}
+L([0,0],[c0,0],'WFIL');T('SB-I / SB-O  (fillet, inside and outside)',c0+th*.8,-th*.3,th*.9);L([0,H],[R.pl[n-1].c,H],'WFIL');T('TA-O (top angle) / RT',R.pl[n-1].c+th*.8,H-th*.3,th*.9);
+I.snoz.forEach(o=>{const[m,d,od,a,el]=o,i=z.findIndex((zz,q)=>el>=zz&&el<zz+I.courses[q]),c=R.pl[Math.max(i,0)].c,x=a/360*c;if(isCl(d))Rc(x-od/2,el-od/2,x+od/2,el+od/2,'WFIL');else C([x,el],od/2,'WFIL');C([x,el],od*.9,'WFIL');T(`NW-${m} / NP-${m}`,x+od*.9+th*.4,el-th*.3,th*.8)});
+if(R.need)for(let i=0;i<I.na;i++){const a=((I.a0+i*360/I.na)%360+360)%360,x=a/360*c0;Rc(x-120,0,x+120,300,'WFIL');T('AC-'+(i+1),x,300+th*.6,th*.8,'TEXT',0,1)}
+for(let a=0;a<=360;a+=45){const x=a/360*c0;L([x,H],[x,H+th*1.2],'DIM');T(a+'°',x,H+th*1.8,th*.8,'DIM',0,1)}return k}
+function wmBottom(k,I,R,WR){const{th,L,C,T}=k,b=WR.bs,rb=b.rb,r0=b.r0;
+C([0,0],rb);C([0,0],r0,'THIN');C([0,0],I.d/2,'THIN');L([-rb-500,0],[rb+500,0],'CEN');L([0,-rb-500],[0,rb+500],'CEN');
+b.seams.forEach(s=>{L(s.a,s.b,'WFIL');if(s.k=='L')T(s.id,s.a[0]+th*2,s.a[1]+th*.4,th*.8);else T(s.id,s.a[0]-th*.4,(s.a[1]+s.b[1])/2-th*1.2,th*.8,'TEXT',90,0)});
+T('BOTTOM WELD MAP',-rb,-rb-th*6,th*1.4);T(`LAP-WELDED PER 5.1.5.4: FULL FILLET ${Math.min(R.tb,13)} mm, TOP SIDE, ALL SEAMS. VACUUM BOX TEST.`,-rb,-rb-th*10,th*.8);T('SHELL-TO-BOTTOM: SB-I / SB-O (CIRCLE AT SHELL OD). ANNULAR BUTTS, IF REQUIRED, ARE NOT SHOWN.',-rb,-rb-th*13,th*.8);return k}
+function wmRoof(k,I,R,WR){const{th,L,C,T}=k,Rr=WR.Rr,n=WR.nR,cap=Math.min(300,Rr/8);
+C([0,0],Rr,'WFIL');C([0,0],I.d/2,'THIN');C([0,0],cap,'OUT');L([-Rr-500,0],[Rr+500,0],'CEN');L([0,-Rr-500],[0,Rr+500],'CEN');
+for(let i=0;i<n;i++){const a=360*i/n;L([cap*sn(a),cap*cs(a)],[Rr*sn(a),Rr*cs(a)],'WFIL');const r=Rr*.62;T('RR-'+(i+1),r*sn(a)+th*.3,r*cs(a),th*.7)}
+for(let j=1;j<=WR.rings;j++){C([0,0],Rr*j/(WR.rings+1),'WFIL');T('RC-'+j,Rr*j/(WR.rings+1)+th*.4,th*.5,th*.8)}
+I.rnoz.forEach(o=>{const x=o[4]*sn(o[3]),y=o[4]*cs(o[3]);C([x,y],o[2]/2,'WFIL');T('RW-'+o[0],x+o[2]/2+th*.4,y,th*.8)});
+T('RT (ROOF TO TOP ANGLE)',Rr*.55,-Rr-th*2,th*.9);T('ROOF WELD MAP',-Rr,-Rr-th*6,th*1.4);T(`LAP >= 25 mm, CONTINUOUS FILLET ${Math.min(5,R.rt)} mm, TOP SIDE. ${n} RADIAL SEAMS, ${WR.rings} RING SEAM(S).`,-Rr,-Rr-th*10,th*.8);return k}
+function wmLegend(k,I,R,WR){const{th,L,T,tbl}=k;T('WELD IDENTIFICATION AND LEGEND',0,th*2,th*1.2);
+L([0,-th*1],[th*8,-th*1],'WELD');T('BUTT, FULL PENETRATION',th*9,-th*1.3,th*.9);L([0,-th*3.5],[th*8,-th*3.5],'WFIL');T('FILLET OR LAP FILLET',th*9,-th*3.8,th*.9);
+const rows=[['ID','JOINT','TYPE','DETAIL','NO.','LENGTH m','NDE']];WG.forEach(g=>{const r=WR.rows.filter(x=>x.g==g[0]);if(!r.length)return;const ids=r.length>1?`${r[0].id} - ${r[r.length-1].id}`:r[0].id;rows.push([ids,g[1],g[2],g[3],r.length,F(sum(r.map(x=>x.L)),1),g[5]])});
+const L2=sum(WR.rows.map(x=>x.L));rows.push(['TOTAL','','','',WR.rows.length,F(L2,1),'']);
+tbl(0,-th*7,[th*13,th*22,th*17,th*7,th*5,th*8,th*36],rows,th*.9);return k}
+function weldWM(I,R,WR){return S=>{const a=kit(S),b=kit(S),c=kit(S),d=kit(S);wmShell(a,I,R);wmBottom(b,I,R,WR);wmRoof(c,I,R,WR);wmLegend(d,I,R,WR);const g=30*S,B1=bb(a.E),B2=bb(b.E),B3=bb(c.E),B4=bb(d.E),w2=B2[2]-B2[0],w3=B3[2]-B3[0];return{E:[...a.E,...b.E.map(e=>mv(e,B1[0]-B2[0],B1[1]-g-B2[3])),...c.E.map(e=>mv(e,B1[0]+w2+g-B3[0],B1[1]-g-B3[3])),...d.E.map(e=>mv(e,B1[0]+w2+w3+2*g-B4[0],B1[1]-g-B4[3]))]}}}
+function wmHTML(I,R,WR){const e=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'),rows=WR.rows,tot=sum(rows.map(x=>x.L)),kg=sum(rows.map(x=>x.kg)),hd=a=>'<thead><tr>'+a.map(x=>`<th class="l">${x}</th>`).join('')+'</tr></thead>',td=a=>'<tr>'+a.map(c=>`<td class="l">${e(c)}</td>`).join('')+'</tr>';
+const grp=WG.map(g=>{const r=rows.filter(x=>x.g==g[0]);if(!r.length)return'';const ids=r.length>1?`${r[0].id} to ${r[r.length-1].id}`:r[0].id,sz=[...new Set(r.map(x=>x.size))].join(' / '),t=[...new Set(r.map(x=>x.t))].join(', ');return td([ids,g[1],g[2]+(g[3]?' ('+g[3]+')':''),t,sz,r.length,F(sum(r.map(x=>x.L)),1),F(sum(r.map(x=>x.kg)),0),g[4],r[0].nde])}).join('');
+const seq=[['Bottom (BL, BE)','Lay and tack the plates, weld the short end seams first and then the long seams from the centre outward, two welders back-stepping. Leave about 300 mm open at the edge until the shell-to-bottom joint is done. Vacuum box test the seams.'],['Shell course 1 (V1-*)','Fit up the vertical seams on strongbacks, tack, then weld opposite seams at the same time, bottom up. Back-gouge the second side on full-penetration seams.'],['Shell course 2 up (H01, V2-* …)','Fit the next course on clips and wedges with its vertical seams offset, weld its vertical seams, then the horizontal seam with two welders in the same direction. Repeat for each course.'],['Shell to bottom (SB-I, SB-O)','Weld inside and outside with welders opposite each other, going the same way round. Do the MT/PT or vacuum box test required by the schedule.'],['Top angle and roof (TA-O, RR, RC, RT)','Fit the top angle, then lay the roof plates and weld the lap seams from the centre outward, then the roof to the top angle.'],['Nozzles and chairs (NW, NP, RW, AC)','Cut in and weld nozzles, pads and manways, then the anchor chairs, with the shell plumb. Air test each reinforcing pad.'],['Final','Finish all repairs and NDE before the hydrostatic test.']];
+const ctl=[['Qualification','Use only approved WPS/PQR and qualified welders (API 650 Sec. 9, ASME IX). Mark the welder ID beside each seam and record it in the weld log.'],['Fit-up hold point','Check root gap, alignment, lap width, peaking and banding before tacking and again before welding.'],['Surface and weather','Edges clean, dry and free of paint, rust, scale and oil. Do not weld on wet or frosty steel or in wind or rain without shelter. Preheat when the WPS or the plate thickness and grade call for it.'],['Sequence and distortion','Weld balanced (opposite seams together), back-step long seams, and keep tack spacing and strongbacks in place until the weld passes them. Watch peaking and banding as you go.'],['Passes','Clean slag between passes. Back-gouge to sound metal before the second side of a full-penetration butt. Fillets: check leg size with a gauge.'],['Inspection','Visual after each weld, then the NDE in the schedule (RT, MT/PT, vacuum box). Hold points: fit-up, root pass (when the WPS requires), final visual, NDE, hydrotest.'],['Repairs','Grind out the defect to sound metal, reweld to the WPS, retest by the same method, and record it.']];
+const log=rows.map(r=>td([r.id,r.loc,r.type,r.t,r.size,F(r.L,2),r.nde,'','','','','']));
+return `<div class="card" id="tk_wmcard"><h2>Weld map and welding details · API 650</h2><p class="note" style="margin:0 0 8px">Every weld has an ID. The weld map drawing (Drawing 5 below, DXF and SVG) shows where each ID is on the shell roll-out, the bottom and the roof.</p>
+<div class="spec"><span>${rows.length} welds</span><span>${F(tot,1)} m of weld</span><span>~${F(kg,0)} kg weld metal (estimate)</span><span>Fillet and lap welds: blue · Butt welds: orange</span></div>
+<h3>Weld register</h3><div class="scroll"><table>${hd(['IDs','Joint','Type (detail)','Plate t mm','Size','No.','Length m','Weld metal kg','Typical process','NDE'])}<tbody>${grp}</tbody></table></div>
+<h3>Welding sequence</h3><ol class="steps">${seq.map((s,i)=>`<li style="cursor:default"><b>${i+1}. ${s[0]}</b>${s[1]}</li>`).join('')}</ol>
+<h3>Welding details and controls</h3><div class="scroll"><table>${hd(['Topic','Detail'])}<tbody>${ctl.map(c=>td(c)).join('')}</tbody></table></div>
+<details class="ph"><summary>Weld log, every weld (fill in on site)</summary><div class="scroll"><table>${hd(['ID','Location','Type','t mm','Size','Length m','NDE','Welder ID','WPS','Date','VT','NDE result'])}<tbody>${log.join('')}</tbody></table></div></details>
+<div class="ctrl"><button class="btn go" id="tk_wlog">Download weld log (CSV)</button></div>
+<p class="note">Typical practice for a lap-welded bottom and butt-welded shell. The approved WPS, your project specification and the API 650 edition you build to take priority. Process and consumable choices are typical, not a WPS. Weld lengths and weld metal are estimates from the plate layout (weld metal: 10% over the joint area, double-V butts with a 2 mm gap and 60° included angle, fillets as a right triangle). Nozzle, pad and chair weld sizes are placeholders: the Designer sets them.</p></div>`}
+const LY={OUT:[7,'CONTINUOUS'],THIN:[8,'CONTINUOUS'],WELD:[30,'CONTINUOUS'],WFIL:[5,'CONTINUOUS'],CEN:[1,'CENTER'],HID:[5,'DASHED'],DIM:[3,'CONTINUOUS'],TEXT:[2,'CONTINUOUS'],NOZ:[4,'CONTINUOUS'],SUP:[6,'CONTINUOUS'],FRAME:[7,'CONTINUOUS']};
+const CV={OUT:'var(--ink)',THIN:'var(--mut)',WELD:'var(--weld)',WFIL:'#2a6fd6',CEN:'#d4453a',HID:'var(--steel)',DIM:'#1b8a5b',TEXT:'var(--ink)',NOZ:'var(--ink)',SUP:'var(--steel)',FRAME:'var(--ink)'},CF={OUT:'#14232d',THIN:'#5b6d78',WELD:'#e4572e',WFIL:'#2a6fd6',CEN:'#d4453a',HID:'#7d93a1',DIM:'#1b8a5b',TEXT:'#14232d',NOZ:'#14232d',SUP:'#7d93a1',FRAME:'#14232d'};
+function fin(bf,ttl,I,fx){let pk=null;for(const[nm,w,h]of[['A1',841,594],['A0',1189,841]]){for(const S of fx?[fx]:SC){const kk=bf(S),b=bb(kk.E);if(b[2]-b[0]<=(w-40)*S&&b[3]-b[1]<=(h-75)*S){pk={nm,w,h,S,kk,b};break}}if(pk)break}
+if(!pk){const S=fx||400,kk=bf(S);pk={nm:'A0',w:1189,h:841,S,kk,b:bb(kk.E)}}
+const{nm,w,h,S,kk,b}=pk,W=w*S,HH=h*S,E=kk.E.map(e=>mv(e,20*S+((w-30)*S-(b[2]-b[0]))/2-b[0],55*S+((h-65)*S-(b[3]-b[1]))/2-b[1])),L=(p,q)=>E.push({t:'L',p,q,l:'FRAME'}),Rc=(a,bb_,c,d)=>{L([a,bb_],[c,bb_]);L([c,bb_],[c,d]);L([c,d],[a,d]);L([a,d],[a,bb_])},T=(x,y,s,hh)=>E.push({t:'T',p:[x,y],s,h:hh,l:'TEXT',r:0,c:0});
+Rc(0,0,W,HH);Rc(20*S,10*S,W-10*S,HH-10*S);Rc(W-200*S,10*S,W-10*S,55*S);L([W-200*S,32*S],[W-10*S,32*S]);T(W-195*S,44*S,ttl,5*S);T(W-195*S,36*S,`${I.name} - ${I.customer} - ${I.project}`.slice(0,60),2.6*S);T(W-195*S,24*S,`SCALE 1:${S}  SHEET ${nm}  UNITS mm (drawn full size)`,3.2*S);T(W-195*S,15*S,'API 650 screening design - verify with the Designer.',2.6*S);
+const f=v=>(+v).toFixed(3),g=(...a)=>a.join('\n')+'\n';let o=g(0,'SECTION',2,'HEADER',9,'$ACADVER',1,'AC1009',9,'$LTSCALE',40,S,0,'ENDSEC',0,'SECTION',2,'TABLES',0,'TABLE',2,'LTYPE',70,3,0,'LTYPE',2,'CONTINUOUS',70,0,3,'Solid',72,65,73,0,40,0,0,'LTYPE',2,'DASHED',70,0,3,'Dashed',72,65,73,2,40,18,49,12,49,-6,0,'LTYPE',2,'CENTER',70,0,3,'Center',72,65,73,4,40,50,49,32,49,-6,49,6,49,-6,0,'ENDTAB',0,'TABLE',2,'LAYER',70,10);
+Object.entries(LY).forEach(([k,v])=>o+=g(0,'LAYER',2,k,70,0,62,v[0],6,v[1]));o+=g(0,'ENDTAB',0,'TABLE',2,'STYLE',70,1,0,'STYLE',2,'STANDARD',70,0,40,0,41,1,50,0,71,0,42,2.5,3,'txt',4,'',0,'ENDTAB',0,'ENDSEC',0,'SECTION',2,'ENTITIES');
+const dx=s=>s.replace(/°/g,'%%d');E.forEach(e=>{const l=e.l;if(e.t=='L')o+=g(0,'LINE',8,l,10,f(e.p[0]),20,f(e.p[1]),30,0,11,f(e.q[0]),21,f(e.q[1]),31,0);else if(e.t=='C')o+=g(0,'CIRCLE',8,l,10,f(e.c[0]),20,f(e.c[1]),30,0,40,f(e.r));else if(e.t=='T')o+=g(0,'TEXT',8,l,10,f(e.p[0]),20,f(e.p[1]),30,0,40,f(e.h),1,dx(e.s),50,f(e.r),...(e.c?[72,1,73,2,11,f(e.p[0]),21,f(e.p[1]),31,0]:[]));else if(e.t=='P'){o+=g(0,'POLYLINE',8,l,66,1,70,0,10,0,20,0,30,0);e.pts.forEach(p=>o+=g(0,'VERTEX',8,l,10,f(p[0]),20,f(p[1]),30,0));o+=g(0,'SEQEND',8,l)}else{const p=e.pts;o+=g(0,'SOLID',8,l,10,f(p[0][0]),20,f(p[0][1]),30,0,11,f(p[1][0]),21,f(p[1][1]),31,0,12,f(p[2][0]),22,f(p[2][1]),32,0,13,f(p[2][0]),23,f(p[2][1]),33,0)}});o+=g(0,'ENDSEC',0,'EOF');
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;'),mkS=(P,std)=>{const st=e=>`stroke="${P[e.l]}" fill="none" stroke-width="${f((['OUT','FRAME','NOZ'].includes(e.l)?.5:.25)*S)}"${e.l=='CEN'?` stroke-dasharray="${14*S} ${3*S} ${3*S} ${3*S}"`:e.l=='HID'?` stroke-dasharray="${4*S} ${2*S}"`:''}`,Y=v=>f(HH-v);
+return`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${HH}" ${std?`width="${w}mm" height="${h}mm"`:'role="img" aria-label="'+esc(ttl)+'"'} font-family="Barlow Semi Condensed,Arial Narrow,Arial,sans-serif">${std?`<rect width="${W}" height="${HH}" fill="#fff"/>`:''}`+E.map(e=>e.t=='L'?`<line x1="${f(e.p[0])}" y1="${Y(e.p[1])}" x2="${f(e.q[0])}" y2="${Y(e.q[1])}" ${st(e)}/>`:e.t=='C'?`<circle cx="${f(e.c[0])}" cy="${Y(e.c[1])}" r="${f(e.r)}" ${st(e)}/>`:e.t=='P'?`<polyline points="${e.pts.map(p=>f(p[0])+','+Y(p[1])).join(' ')}" ${st(e)}/>`:e.t=='S'?`<polygon points="${e.pts.map(p=>f(p[0])+','+Y(p[1])).join(' ')}" fill="${P.DIM}"/>`:`<text x="${f(e.p[0])}" y="${Y(e.p[1])}" font-size="${f(e.h)}" text-anchor="${e.c?'middle':'start'}" dominant-baseline="${e.c?'central':'auto'}" fill="${P.TEXT}" transform="rotate(${-e.r} ${f(e.p[0])} ${Y(e.p[1])})">${esc(e.s)}</text>`).join('')+'</svg>'};
+return{dxf:o,svg:mkS(CV,0),svgFile:mkS(CF,1),S,nm}}
+function sheets(I,R){const ga=S=>{const a=kit(S),b=kit(S),c=kit(S);elev(a,I,R,S);plan(b,I,R);sched(c,I);const g=26*S,B1=bb(a.E),B2=bb(b.E),B3=bb(c.E);return{E:[...a.E,...b.E.map(e=>mv(e,B1[2]+g-B2[0],B1[3]-B2[3])),...c.E.map(e=>mv(e,B1[2]+g-B3[0],B1[3]-(B2[3]-B2[1])-g-B3[3]))]}},
+ro=S=>{const a=kit(S),b=kit(S);rollout(a,I,R);bom(b,I,R);const g=26*S,B1=bb(a.E),B2=bb(b.E);return{E:[...a.E,...b.E.map(e=>mv(e,B1[0]-B2[0],B1[1]-g-B2[3]))]}},
+de=S=>dets(kit(S),I,R),br=S=>{const a=kit(S),b=kit(S);botPlan(a,I,R);roofPlan(b,I,R);const g=30*S,B1=bb(a.E),B2=bb(b.E);return{E:[...a.E,...b.E.map(e=>mv(e,B1[2]+g-B2[0],B1[1]-B2[1]))]}};
+return[['GENERAL ARRANGEMENT','tank-1-general-arrangement',fin(ga,'STORAGE TANK - GENERAL ARRANGEMENT',I)],['SHELL ROLL-OUT, SCHEDULE & BOM','tank-2-shell-rollout-bom',fin(ro,'SHELL PLATE LAYOUT, SCHEDULE AND BOM',I)],['BOTTOM AND ROOF PLATE LAYOUT','tank-3-bottom-roof',fin(br,'BOTTOM AND ROOF PLATE LAYOUT',I)],['CONSTRUCTION DETAILS','tank-4-details',fin(de,'WELD AND JOINT DETAILS',I,4)],['WELD MAP AND WELD IDENTIFICATION','tank-5-weld-map',fin(weldWM(I,R,wreg(I,R)),'WELD MAP AND WELD IDENTIFICATION',I)]]}
+/* ---------------- UI ---------------- */
+function dxf3d(I,R){const n=I.courses.length,ro=R.ta.map(t=>I.d/2+t),z=R.shell.map(r=>r.z),H=sum(I.courses),NS=72,f=v=>(+v).toFixed(3),g=(...a)=>a.join('\n')+'\n',Rin=I.d/2,r0=ro[0],LY3={SHELL:7,ROOF:3,BOTTOM:5,NOZZLE:1,ANCHOR:6,STAIR:30};
+let o=g(0,'SECTION',2,'HEADER',9,'$ACADVER',1,'AC1009',0,'ENDSEC',0,'SECTION',2,'TABLES',0,'TABLE',2,'LTYPE',70,1,0,'LTYPE',2,'CONTINUOUS',70,0,3,'Solid',72,65,73,0,40,0,0,'ENDTAB',0,'TABLE',2,'LAYER',70,6);Object.entries(LY3).forEach(([k,c])=>o+=g(0,'LAYER',2,k,70,0,62,c,6,'CONTINUOUS'));o+=g(0,'ENDTAB',0,'ENDSEC',0,'SECTION',2,'ENTITIES');
+const pc=(a,b)=>[10+a,20+a,30+a].map((c,i)=>[c,f(b[i])]).flat(),fc=(l,a,b,c,d)=>{o+=g(0,'3DFACE',8,l,...pc(0,a),...pc(1,b),...pc(2,c),...pc(3,d||c))},ring=(r,zz,cx=0,cy=0)=>Array.from({length:NS},(_,k)=>[cx+r*Math.sin(2*Math.PI*k/NS),cy+r*Math.cos(2*Math.PI*k/NS),zz]);
+for(let i=0;i<n;i++){const a=ring(ro[i],z[i]),b=ring(ro[i],z[i]+I.courses[i]);for(let k=0;k<NS;k++)fc('SHELL',a[k],a[(k+1)%NS],b[(k+1)%NS],b[k])}
+const rb=ring(r0+I.bp,0),rr=ring(ro[n-1],H);for(let k=0;k<NS;k++){fc('BOTTOM',rb[k],rb[(k+1)%NS],[0,0,0]);fc('ROOF',rr[k],rr[(k+1)%NS],[0,0,H+R.rise])}
+const tube=(p0,d,r,ln,l,ns=16)=>{const m=Math.hypot(...d),e=d.map(v=>v/m),hh=Math.abs(e[2])<.9?[0,0,1]:[1,0,0],cr=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];let u=cr(e,hh);const um=Math.hypot(...u);u=u.map(v=>v/um);const w=cr(e,u),P=(s,k)=>{const an=2*Math.PI*k/ns;return p0.map((v,j)=>v+e[j]*s+r*(Math.cos(an)*u[j]+Math.sin(an)*w[j]))};for(let k=0;k<ns;k++)fc(l,P(0,k),P(0,k+1),P(ln,k+1),P(ln,k))};
+I.snoz.forEach(([m,d,od,a,e,pr])=>tube([r0*sn(a),r0*cs(a),e],[sn(a),cs(a),0],od/2,pr,'NOZZLE'));
+I.rnoz.forEach(([m,d,od,a,r,pr])=>tube([r*sn(a),r*cs(a),H+R.rise*(1-r/Rin)],[0,0,1],od/2,pr,'NOZZLE'));
+for(let i=0;i<I.na;i++){const a=I.a0+i*360/I.na;tube([(r0+120)*sn(a),(r0+120)*cs(a),0],[0,0,1],I.ad/2,500,'ANCHOR',12)}
+const pl=(l,pts,fl)=>{o+=g(0,'POLYLINE',8,l,66,1,70,fl,10,0,20,0,30,0);pts.forEach(p=>o+=g(0,'VERTEX',8,l,10,f(p[0]),20,f(p[1]),30,f(p[2]),70,32));o+=g(0,'SEQEND',8,l)};
+pl('STAIR',Array.from({length:121},(_,k)=>{const u=k/120,a=I.s0+360*u;return[(r0+400)*sn(a),(r0+400)*cs(a),u*H]}),8);pl('ROOF',ring(ro[n-1]+40,H),9);
+return o+g(0,'ENDSEC',0,'EOF')}
+const dl=(n,t,m)=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:m}));a.download=n;a.click()};
+
+function cutSheet(I,R){const PL=I.pl||6000,PW=1500,rows=[],rho=STEEL/1e9;
+R.pl.forEach((p,i)=>{const t=R.ta[i],w=p.h,nA=Math.floor(p.c/PL),rem=p.c-nA*PL,m='SR'+String(i+1).padStart(2,'0');
+if(nA)rows.push(['Shell',m+'A',t,w,PL,nA]);if(rem>50)rows.push(['Shell',m+'B',t,w,Math.round(rem),1])});
+const OD=2*(I.d/2+R.ta[0]+I.bp),Rb=OD/2,ed=[-Rb];while(ed[ed.length-1]+PW<Rb)ed.push(ed[ed.length-1]+PW);ed.push(Rb);
+for(let i=0;i<ed.length-1;i++){const a=ed[i],b=ed[i+1],y=a<=0&&b>=0?0:Math.min(Math.abs(a),Math.abs(b)),ch=2*Math.sqrt(Math.max(0,Rb*Rb-y*y)),n=Math.ceil(ch/PL);rows.push(['Bottom','BS'+String(i+1).padStart(2,'0'),R.tb,Math.round(b-a),Math.round(ch/n),n])}
+const rawN=[],grp={};rows.forEach(r=>{const k=r[0]+'|'+r[2]+'|'+r[3],per=Math.max(1,Math.floor(PL/r[4]));(grp[k]=grp[k]||{p:r[0],t:r[2],w:r[3],s:0}).s+=Math.ceil(r[5]/per)});
+Object.values(grp).forEach(g=>{const sp=Math.max(1,Math.floor(PW/g.w));g.raw=Math.ceil(g.s/sp);rawN.push(g)});
+const ar=R.ra*1.2,rr=Math.ceil(ar/(PW*PL/1e6));
+const sel=r=>r[2]*r[3]*r[4]*rho,net=sum(rows.map(r=>sel(r)*r[5]));
+return{rows:rows.map(r=>[...r,sel(r),sel(r)*r[5]]),rawN,roof:{area:R.ra,t:R.rt,raw:rr,net:R.ra*R.rt*STEEL/1000},net,PL,PW,rawKg:sum(rawN.map(g=>g.raw*PW*PL*g.t*rho))+rr*PW*PL*R.rt*rho}}
+function cutHTML(C,I){const th=['Part','Mark','t mm','Width','Length','Qty','Unit kg','Total kg'].map(x=>`<th>${x}</th>`).join(''),
+tb=C.rows.map(r=>`<tr><td class="l">${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td><td>${r[5]}</td><td>${F(r[6],1)}</td><td>${F(r[7],1)}</td></tr>`).join(''),
+nb=C.rawN.map(g=>`<tr><td class="l">${g.p}</td><td>${g.t}</td><td>${g.w}</td><td>${g.raw}</td><td>${g.raw}</td></tr>`).join('');
+return`<div class="card"><h2>Plate cutting sheet</h2><p class="note" style="margin:0 0 8px">Cut list from the layout above on ${C.PW} x ${C.PL} mm stock: full-length shell plates plus one closing plate per course (trim on site), bottom as 1500 mm strips split at ${C.PL} mm, roof counted by area + 20 % for laps. Per tank.</p><div class="scroll"><table><thead><tr>${th}</tr></thead><tbody>${tb}</tbody></table></div><div class="spec"><span>Net plate (shell + bottom) ${F(C.net)} kg</span><span>Roof ${F(C.roof.net)} kg net</span></div><h3>Raw plates (${C.PW} x ${C.PL}), per tank</h3><div class="scroll"><table><thead><tr><th>Part</th><th>t mm</th><th>Strip width</th><th>Raw plates</th><th></th></tr></thead><tbody>${nb}<tr><td class="l">Roof</td><td>${C.roof.t}</td><td>-</td><td>${C.roof.raw}</td><td></td></tr></tbody></table></div><div class="spec"><span>Raw plate ${F(C.rawKg)} kg per tank</span></div><div class="ctrl"><button class="btn go" id="tk_cut">Download cutting sheet (CSV)</button></div><p class="note">Layout is theoretical: the drawing set nesting marks and any clean-out course plate govern. Weld gaps, trim allowance and plate grade are not included.</p></div>`}
+function readI(){const I={};FL.forEach(([k])=>{const v=q('#tk_'+k).value;I[k]=num.has(k)?+v:v});I.courses=lst(I.courses);I.tdr=lst(I.tdr);while(I.tdr.length<I.courses.length)I.tdr.push(0);I.snoz=nz(q('#tk_noz').value);I.rnoz=nz(q('#tk_rnoz').value);return I}
+/* ---- bottom fabrication: 3D animation (canvas, own projection) ---- */
+const BFC=`<div class="card" id="bfcard"><h2>Bottom fabrication · 3D animation</h2><p class="note" style="margin:0 0 8px">Lap-welded tank bottom, step by step, drawn from your diameter, bottom plate, projection and plate length. Drag the picture to turn it, or click a step to jump to it.</p>
+<div class="row"><div><canvas id="bfc" class="stage" style="width:100%;display:block;touch-action:none;cursor:grab" role="img" aria-label="3D animation of storage tank bottom fabrication"></canvas>
+<div class="ctrl"><button class="btn go" id="bfp">❚❚ Pause</button><button class="btn" id="bfr">↺ Replay</button><button class="btn" id="bfv">Reset view</button><input type="range" id="bfs" min="0" max="1000" value="0" aria-label="Animation position"></div><div class="spec" id="bfo"></div></div>
+<div><ol class="steps" id="bfl"></ol></div></div>
+<p class="note">Plate thickness, lap and the sand pad are exaggerated so they can be seen. The layout (strip width 1500 mm, staggered end joints, lap seams, about 300 mm left unwelded at the seam ends) is typical practice, not a drawing: follow your approved drawing, WPS and the API 650 edition in force. If the tank needs an annular ring (API 650 5.5), the annular plates are laid and butt-welded first and the sketch plates lap onto them.</p></div>`;
+function bfInit(){
+const cv=q('#bfc'),cx=cv.getContext('2d'),ee=t=>t*t*(3-2*t),cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const STG=[['Prepare the foundation','Check the ringwall level and the compacted sand pad, then mark the centre point and two centre lines. Everything is set out from the centre.',3],
+['Lay the plates','Start with the centre strip, then lay strips outward on both sides. Each plate laps its neighbour by at least 5 × thickness (not less than 32 mm: check your API 650 edition). Stagger the end joints so four plates never meet at one corner.',7],
+['Fit up and tack','Pull the laps tight with clamps and wedges, check the lap width, then tack every 300 to 500 mm. A gap under the lap gives a weak, leaking fillet.',3],
+['Weld the lap seams','Short end seams first, centre outward, then the long seams. Two welders start in the middle of each seam and work outward (back-step) to balance shrinkage. Leave about 300 mm unwelded at the seam ends until the shell is welded.',9],
+['Cut the circle','Scribe the bottom outside circle from the centre (shell OD + 2 × projection) and cut the oversize plates to it. Grind the cut edge smooth.',4],
+['Mark the shell circle','Scribe the shell circle from the same centre. The bottom projects beyond the shell by the projection you entered; the first shell course is set on this line.',3],
+['Vacuum box test','Brush soap solution on each seam, set the box and pull a vacuum (21 to 35 kPa, 3 to 5 psig per API 650). Bubbles mean a leak: mark it, grind out, reweld and retest.',7]];
+const ST=[];let tt=0;STG.forEach(s=>{ST.push(tt);tt+=s[2]});const TT=tt;
+q('#bfl').innerHTML=STG.map((s,i)=>`<li tabindex="0"><b>${i+1}. ${s[0]}</b>${s[1]}</li>`).join('');
+const lis=[...q('#bfl').children];
+let G,T=0,play=true,dirty=true,last=0,W=600,H=432,DPR=1,K=.1,CX=0,CY=0,cur=-1;const cam={yaw:-.6,pit:.95};
+function clipPoly(xa,xb,ya,yb,Rr){const ym=ya*yb>0?Math.min(Math.abs(ya),Math.abs(yb)):0,xm=Math.sqrt(Math.max(Rr*Rr-ym*ym,0));xa=Math.max(xa,-xm);xb=Math.min(xb,xm);if(xb-xa<1)return null;const N=14,top=[],bot=[];for(let i=0;i<=N;i++){const x=xa+(xb-xa)*i/N,h=Math.sqrt(Math.max(Rr*Rr-x*x,0));top.push([x,Math.min(yb,h)]);bot.push([x,Math.max(ya,-h)])}return top.concat(bot.reverse())}
+function geo(){const g=id=>+q('#'+id).value,D=g('tk_d')||6200,bt=g('tk_bt')||10,bp=g('tk_bp')||50,pl=g('tk_pl')||6000,t1=+String(q('#tk_tdr').value).split(',')[0]||6,R=D/2,ro=R+t1,rb=ro+bp,rc=rb+250,pw=1500,lap=Math.max(32,5*bt),lapV=Math.max(lap,rb*.02),tv=rb*.012,zr=rb*.04;
+const rs=[0];for(let k=1;(k-.5)*pw-lapV<rb;k++)rs.push(k,-k);
+const pcs=[],seams=[];
+rs.forEach((r,ri)=>{const a=Math.abs(r);let ya,yb;if(r==0){ya=-pw/2;yb=pw/2}else if(r>0){ya=(r-.5)*pw-lapV;yb=(r+.5)*pw}else{ya=-(a+.5)*pw;yb=-(a-.5)*pw+lapV}
+const off=a%2?pl/2:0,ed=[-rc-1],n0=Math.ceil(rc/pl)+1;for(let k=-n0;k<=n0;k++){const x=off+k*pl;if(x>-rc&&x<rc)ed.push(x)}ed.push(rc+1);
+for(let i=0;i<ed.length-1;i++){const xa=ed[i]-(i>0?lapV:0),xb=ed[i+1],big=clipPoly(xa,xb,ya,yb,rc),fin=clipPoly(xa,xb,ya,yb,rb);if(!big||!fin)continue;const z=zr+tv+a*tv*.9+i*tv*.45;pcs.push({big,fin,z,ri,i});
+if(i>0){const x=xa,m=Math.sqrt(Math.max(rb*rb-x*x,0))-300,lo=Math.max(ya,-m),hi=Math.min(yb,m);if(hi-lo>200)seams.push({a:[x,lo],b:[x,hi],z:z+tv*.6,k:0,ri,i})}}
+if(r!=0){const y=r>0?ya:yb,m=Math.sqrt(Math.max(rb*rb-y*y,0))-300;if(m>200)seams.push({a:[-m,y],b:[m,y],z:zr+tv+a*tv*.9+tv*1.1,k:1,ri,i:0})}});
+seams.sort((p,q2)=>p.k-q2.k||p.ri-q2.ri||p.i-q2.i);let cum=0;seams.forEach(s=>{s.len=Math.hypot(s.b[0]-s.a[0],s.b[1]-s.a[1]);s.c0=cum;cum+=s.len});
+const tacks=[];seams.forEach(s=>{const n=Math.max(2,Math.floor(s.len/450)+1);for(let j=0;j<n;j++){const f=j/(n-1);tacks.push([s.a[0]+(s.b[0]-s.a[0])*f,s.a[1]+(s.b[1]-s.a[1])*f,s.z])}});
+pcs.sort((p,q2)=>p.ri-q2.ri||p.i-q2.i);pcs.forEach((p,i)=>p.o=i);
+return{D,bt,bp,pl,R,ro,rb,rc,pw,lap,lapV,tv,zr,pcs,seams,tacks,Lw:cum,gr:rb+1400}}
+function fit(){const r=cv.getBoundingClientRect();if(r.width<10)return false;const d=Math.min(devicePixelRatio||1,2),w=Math.round(r.width),h=Math.round(w*.72);if(cv.width!=w*d||cv.height!=h*d||cv.style.height!=h+'px'){cv.width=w*d;cv.height=h*d;cv.style.height=h+'px'}W=w;H=h;DPR=d;return true}
+const col=n=>getComputedStyle(cv).getPropertyValue(n).trim()||'#888';
+function P(x,y,z){const c=Math.cos(cam.yaw),s=Math.sin(cam.yaw),xr=x*c-y*s,yr=x*s+y*c,cp=Math.cos(cam.pit),sp=Math.sin(cam.pit);return[CX+xr*K,CY-(z*cp+yr*sp)*K]}
+function path(pts,z){cx.beginPath();pts.forEach((p,i)=>{const s=P(p[0],p[1],z);i?cx.lineTo(s[0],s[1]):cx.moveTo(s[0],s[1])});cx.closePath()}
+function circ(r,n=96){const a=[];for(let i=0;i<n;i++){const t=i/n*Math.PI*2;a.push([r*Math.cos(t),r*Math.sin(t)])}return a}
+function plate(pts,z,fill,line,shade,alpha){const n=pts.length,tv=G.tv;cx.globalAlpha=alpha;for(let i=0;i<n;i++){const a=pts[i],b=pts[(i+1)%n],A=P(a[0],a[1],z),B=P(b[0],b[1],z),A2=P(a[0],a[1],z-tv),B2=P(b[0],b[1],z-tv);cx.beginPath();cx.moveTo(A[0],A[1]);cx.lineTo(B[0],B[1]);cx.lineTo(B2[0],B2[1]);cx.lineTo(A2[0],A2[1]);cx.closePath();cx.fillStyle=fill;cx.fill();cx.fillStyle='rgba(0,0,0,.5)';cx.fill()}
+path(pts,z);cx.fillStyle=fill;cx.fill();if(shade){cx.fillStyle='rgba(0,0,0,'+shade+')';cx.fill()}cx.strokeStyle=line;cx.lineWidth=1;cx.stroke();cx.globalAlpha=1}
+function line(a,b,z,c,w,dash){const A=P(a[0],a[1],z),B=P(b[0],b[1],z);cx.beginPath();cx.moveTo(A[0],A[1]);cx.lineTo(B[0],B[1]);cx.strokeStyle=c;cx.lineWidth=w;cx.setLineDash(dash||[]);cx.stroke();cx.setLineDash([])}
+function txt(s,x,y,z,c,al){const p=P(x,y,z);cx.font='600 13px system-ui,sans-serif';cx.textAlign=al||'center';cx.lineWidth=4;cx.strokeStyle=col('--bg');cx.strokeText(s,p[0],p[1]);cx.fillStyle=c;cx.fillText(s,p[0],p[1])}
+function torch(x,y,z,k){const g=G,A=P(x,y,z),B=P(x+g.rb*.05,y-g.rb*.05,z+g.rb*.16);cx.beginPath();cx.moveTo(B[0],B[1]);cx.lineTo(A[0],A[1]);cx.strokeStyle=col('--ink');cx.lineWidth=4;cx.stroke();cx.beginPath();cx.arc(A[0],A[1],10,0,7);cx.fillStyle='rgba(255,120,0,.35)';cx.fill();cx.beginPath();cx.arc(A[0],A[1],4,0,7);cx.fillStyle='#ffe27a';cx.fill();cx.strokeStyle='#ffb020';cx.lineWidth=1.5;for(let i=0;i<5;i++){const a=T*30+i*1.9+k,l=8+6*Math.abs(Math.sin(a*1.7));cx.beginPath();cx.moveTo(A[0],A[1]);cx.lineTo(A[0]+Math.cos(a)*l,A[1]-Math.abs(Math.sin(a))*l);cx.stroke()}}
+const u=i=>cl((T-ST[i])/STG[i][2]);
+function draw(){if(!fit())return;const g=G,steel=col('--steel'),ink=col('--ink'),weld=col('--weld'),ok=col('--ok'),mut=col('--mut'),ln=col('--line');cx.setTransform(DPR,0,0,DPR,0,0);cx.clearRect(0,0,W,H);
+K=Math.min(W*.47,H*.45)/g.gr;CX=W/2;CY=H*.53;
+const s0=ee(u(0));
+/* ground, ringwall, sand */
+cx.globalAlpha=.5*s0;path(circ(g.gr),0);cx.fillStyle=ln;cx.fill();cx.globalAlpha=s0;
+const rw0=g.R-200,rw1=g.R+400,N=96;for(let i=0;i<N;i++){const a=i/N*6.2832,b=(i+1)/N*6.2832,A=P(rw1*Math.cos(a),rw1*Math.sin(a),g.zr),B=P(rw1*Math.cos(b),rw1*Math.sin(b),g.zr),A2=P(rw1*Math.cos(a),rw1*Math.sin(a),0),B2=P(rw1*Math.cos(b),rw1*Math.sin(b),0);cx.beginPath();cx.moveTo(A[0],A[1]);cx.lineTo(B[0],B[1]);cx.lineTo(B2[0],B2[1]);cx.lineTo(A2[0],A2[1]);cx.closePath();cx.fillStyle=mut;cx.fill();cx.fillStyle='rgba(0,0,0,.35)';cx.fill()}
+path(circ(g.R-200),g.zr*.96);cx.fillStyle='#c9b27a';cx.globalAlpha=.6*s0;cx.fill();cx.globalAlpha=s0;
+cx.beginPath();[g.rw1=rw1,rw0].forEach(r=>{circ(r).forEach((p,i)=>{const s=P(p[0],p[1],g.zr);i?cx.lineTo(s[0],s[1]):cx.moveTo(s[0],s[1])});cx.closePath()});cx.fillStyle=mut;cx.globalAlpha=.75*s0;cx.fill('evenodd');cx.globalAlpha=1;
+/* centre lines */
+const cu=ee(u(0)),L=g.gr*.9*cu;line([-L,0],[L,0],g.zr+2,weld,1.5,[10,4,2,4]);line([0,-L],[0,L],g.zr+2,weld,1.5,[10,4,2,4]);
+if(T<ST[1]+.01)txt('centre lines',L*.8,-g.gr*.04,g.zr+2,weld);
+/* plates */
+const n=g.pcs.length,uL=T<ST[1]?0:u(1);const settled=[],fall=[];
+g.pcs.forEach((p,k)=>{if(T<ST[1])return;const s=k/(n+.8),pr=cl((uL-s)/(1.8/(n+.8)));if(pr<=0)return;(pr>=1?settled:fall).push([p,pr])});
+const si=T>=ST[4],cut=u(4),offc=T<ST[4]+STG[4][2]&&T>=0,th=cut*6.2832;
+const draw1=(p,pr)=>{const z=p.z+(1-ee(pr))*g.rb*.5,a=Math.min(1,pr*3);
+ if(T<ST[4]){plate(p.big,z,steel,ink,0,a)}
+ else if(T<ST[4]+STG[4][2]){cx.save();cx.beginPath();const w=[[0,0]];for(let i=0;i<=40;i++){const t=th+(6.2832-th)*i/40;w.push([(g.rc+600)*Math.cos(t),(g.rc+600)*Math.sin(t)])}w.forEach((q2,i)=>{const s=P(q2[0],q2[1],z);i?cx.lineTo(s[0],s[1]):cx.moveTo(s[0],s[1])});cx.closePath();cx.clip();plate(p.big,z,steel,ink,.25,a);cx.restore();plate(p.fin,z,steel,ink,0,a)}
+ else plate(p.fin,z,steel,ink,0,a)};
+settled.sort((p,q2)=>p[0].z-q2[0].z||p[0].o-q2[0].o).forEach(x=>draw1(x[0],x[1]));fall.forEach(x=>draw1(x[0],x[1]));
+/* tack */
+const tk=T<ST[2]?0:ee(u(2));if(tk>0)g.tacks.slice(0,Math.ceil(g.tacks.length*tk)).forEach(t=>{const s=P(t[0],t[1],t[2]+g.tv*.3);cx.beginPath();cx.arc(s[0],s[1],3,0,7);cx.fillStyle='#ffd24a';cx.fill();cx.strokeStyle=ink;cx.lineWidth=.8;cx.stroke()});
+/* weld */
+const wp=T<ST[3]?0:u(3)*g.Lw,tp=T<ST[6]?0:u(6)*g.Lw;let torches=[];
+g.seams.forEach(s=>{const f=cl((wp-s.c0)/s.len);if(f<=0)return;const m=[(s.a[0]+s.b[0])/2,(s.a[1]+s.b[1])/2],a=[m[0]+(s.a[0]-m[0])*f,m[1]+(s.a[1]-m[1])*f],b=[m[0]+(s.b[0]-m[0])*f,m[1]+(s.b[1]-m[1])*f];line(a,b,s.z,weld,3.2);if(f<1&&T<ST[4]){torches.push([a,s.z],[b,s.z])}
+ const ft=cl((tp-s.c0)/s.len);if(ft>0){const e=[s.a[0]+(s.b[0]-s.a[0])*ft,s.a[1]+(s.b[1]-s.a[1])*ft];line(s.a,e,s.z+1,ok,3.6);if(ft<1&&T<ST[6]+STG[6][2]){const dx=s.b[0]-s.a[0],dy=s.b[1]-s.a[1],d=Math.hypot(dx,dy),ux=dx/d,uy=dy/d,w=g.rb*.12,h=g.rb*.07,bh=g.rb*.07,c=[e[0],e[1]],q1=[c[0]-ux*w-uy*h,c[1]-uy*w+ux*h],q2=[c[0]+ux*w-uy*h,c[1]+uy*w+ux*h],q3=[c[0]+ux*w+uy*h,c[1]+uy*w-ux*h],q4=[c[0]-ux*w+uy*h,c[1]-uy*w-ux*h],z=s.z+g.tv*.4;path([q1,q2,q3,q4],z);cx.strokeStyle=ink;cx.lineWidth=1.5;cx.stroke();[q1,q2,q3,q4].forEach(v=>line(v,v,z,ink,0));[q1,q2,q3,q4].forEach(v=>{const A=P(v[0],v[1],z),B=P(v[0],v[1],z+bh);cx.beginPath();cx.moveTo(A[0],A[1]);cx.lineTo(B[0],B[1]);cx.strokeStyle=ink;cx.lineWidth=1.5;cx.stroke()});path([q1,q2,q3,q4],z+bh);cx.fillStyle='rgba(120,190,255,.45)';cx.fill();cx.stroke()}}});
+torches.forEach((t,i)=>torch(t[0][0],t[0][1],t[1],i));
+/* cut */
+const zt=g.zr+g.tv*1.2+g.pcs.reduce((m,p)=>Math.max(m,p.z),0)-g.zr-g.tv;
+if(T>=ST[4]){const th2=T<ST[5]?th:6.2832;if(th2>0){cx.beginPath();for(let i=0;i<=80;i++){const t=th2*i/80,s=P(g.rb*Math.cos(t),g.rb*Math.sin(t),zt);i?cx.lineTo(s[0],s[1]):cx.moveTo(s[0],s[1])}cx.strokeStyle=weld;cx.lineWidth=2.5;cx.stroke()}
+ if(cut<1&&cut>0)torch(g.rb*Math.cos(th),g.rb*Math.sin(th),zt,3);if(T>=ST[4]+STG[4][2]*.5)txt('bottom OD '+Math.round(g.rb*2)+' mm',0,-g.rb-750,g.zr,ink)}
+/* shell circle */
+if(T>=ST[5]){const a=T<ST[6]?ee(u(5))*6.2832:6.2832,zs=zt+g.tv*.2;cx.beginPath();for(let i=0;i<=80;i++){const t=a*i/80,s=P(g.ro*Math.cos(t),g.ro*Math.sin(t),zs);i?cx.lineTo(s[0],s[1]):cx.moveTo(s[0],s[1])}cx.setLineDash([8,4]);cx.strokeStyle=ink;cx.lineWidth=2;cx.stroke();cx.setLineDash([]);
+ if(a<6.28)line([0,0],[g.ro*Math.cos(a),g.ro*Math.sin(a)],zs,mut,1.2);const c0=P(0,0,zs);cx.beginPath();cx.arc(c0[0],c0[1],4,0,7);cx.fillStyle=ink;cx.fill();
+ if(u(5)>.8||T>=ST[6]){line([g.ro,0],[g.rb,0],zs,weld,4);txt('projection '+g.bp+' mm',g.rb+g.gr*.12,0,zs,weld);txt('shell OD '+Math.round(g.ro*2)+' mm',0,g.ro*.45,zs,ink)}}
+/* title */
+const si2=Math.min(STG.length-1,ST.findIndex((s,i)=>T<s+STG[i][2]));const idx=si2<0?STG.length-1:si2;cx.font='700 15px system-ui,sans-serif';cx.textAlign='left';cx.fillStyle=ink;cx.fillText((idx+1)+'/'+STG.length+'  '+STG[idx][0],12,22);
+if(idx!=cur){cur=idx;lis.forEach((l,i)=>{l.classList.toggle('on',i==idx);l.classList.toggle('done',i<idx)})}
+q('#bfs').value=Math.round(T/TT*1000);
+const pc=Math.round(u(idx)*100);q('#bfo').innerHTML=[`Bottom OD ${Math.round(g.rb*2)} mm · PL ${g.bt} mm`,`${g.pcs.length} plates · lap ${Math.round(g.lap)} mm`,`${g.seams.length} lap seams · ${(g.Lw/1000).toFixed(1)} m of weld`,`${STG[idx][0]} ${pc}%`].map(x=>`<span>${x}</span>`).join('');dirty=false}
+function loop(t){const dt=Math.min(.1,(t-last)/1000||0);last=t;if(play&&T<TT){T=Math.min(TT,T+dt);dirty=true;if(T>=TT){play=false;q('#bfp').textContent='▶ Play'}}if((dirty||play)&&!root.hidden)draw();requestAnimationFrame(loop)}
+const reb=()=>{try{G=geo();dirty=true}catch(e){console.error(e)}};reb();
+q('#bfp').onclick=()=>{if(T>=TT)T=0;play=!play;q('#bfp').textContent=play?'❚❚ Pause':'▶ Play';dirty=true};
+q('#bfr').onclick=()=>{T=0;play=true;q('#bfp').textContent='❚❚ Pause';dirty=true};
+q('#bfv').onclick=()=>{cam.yaw=-.6;cam.pit=.95;dirty=true};
+q('#bfs').oninput=e=>{T=+e.target.value/1000*TT;dirty=true};
+lis.forEach((l,i)=>{const f=()=>{T=ST[i]+.01;dirty=true};l.onclick=f;l.onkeydown=e=>e.key=='Enter'&&f()});
+let dg=false,lx=0,ly=0;cv.onpointerdown=e=>{dg=true;lx=e.clientX;ly=e.clientY;cv.setPointerCapture(e.pointerId);cv.style.cursor='grabbing'};cv.onpointermove=e=>{if(!dg)return;cam.yaw+=(e.clientX-lx)*.008;cam.pit=cl(cam.pit+(e.clientY-ly)*.006,.2,1.5);lx=e.clientX;ly=e.clientY;dirty=true};cv.onpointerup=cv.onpointercancel=()=>{dg=false;cv.style.cursor='grab'};
+['tk_d','tk_bt','tk_bp','tk_pl','tk_tdr'].forEach(id=>q('#'+id).addEventListener('change',reb));q('#tk_run').addEventListener('click',reb);q('#tk_rst').addEventListener('click',()=>setTimeout(reb,0));
+addEventListener('resize',()=>dirty=true);new MutationObserver(()=>dirty=true).observe(document.documentElement,{attributes:true});
+if(matchMedia('(prefers-reduced-motion:reduce)').matches){play=false;T=TT;q('#bfp').textContent='▶ Play'}
+requestAnimationFrame(loop)}
+/* ---- shell assembly and fit-up: 3D animation ---- */
+const SHC=`<div class="card" id="shcard"><h2>Shell assembly and fit-up · 3D animation</h2><p class="note" style="margin:0 0 8px">How the shell goes up on the finished bottom: guide blocks, erecting course 1, fitting and welding the vertical seams, fitting course 2 on clips and wedges, then repeating up the tank. Drawn from your diameter, course heights and plate length. Drag to turn it, or click a step.</p>
+<div class="row"><div><canvas id="sw_c" class="stage" style="width:100%;display:block;touch-action:none;cursor:grab" role="img" aria-label="3D animation of storage tank shell assembly and fit-up"></canvas>
+<div class="ctrl"><button class="btn go" id="sw_p">❚❚ Pause</button><button class="btn" id="sw_r">↺ Replay</button><button class="btn" id="sw_v">Reset view</button><input type="range" id="sw_s" min="0" max="1000" value="0" aria-label="Animation position"></div><div class="spec" id="sw_o"></div></div>
+<div><ol class="steps" id="sw_l"></ol></div></div>
+<p class="note">Plate thickness, gaps, clips and wedges are exaggerated so they can be seen. Plate count per course comes from the plate length you entered; real plans, sequence and limits come from your drawings, WPS and the API 650 edition in force. Peaking, banding, plumb and roundness limits are in the tolerance table below.</p></div>`;
+function shInit(){
+const cv=q('#sw_c'),cx=cv.getContext('2d'),ee=t=>t*t*(3-2*t),cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),TP=6.2832;
+const STG=[['Set out the shell circle','Scribe the shell circle from the centre on the finished bottom. Weld guide blocks (stop angles) on the outside of the circle, about every half plate, to hold the first course on the line.',3],
+['Erect course 1','Rolled plates are lifted one at a time and stood against the guide blocks. Brace each plate plumb with a temporary support until the next one is in. Leave an open gap at each vertical seam for fit-up.',6],
+['Fit up the vertical seams','Close each seam to the root gap in the WPS (about 3 mm) with strongbacks, pins and wedges. Line up the plate faces, then check peaking with a 900 mm sweep board before and after tacking.',5],
+['Weld the vertical seams','Weld opposite seams at the same time so shrinkage is balanced, from the bottom up, back-stepping. Take the strongbacks off as the weld passes them and back-gouge before the second side.',7],
+['Fit up course 2','Weld fit-up clips (lugs) on the top edge of course 1 about every metre. Lower each plate of course 2 onto the clips, offset its vertical seams from the course below (API 650: at least 5 × thickness), then drive the wedges to set the root gap and align the plates. Tack every 300 to 500 mm.',8],
+['Weld course 2','Weld the vertical seams of course 2 first, then the horizontal seam with two welders going the same way round the tank from opposite starting points.',6],
+['Build up the courses','Repeat the cycle for each remaining course: erect, fit up, tack, weld the vertical seams, then the horizontal seam. Check plumb and roundness as you go.',7],
+['Weld shell to bottom','Weld the shell-to-bottom joint inside and outside with welders opposite each other going the same direction. Then do the final checks: plumb, roundness at 0.3 m, peaking and banding.',5]];
+const ST=[];let tt=0;STG.forEach(s=>{ST.push(tt);tt+=s[2]});const TT=tt;
+q('#sw_l').innerHTML=STG.map((s,i)=>`<li tabindex="0"><b>${i+1}. ${s[0]}</b>${s[1]}</li>`).join('');
+const lis=[...q('#sw_l').children];
+let G,T=0,play=true,dirty=true,last=0,W=600,H=432,DPR=1,K=.1,CX=0,CY=0,cur=-1,Q=[];const cam={yaw:-.6,pit:.78};
+function sgeo(){const g=id=>+q('#'+id).value,D=g('tk_d')||6200,bt=g('tk_bt')||10,bp=g('tk_bp')||50,pl=g('tk_pl')||6000,hs=String(q('#tk_courses').value).split(',').map(Number).filter(x=>x>0),tl=String(q('#tk_tdr').value).split(',').map(Number);if(!hs.length)hs.push(1500);const nc=hs.length,R=D/2,t1=tl[0]||6,ro=R+t1,rb=ro+bp,rO=R+rb*.012,np=cl(Math.ceil(TP*ro/pl),3,48),zr=rb*.04,tv=rb*.012,zs=zr+tv,hg=rb*.012;let z=zs;const hh=hs.map((h,i)=>{const a=z+i*hg;z+=h;return[a,a+h]});return{D,bt,bp,R,ro,rb,rO,np,nc,zr,tv,zs,hg,gapV:rb*.014,hs,hh,h0:hs[0],h1:hs[1]||0,Ht:z-zs+(nc-1)*hg,gr:rb+1400,tx:rO-R}}
+function fit(){const r=cv.getBoundingClientRect();if(r.width<10)return false;const d=Math.min(devicePixelRatio||1,2),w=Math.round(r.width),h=Math.round(w*.78);if(cv.width!=w*d||cv.height!=h*d||cv.style.height!=h+'px'){cv.width=w*d;cv.height=h*d;cv.style.height=h+'px'}W=w;H=h;DPR=d;return true}
+const col=n=>getComputedStyle(cv).getPropertyValue(n).trim()||'#888';
+const shd=(c,s)=>{cx.fillStyle=c;const h=cx.fillStyle;if(h[0]!='#')return c;const n=parseInt(h.slice(1),16);return`rgb(${(n>>16&255)*(1-s)|0},${(n>>8&255)*(1-s)|0},${(n&255)*(1-s)|0})`};
+function P(x,y,z){const c=Math.cos(cam.yaw),s=Math.sin(cam.yaw),xr=x*c-y*s,yr=x*s+y*c,cp=Math.cos(cam.pit),sp=Math.sin(cam.pit);return[CX+xr*K,CY-(z*cp+yr*sp)*K]}
+const dep=(x,y,z)=>(x*Math.sin(cam.yaw)+y*Math.cos(cam.yaw))*Math.cos(cam.pit)-z*Math.sin(cam.pit);
+function path(pts,z){cx.beginPath();pts.forEach((p,i)=>{const s=P(p[0],p[1],z);i?cx.lineTo(s[0],s[1]):cx.moveTo(s[0],s[1])});cx.closePath()}
+function circ(r,n=96){const a=[];for(let i=0;i<n;i++){const t=i/n*TP;a.push([r*Math.cos(t),r*Math.sin(t)])}return a}
+function qd(pts,fill,shade,a){const m=[0,0,0];pts.forEach(p=>{m[0]+=p[0];m[1]+=p[1];m[2]+=p[2]});Q.push({k:0,d:dep(m[0]/pts.length,m[1]/pts.length,m[2]/pts.length),pts,fill,shade,a:a==null?1:a})}
+function ql(a,b,c,w,bias){Q.push({k:1,d:dep((a[0]+b[0])/2,(a[1]+b[1])/2,(a[2]+b[2])/2)-(bias||80),a,b,c,w})}
+function panel(r,a0,a1,z0,z1,dz,al){const ns=Math.max(3,Math.ceil((a1-a0)/.12)),sy=Math.sin(cam.yaw),cy=Math.cos(cam.yaw),pt=(a,rr,z)=>[rr*Math.cos(a),rr*Math.sin(a),z+dz],ink=col('--ink'),steel=col('--steel');
+for(let s=0;s<ns;s++){const aa=a0+(a1-a0)*s/ns,bb=a0+(a1-a0)*(s+1)/ns,am=(aa+bb)/2,f=-(Math.cos(am)*sy+Math.sin(am)*cy);qd([pt(aa,r,z0),pt(bb,r,z0),pt(bb,r,z1),pt(aa,r,z1)],steel,f>0?.06+.3*(1-f):.34,al);qd([pt(aa,r,z1),pt(bb,r,z1),pt(bb,G.R,z1),pt(aa,G.R,z1)],steel,.02,al)}
+[a0,a1].forEach(a=>ql(pt(a,r+2,z0),pt(a,r+2,z1),ink,1.2,5))}
+function box(r,ang,z,w,d,h,fill){const ca=Math.cos(ang),sa=Math.sin(ang),pt=(u,v,zz)=>[(r+v)*ca-u*sa,(r+v)*sa+u*ca,zz],c=[[-w/2,-d/2],[w/2,-d/2],[w/2,d/2],[-w/2,d/2]];for(let i=0;i<4;i++){const A=c[i],B=c[(i+1)%4];qd([pt(A[0],A[1],z),pt(B[0],B[1],z),pt(B[0],B[1],z+h),pt(A[0],A[1],z+h)],fill,.28)}qd(c.map(p=>pt(p[0],p[1],z+h)),fill,0)}
+function txt(s,x,y,z,c){const p=P(x,y,z);cx.font='600 13px system-ui,sans-serif';cx.textAlign='center';cx.lineWidth=4;cx.strokeStyle=col('--bg');cx.strokeText(s,p[0],p[1]);cx.fillStyle=c;cx.fillText(s,p[0],p[1])}
+function torch(x,y,z,k){const g=G,A=P(x,y,z),B=P(x+g.rb*.05,y-g.rb*.05,z+g.rb*.16);cx.beginPath();cx.moveTo(B[0],B[1]);cx.lineTo(A[0],A[1]);cx.strokeStyle=col('--ink');cx.lineWidth=4;cx.stroke();cx.beginPath();cx.arc(A[0],A[1],10,0,7);cx.fillStyle='rgba(255,120,0,.35)';cx.fill();cx.beginPath();cx.arc(A[0],A[1],4,0,7);cx.fillStyle='#ffe27a';cx.fill();cx.strokeStyle='#ffb020';cx.lineWidth=1.5;for(let i=0;i<5;i++){const a=T*30+i*1.9+k,l=8+6*Math.abs(Math.sin(a*1.7));cx.beginPath();cx.moveTo(A[0],A[1]);cx.lineTo(A[0]+Math.cos(a)*l,A[1]-Math.abs(Math.sin(a))*l);cx.stroke()}}
+const u=i=>cl((T-ST[i])/STG[i][2]);
+function draw(){if(!fit())return;const g=G,steel=col('--steel'),ink=col('--ink'),weld=col('--weld'),ok=col('--ok'),mut=col('--mut'),ln=col('--line'),np=g.np,span=TP/np,cp=Math.cos(cam.pit),sp=Math.sin(cam.pit),sy=Math.sin(cam.yaw),cyw=Math.cos(cam.yaw),nc=g.nc,M=nc-2,GP=Math.ceil(np/2);
+cx.setTransform(DPR,0,0,DPR,0,0);cx.clearRect(0,0,W,H);cx.lineCap='round';Q=[];
+let hc=g.h0;if(T>=ST[4])hc+=g.h1*ee(cl(u(4)*1.5));if(T>=ST[6])hc=g.h0+g.h1+(g.Ht-g.h0-g.h1)*ee(u(6));if(T>=ST[7])hc=g.Ht;
+const he=(hc*cp+2*g.gr*sp)/2*1.08;K=Math.min(W*.47/g.gr,H*.46/he);CX=W/2;CY=H/2+hc*cp*K/2+10;
+/* ground, ringwall, sand, bottom */
+cx.globalAlpha=.5;path(circ(g.gr),0);cx.fillStyle=ln;cx.fill();cx.globalAlpha=1;
+const rw0=g.R-200,rw1=g.R+400,N=96;for(let i=0;i<N;i++){const a=i/N*TP,b=(i+1)/N*TP,A=P(rw1*Math.cos(a),rw1*Math.sin(a),g.zr),B=P(rw1*Math.cos(b),rw1*Math.sin(b),g.zr),A2=P(rw1*Math.cos(a),rw1*Math.sin(a),0),B2=P(rw1*Math.cos(b),rw1*Math.sin(b),0);cx.beginPath();cx.moveTo(A[0],A[1]);cx.lineTo(B[0],B[1]);cx.lineTo(B2[0],B2[1]);cx.lineTo(A2[0],A2[1]);cx.closePath();cx.fillStyle=shd(mut,.3);cx.fill()}
+cx.beginPath();[rw1,rw0].forEach(r=>{circ(r).forEach((p,i)=>{const s=P(p[0],p[1],g.zr);i?cx.lineTo(s[0],s[1]):cx.moveTo(s[0],s[1])});cx.closePath()});cx.fillStyle=mut;cx.globalAlpha=.75;cx.fill('evenodd');cx.globalAlpha=1;
+path(circ(g.rb),g.zs);cx.fillStyle=shd(steel,.1);cx.fill();cx.strokeStyle=ink;cx.lineWidth=1;cx.stroke();
+/* shell circle scribe */
+const a0=T<ST[1]?ee(u(0))*TP:TP;if(a0>0){cx.beginPath();for(let i=0;i<=80;i++){const t=a0*i/80,s=P(g.ro*Math.cos(t),g.ro*Math.sin(t),g.zs+2);i?cx.lineTo(s[0],s[1]):cx.moveTo(s[0],s[1])}cx.setLineDash([8,4]);cx.strokeStyle=weld;cx.lineWidth=2;cx.stroke();cx.setLineDash([])}
+/* guide blocks */
+const ngb=2*np,vg=T<ST[0]?0:Math.ceil(ngb*(T>=ST[1]?1:cl((u(0)-.35)/.65)));for(let k=0;k<vg;k++)box(g.rO+g.rb*.014,(k+.5)*TP/ngb,g.zs,g.rb*.03,g.rb*.014,g.rb*.03,'#ffd24a');
+/* gap, drops */
+const ga=(T<ST[2]?2.2:T<ST[3]?2.2-1.2*ee(u(2)):1)*g.gapV/g.rO;
+const prog=(c,j)=>{const L=1.8/(np+.8);if(c==0){if(T<ST[1])return 0;if(T>=ST[2])return 1;return cl((u(1)-j/(np+.8))/L)}if(c==1){if(T<ST[4])return 0;if(T>=ST[5])return 1;return cl((cl(u(4)/.6)-j/(np+.8))/L)}if(T<ST[6])return 0;if(T>=ST[7])return 1;return cl((u(6)-(c-2)/(M+.5))/(1.5/(M+.5)))};
+const wdg=ee(cl((u(4)-.6)/.3)),ex1=T<ST[4]||T>=ST[5]?0:g.hg*3*(1-wdg),cranes=[],torches=[],seamZ=c=>(g.hh[c][1]+(g.hh[c+1]?g.hh[c+1][0]:g.hh[c][1]))/2;
+const fV=(c,j)=>{if(c==0){if(T<ST[3])return 0;if(T>=ST[4])return 1;return cl(u(3)*GP-(j%GP))}if(c==1){if(T<ST[5])return 0;if(T>=ST[6])return 1;return cl(u(5)/.45*GP-(j%GP))}return cl((prog(c,j)-.6)/.4)};
+for(let c=0;c<nc;c++){const off=(c%2)*span/2,z0=g.hh[c][0],z1=g.hh[c][1],ex=c==1?ex1:0,dH=g.hs[c]*.9+g.rb*.3;
+ for(let j=0;j<np;j++){const pr=prog(c,j);if(pr<=0)continue;const dz=(1-ee(pr))*dH+ex,al=Math.min(1,pr*3),pa=off+j*span+ga/2,pb=off+(j+1)*span-ga/2;panel(g.rO,pa,pb,z0,z1,dz,al);if(pr<1){const am=(pa+pb)/2;cranes.push([g.rO*Math.cos(am),g.rO*Math.sin(am),z1+dz])}
+  const f=fV(c,j),th=off+j*span,x=(g.rO+5)*Math.cos(th),y=(g.rO+5)*Math.sin(th);if(f>0&&prog(c,j)>=1&&prog(c,(j+np-1)%np)>=1){const zt=z0+ex+(z1-z0)*f;ql([x,y,z0+ex],[x,y,zt],weld,3.4,60);if(f<1)torches.push([x,y,zt])}}}
+/* strongbacks, peaking board */
+const fv0=j=>fV(0,j);let bj=0,bf=-9;for(let j=0;j<np;j++){const f=-(Math.cos(j*span)*sy+Math.sin(j*span)*cyw);if(f>bf){bf=f;bj=j}}
+const sbShow=(c,j,t)=>{const th=(c%2)*span/2+j*span,z0=g.hh[c][0]+(c==1?ex1:0),h=g.hs[c];[.22,.78].forEach(k=>{box(g.rO+g.rb*.008,th,z0+h*k,g.rb*.05,g.rb*.012,g.rb*.014,'#9aa7b4');box(g.rO+g.rb*.008,th+g.rb*.03/g.rO,z0+h*k,g.rb*.012,g.rb*.016,g.rb*.02,'#ff8a1f')})};
+if(T>=ST[2]&&T<ST[4]){for(let j=0;j<np;j++){if(u(2)*1.3*np>j||T>=ST[3])if(fv0(j)<.55&&prog(0,j)>=1)sbShow(0,j)}}
+if(T>=ST[4]&&T<ST[6])for(let j=0;j<np;j++)if(fV(1,j)<.55&&prog(1,j)>=1&&prog(1,(j+np-1)%np)>=1)sbShow(1,j);
+if(T>=ST[2]+STG[2][2]*.55&&T<ST[3]){const th=bj*span,zb=g.hh[0][0]+g.hs[0]*.5,r=g.rO+g.rb*.02;for(let i=0;i<8;i++){const a=th+(-450+900*i/8)/g.rO,b=th+(-450+900*(i+1)/8)/g.rO;ql([r*Math.cos(a),r*Math.sin(a),zb],[r*Math.cos(b),r*Math.sin(b),zb],ink,5,300)}}
+/* fit-up lugs + tack dots (course 1 top edge) */
+if(T>=ST[4]&&T<ST[6]){const nl=np*3,vl=Math.ceil(nl*(T>=ST[5]?1:cl(u(4)/.25))),zt=g.hh[0][1];for(let k=0;k<vl;k++){const a=(k+.3)*TP/nl;box(g.rO+g.rb*.008,a,zt-g.rb*.05,g.rb*.018,g.rb*.014,g.rb*.04,'#9aa7b4');box(g.rO+g.rb*.008,a,zt-g.rb*.012,g.rb*.012,g.rb*.02,g.rb*.026,'#ff8a1f')}
+ const tkn=8*np,vt=Math.ceil(tkn*(T>=ST[5]?1:cl((u(4)-.85)/.15))),zz=seamZ(0);for(let k=0;k<vt;k++){const a=k*TP/tkn,r=g.rO+4;ql([r*Math.cos(a),r*Math.sin(a),zz],[r*Math.cos(a)+1,r*Math.sin(a),zz],'#ffd24a',5,120)}}
+/* horizontal and base welds */
+const arcW=(r,z,a,b,c)=>{const n=Math.max(2,Math.ceil((b-a)/.1));for(let i=0;i<n;i++){const s=a+(b-a)*i/n,e=a+(b-a)*(i+1)/n;ql([r*Math.cos(s),r*Math.sin(s),z],[r*Math.cos(e),r*Math.sin(e),z],c,3.4,60)}};
+const ring=(r,z,hp)=>{if(hp<=0)return;arcW(r,z,0,Math.PI*hp,weld);arcW(r,z,Math.PI,Math.PI+Math.PI*hp,weld);if(hp<1)[0,Math.PI].forEach(o=>torches.push([r*Math.cos(o+Math.PI*hp),r*Math.sin(o+Math.PI*hp),z]))};
+ring(g.rO+4,seamZ(0),T<ST[5]?0:T>=ST[6]?1:cl((u(5)-.5)/.45));
+for(let c=1;c<nc-1;c++){const p=prog(c+1,0);if(p>=.85)ring(g.rO+4,seamZ(c),1)}
+ring(g.rO+6,g.zs+3,T<ST[7]?0:T>=ST[7]+STG[7][2]?1:ee(u(7)));
+/* draw sorted */
+Q.sort((a,b)=>b.d-a.d);Q.forEach(it=>{cx.globalAlpha=it.a==null?1:it.a;if(it.k){const A=P(...it.a),B=P(...it.b);cx.beginPath();cx.moveTo(A[0],A[1]);cx.lineTo(B[0],B[1]);cx.strokeStyle=it.c;cx.lineWidth=it.w;cx.stroke()}else{cx.beginPath();it.pts.forEach((p,i)=>{const s=P(p[0],p[1],p[2]);i?cx.lineTo(s[0],s[1]):cx.moveTo(s[0],s[1])});cx.closePath();const f=shd(it.fill,it.shade);cx.fillStyle=f;cx.fill();cx.strokeStyle=f;cx.lineWidth=.8;cx.stroke()}});cx.globalAlpha=1;
+cranes.forEach(c=>{const A=P(c[0],c[1],c[2]),B=P(c[0],c[1],c[2]+g.rb*.5);cx.beginPath();cx.moveTo(A[0],A[1]);cx.lineTo(B[0],B[1]);cx.strokeStyle=ink;cx.lineWidth=1.5;cx.stroke();cx.beginPath();cx.arc(B[0],B[1],4,0,7);cx.fillStyle=ink;cx.fill()});
+torches.forEach((t,i)=>torch(t[0],t[1],t[2],i));
+/* labels */
+if(T<ST[1]&&u(0)>.9)txt('shell OD '+Math.round(g.ro*2)+' mm',0,0,g.zs+2,weld);
+if(T>=ST[0]&&T<ST[1]&&vg>2){txt('guide blocks',(g.rO+g.rb*.2)*Math.cos(.5*TP/ngb),(g.rO+g.rb*.2)*Math.sin(.5*TP/ngb),g.zs,mut)}
+if(T>=ST[2]&&T<ST[3]){const th=bj*span,r=g.rO+g.rb*.12;txt('root gap ≈ 3 mm, strongback + wedge',r*Math.cos(th),r*Math.sin(th),g.hh[0][1]+g.rb*.04,ink);if(u(2)>.55)txt('peaking board 900 mm',r*Math.cos(th),r*Math.sin(th),g.hh[0][0]+g.hs[0]*.5,weld)}
+if(T>=ST[4]&&T<ST[5]){const th=.4,r=g.rO+g.rb*.12;txt('fit-up clip + wedge',r*Math.cos(th),r*Math.sin(th),g.hh[0][1],ink);if(u(4)>.3)txt('course 2 seams offset from course 1',0,-g.rO-g.rb*.1,g.hh[0][1]+g.hs[1]+g.rb*.05,weld)}
+if(T>=ST[6]&&T<ST[7]&&M>0){const m=Math.min(M,Math.floor(u(6)*(M+.5))+1)+2;txt('course '+Math.min(m,nc)+' of '+nc,0,-g.rO-g.rb*.15,g.zs,weld)}
+if(T>=ST[7]+STG[7][2]*.6)txt('check plumb, roundness, peaking, banding',0,-g.rO-g.rb*.15,g.zs,ok);
+/* title and readouts */
+const si=ST.findIndex((s,i)=>T<s+STG[i][2]),idx=si<0?STG.length-1:si;cx.font='700 15px system-ui,sans-serif';cx.textAlign='left';cx.fillStyle=ink;cx.fillText((idx+1)+'/'+STG.length+'  '+STG[idx][0],12,22);
+if(idx!=cur){cur=idx;lis.forEach((l,i)=>{l.classList.toggle('on',i==idx);l.classList.toggle('done',i<idx)})}
+q('#sw_s').value=Math.round(T/TT*1000);
+q('#sw_o').innerHTML=[`Shell OD ${Math.round(g.ro*2)} mm`,`${np} plates per course · ${nc} courses`,`Height ${(sum(g.hs)/1000).toFixed(1)} m`,`${STG[idx][0]} ${Math.round(u(idx)*100)}%`].map(x=>`<span>${x}</span>`).join('');dirty=false}
+function loop(t){const dt=Math.min(.1,(t-last)/1000||0);last=t;if(play&&T<TT){T=Math.min(TT,T+dt);dirty=true;if(T>=TT){play=false;q('#sw_p').textContent='▶ Play'}}if((dirty||play)&&!root.hidden)draw();requestAnimationFrame(loop)}
+const reb=()=>{try{G=sgeo();dirty=true}catch(e){console.error(e)}};reb();
+q('#sw_p').onclick=()=>{if(T>=TT)T=0;play=!play;q('#sw_p').textContent=play?'❚❚ Pause':'▶ Play';dirty=true};
+q('#sw_r').onclick=()=>{T=0;play=true;q('#sw_p').textContent='❚❚ Pause';dirty=true};
+q('#sw_v').onclick=()=>{cam.yaw=-.6;cam.pit=.78;dirty=true};
+q('#sw_s').oninput=e=>{T=+e.target.value/1000*TT;dirty=true};
+lis.forEach((l,i)=>{const f=()=>{T=ST[i]+.01;dirty=true};l.onclick=f;l.onkeydown=e=>e.key=='Enter'&&f()});
+let dg=false,lx=0,ly=0;cv.onpointerdown=e=>{dg=true;lx=e.clientX;ly=e.clientY;cv.setPointerCapture(e.pointerId);cv.style.cursor='grabbing'};cv.onpointermove=e=>{if(!dg)return;cam.yaw+=(e.clientX-lx)*.008;cam.pit=cl(cam.pit+(e.clientY-ly)*.006,.2,1.5);lx=e.clientX;ly=e.clientY;dirty=true};cv.onpointerup=cv.onpointercancel=()=>{dg=false;cv.style.cursor='grab'};
+['tk_d','tk_bt','tk_bp','tk_pl','tk_tdr','tk_courses'].forEach(id=>q('#'+id).addEventListener('change',reb));q('#tk_run').addEventListener('click',reb);q('#tk_rst').addEventListener('click',()=>setTimeout(reb,0));
+addEventListener('resize',()=>dirty=true);new MutationObserver(()=>dirty=true).observe(document.documentElement,{attributes:true});
+if(matchMedia('(prefers-reduced-motion:reduce)').matches){play=false;T=TT;q('#sw_p').textContent='▶ Play'}
+requestAnimationFrame(loop)}
+function build(){q('#tk_body').innerHTML=`<div class="hubw"><div class="eyebrow">Storage tanks</div><h1>Tank Design · API 650</h1><p>Welded steel atmospheric tank: shell, bottom, roof, wind, anchorage, weights, plate layout and detailed CAD drawings.</p>
+<div class="card"><h2>Input</h2><div class="fld">${FL.map(([k,l])=>`<label>${l}<input id="tk_${k}" ${num.has(k)?'type="number" step="any"':''} style="width:${['name','customer','project','courses','tdr'].includes(k)?'100%':'110px'}"></label>`).join('')}</div><div class="row"><label class="note">Shell nozzles: mark, description, OD, angle°, elevation, projection<textarea id="tk_noz" rows="8" style="width:100%;font:12px monospace;background:var(--bg);color:var(--ink);border:1px solid var(--line)"></textarea></label><label class="note">Roof nozzles: mark, description, OD, angle°, radius, projection<textarea id="tk_rnoz" rows="8" style="width:100%;font:12px monospace;background:var(--bg);color:var(--ink);border:1px solid var(--line)"></textarea></label></div><div class="ctrl"><button class="btn go" id="tk_run">Calculate and draw</button><button class="btn" id="tk_rst">Reset to Tank-2400 BBL</button></div></div>${BFC}${SHC}<div id="tk_out"></div></div>`;set(DEF);q('#tk_run').onclick=run;q('#tk_rst').onclick=()=>{set(DEF);run()};bfInit();shInit();run()}
+function set(D){FL.forEach(([k])=>q('#tk_'+k).value=D[k]);q('#tk_noz').value=D.noz;q('#tk_rnoz').value=D.rnoz}
+function wdHTML(R){const T=R.tol,e=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'),hd=a=>'<thead><tr>'+a.map(x=>`<th class="l">${x}</th>`).join('')+'</tr></thead>',sb=x=>x==null?'<b>⚠ MEASURE</b>':x?'<b class="v-ok">✔ PASS</b>':'<b class="v-bad">✘ FAIL</b>';
+return `<div class="card"><h2>Welding details, peaking and banding · API 650</h2><h3>Weld schedule</h3><div class="scroll"><table>${hd(['Joint','Clause','Detail','Size','Process / NDE'])}<tbody>${R.wsch.map(r=>'<tr>'+r.map(c=>`<td class="l">${e(c)}</td>`).join('')+'</tr>').join('')}</tbody></table></div>
+<h3>Shell tolerances after welding</h3><div class="scroll"><table>${hd(['Clause','Check','Limit','Measured','Status'])}<tbody>${T.rows.map(r=>'<tr>'+r.slice(0,4).map(c=>`<td class="l">${e(c)}</td>`).join('')+`<td class="l">${sb(r[4])}</td></tr>`).join('')}</tbody></table></div>
+<div class="spec"><span>Peaking board: 900 mm chord, radius ${F(T.Rn)} mm inside (rise ${F(T.sag,1)} mm) or ${F(T.Ro)} mm outside (rise ${F(T.sagO,1)} mm)</span><span>Banding board: straight, 900 mm</span><span>Vertical seams ${T.nV} · horizontal seams ${T.nH}</span><span>Suggested stations: peaking ${T.stV}, banding ${T.stH}</span></div>
+<p class="note">Enter the largest gap measured with the sweep board in the Input fields (peaking, banding, plumbness, roundness) and press Calculate. Limits apply to the absolute value, inward or outward, and the worst reading governs, not an average. Station counts are an inspection-plan suggestion (API 650 gives no number). To stay inside the limits: pre-roll plates to radius, use strongbacks and fit-up clips, and weld in a balanced or back-step sequence. Weld sizes, spot-RT counts and clause numbers are screening values: confirm them against the edition and WPS you design to.</p></div>`}
+function run(){const out=q('#tk_out');let I;try{I=readI();if(!(I.d>0)||!I.courses.length||I.courses.some(x=>!(x>0)))throw Error('Check diameter and course heights');if(I.hll>sum(I.courses))throw Error('Design liquid level is above the shell height');const{steps,R}=design(I);
+let SH;try{SH=sheets(I,R)}catch(e){console.error(e);SH=[]}
+let CUT;try{CUT=cutSheet(I,R)}catch(e){console.error(e)}
+let WMC='',WR=null;try{WR=wreg(I,R);WMC=wmHTML(I,R,WR)}catch(e){console.error(e)}
+const txt=['API 650 TANK DESIGN REPORT - '+I.name,'='.repeat(70),...steps.flatMap(([t,l])=>['',t,'-'.repeat(t.length),...l]),'','LAYOUT CHECKS',...R.chk].join('\n');
+const bad=R.acc.some(a=>a[4]=='FAIL');
+out.innerHTML=`<div class="card"><h2>Results</h2><div class="spec"><span>Capacity ${F(R.vn/BBL)} bbl (${F(R.vn,1)} m³)</span><span>Shell t: ${R.ta.join(' / ')} mm</span><span>Bottom ${R.tb} mm · Roof ${R.rt} mm</span><span>Empty ${F(R.emp)} kg</span><span>Test water ${F(R.tk)} kg</span><span>Wind q ${F(R.qw,2)} kPa</span><span>Anchorage: ${R.need?'required':'not required'}</span><span>${bad?'✘ '+R.acc.filter(a=>a[4]=='FAIL').length+' criteria FAIL':'✔ All computed criteria pass'}</span></div>
+<div class="scroll"><table><thead><tr><th>Course</th><th>h mm</th><th>td mm</th><th>tt mm</th><th>Req mm</th><th>Plate</th><th>Adopted</th><th>S/Sd MPa</th><th>Test MPa</th><th>Plates</th><th>Check</th></tr></thead><tbody>${R.shell.map((r,i)=>`<tr><td>C${r.i}</td><td>${r.h}</td><td>${F(r.td,2)}</td><td>${F(r.tt,2)}</td><td>${F(r.req,2)}</td><td>${r.sel}</td><td>${r.ad}</td><td>${F(r.S)}/${I.sd}</td><td>${F(r.St)}/${I.st}</td><td>${R.pl[i].np}</td><td>${r.ok?'OK':'FAIL'}</td></tr>`).join('')}</tbody></table></div>
+<h3>API 650 acceptance criteria</h3><div class="spec"><span class="v-ok">${R.acc.filter(a=>a[4]=='PASS').length} pass</span><span class="v-bad">${R.acc.filter(a=>a[4]=='FAIL').length} fail</span><span>${R.acc.filter(a=>a[4]=='CHECK').length} to verify</span></div><div class="scroll"><table><thead><tr><th>Clause</th><th class="l">Criterion</th><th class="l">Required</th><th class="l">Actual</th><th>Status</th></tr></thead><tbody>${R.acc.map(a=>`<tr><td>${a[0]}</td><td class="l">${a[1]}</td><td class="l">${a[2]}</td><td class="l">${a[3]}</td><td><b class="${a[4]=='PASS'?'v-ok':a[4]=='FAIL'?'v-bad':''}">${a[4]=='PASS'?'✔ PASS':a[4]=='FAIL'?'✘ FAIL':'⚠ VERIFY'}</b></td></tr>`).join('')}</tbody></table></div><p class="note">PASS/FAIL are computed from your inputs. VERIFY means the item depends on information or calculations this screening tool does not hold. Clause numbers follow API 650 12th edition; confirm limits against the edition you design to.</p>
+<h3>Layout checks</h3><ul>${R.chk.map(c=>`<li>${c}</li>`).join('')}</ul><details class="ph"><summary>Step-by-step calculation</summary><pre style="padding:10px;overflow:auto;font-size:12px;margin:0">${txt.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</pre></details><div class="ctrl"><button class="btn" id="tk_rep">Download report (TXT)</button><button class="btn go" id="tk_3d">Download 3D model (DXF)</button></div><p class="note">Screening only: one-foot method, simplified overturning, no seismic (Annex E), no nozzle reinforcement or external-pressure checks. Allowable stresses are user inputs, so take them from API 650 Table 5-2 for the edition and plate grade used.</p></div>
+${wdHTML(R)}${WMC}${CUT?cutHTML(CUT,I):''}${SH.map((s,i)=>`<div class="card"><h2>Drawing ${i+1} · ${s[0]}</h2><p class="note">Sheet ${s[2].nm}, scale 1:${s[2].S}</p><div class="ctrl"><button class="btn go" data-d="${i}">Download DXF</button><button class="btn" data-s="${i}">Download SVG</button></div><div class="stage">${s[2].svg}</div></div>`).join('')}`;
+if(WR&&q('#tk_wlog'))q('#tk_wlog').onclick=()=>{const c=[['Weld ID','Location','Joint type','Plate t mm','Size','Length m','NDE','Welder ID','WPS','Date','VT','NDE result'],...WR.rows.map(r=>[r.id,r.loc,r.type,r.t,r.size,F(r.L,2),r.nde,'','','','',''])];dl('tank-weld-log.csv','\ufeff'+c.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n'),'text/csv')};
+if(CUT&&q('#tk_cut'))q('#tk_cut').onclick=()=>{const c=[['Part','Mark','Thk mm','Width mm','Length mm','Qty/tank','Unit kg','Total kg'],...CUT.rows.map(r=>r.map((v,j)=>j>5?(+v).toFixed(1):v)),[],['Raw plates per tank','Part','Thk','Strip width','Raw plates'],...CUT.rawN.map(g=>['',g.p,g.t,g.w,g.raw]),['','Roof',CUT.roof.t,'',CUT.roof.raw]];dl('tank-cutting-sheet.csv','\ufeff'+c.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n'),'text/csv')};q('#tk_3d').onclick=()=>dl('tank-3d-model.dxf',dxf3d(I,R),'application/dxf');q('#tk_rep').onclick=()=>dl('tank-design-report.txt',txt,'text/plain');out.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>dl(SH[b.dataset.d][1]+'.dxf',SH[b.dataset.d][2].dxf,'application/dxf'));out.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>dl(SH[b.dataset.s][1]+'.svg',SH[b.dataset.s][2].svgFile,'image/svg+xml'))}catch(e){out.innerHTML=`<div class="card"><p class="lerr">${e.message}</p></div>`}}
+window.TANK={dxf3d,design,sheets,readI:()=>0,DEF,nz,lst,mount:()=>{if(!root.dataset.b){root.dataset.b=1;build()}}};
+})();
+
+</script>
+<script>
 /* ---- petroPower: login + equipment selection router ---- */
 (function(){
-const U='mar0',P='asd123asd',K='petroPowerAuth',TABIDS=['design','beams','flanges','fitup','weld','pwht','nde'];
+const U='mar0',P='asd123asd',K='petroPowerAuth',TABIDS=['beams','flanges','fitup','weld','pwht','nde'];
 let mem=false;
 const authed=()=>{try{return sessionStorage.getItem(K)=='1'}catch(e){return mem}};
 const setAuth=v=>{mem=v;try{v?sessionStorage.setItem(K,'1'):sessionStorage.removeItem(K)}catch(e){}};
-const V={login:$('#login'),hub:$('#hub'),rotating:$('#soon-rot'),hydraulic:$('#soon-hyd'),static:$('#app-static')};
+const V={login:$('#login'),hub:$('#hub'),rotating:$('#soon-rot'),hydraulic:$('#soon-hyd'),static:$('#app-static'),tank:$('#app-tank'),vessel:$('#app-vessel')};
 function view(n){Object.entries(V).forEach(([k,e])=>e.hidden=k!=n);window.scrollTo(0,0);if(n=='login')setTimeout(()=>$('#lu').focus(),0)}
 function route(){const h=location.hash.slice(1);
  if(!authed())return view('login');
- if(TABIDS.includes(h)){view('static');if($('#'+h).hidden)show(h)}
+ if(h=='vessel'||h=='design'){view('vessel');$('#design').hidden=false}
+ else if(TABIDS.includes(h)){view('static');if($('#'+h).hidden)show(h)}
+ else if(h=='tank'){view('tank');TANK.mount()}
  else if(h=='rotating'||h=='hydraulic')view(h);
  else view('hub')}
 const go=h=>{if(location.hash.slice(1)==h)route();else location.hash=h};
@@ -1768,7 +2316,7 @@ $('#lf').onsubmit=e=>{e.preventDefault();
  if($('#lu').value.trim()==U&&$('#lp').value==P){setAuth(true);$('#le').textContent='';$('#lp').value='';go('hub')}
  else{$('#le').textContent='Incorrect username or password.';$('#lp').value='';$('#lp').focus()}};
 const h0=window.__h0;
-if(authed()){try{history.replaceState(null,'',location.pathname+location.search+'#'+(TABIDS.includes(h0)||h0=='rotating'||h0=='hydraulic'?h0:'hub'))}catch(e){location.hash=TABIDS.includes(h0)?h0:'hub'}}
+if(authed()){try{history.replaceState(null,'',location.pathname+location.search+'#'+(TABIDS.includes(h0)||h0=='rotating'||h0=='hydraulic'||h0=='tank'||h0=='vessel'?h0:'hub'))}catch(e){location.hash=TABIDS.includes(h0)||h0=='vessel'?h0:'hub'}}
 else{try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}}
 route();
 })();
